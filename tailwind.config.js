@@ -12,7 +12,13 @@ export default {
       'xl': '1280px',
 
     },
-    extend: {}
+    extend: {
+      colors: {
+        "main": "#800000",
+        "sub-main": "#E9BA46",
+
+      }
+    }
   },
   plugins: []
 };
