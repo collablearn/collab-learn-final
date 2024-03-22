@@ -4,7 +4,7 @@
 </script>
 
 <div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
-	<div class="w-[250px]">
+	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
 			<img src={icon_320} alt="icon-320" />
 		</div>
