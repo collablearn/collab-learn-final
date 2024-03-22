@@ -1,5 +1,6 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
+	import Loader from '$lib/general-components/loader.svelte';
 </script>
 
 <div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
@@ -24,9 +25,10 @@
 
 		<div class="mt-[40px]">
 			<button
-				class="bg-submain w-full rounded-[20.5px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center"
-				>LOG IN</button
+				class="bg-submain w-full rounded-[20.5px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
+				<Loader name="LOG IN" />
+			</button>
 
 			<div class="mt-[40px] flex justify-center">
 				<button class="text-[14px] text-submain underline">Forgot Password?</button>
