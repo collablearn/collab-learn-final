@@ -15,7 +15,7 @@ export default {
     extend: {
       colors: {
         "main": "#800000",
-        "sub-main": "#E9BA46",
+        "submain": "#E9BA46",
 
       }
     }

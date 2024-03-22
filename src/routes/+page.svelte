@@ -2,4 +2,6 @@
 	import Login from '$lib/static-components/login.svelte';
 </script>
 
-<div class=""></div>
+<div class="">
+	<Login />
+</div>
