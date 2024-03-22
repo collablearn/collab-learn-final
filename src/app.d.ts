@@ -1,13 +1,18 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+import type { Session } from "@supabase/supabase-js";
+
 declare global {
 	namespace App {
-		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
+		interface Locals {
+			supabase: SupabaseClient
+			supabaseAdmin: SupabaseClient
+			getSession: () => Promise<Session | null>
+			isLogged: () => "has auth" | "no auth" | "no proper cookies" | "no cookies detected"
+		}
+
+
 	}
 }
 
-export {};
+export { };
