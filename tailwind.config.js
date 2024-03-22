@@ -2,6 +2,16 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
+    screens: {
+      'sm': '480',
+
+      'md': '640px',
+
+      'lg': '1024px',
+
+      'xl': '1280px',
+
+    },
     extend: {}
   },
   plugins: []
