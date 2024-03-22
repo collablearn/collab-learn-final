@@ -29,11 +29,11 @@
 			>
 
 			<div class="mt-[40px] flex justify-center">
-				<button class="text-[14px] text-submain">Forgot Password?</button>
+				<button class="text-[14px] text-submain underline">Forgot Password?</button>
 			</div>
 
 			<div class="mt-[40px] flex justify-center">
-				<button class="text-[14px] text-white">Create Account</button>
+				<button class="text-[14px] text-white underline">Create Account</button>
 			</div>
 		</div>
 	</div>
