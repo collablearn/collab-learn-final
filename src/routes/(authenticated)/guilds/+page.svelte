@@ -1,7 +1,12 @@
 <script lang="ts">
-	import CreateGuild from '$lib/auth-components/guilds/create-guild.svelte';
+	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
+	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 </script>
 
 <div class="fixed bottom-0 right-0 m-[20px]">
-	<CreateGuild />
+	<CreateGuildBtn />
+</div>
+
+<div class="">
+	<SearchGuilds />
 </div>
