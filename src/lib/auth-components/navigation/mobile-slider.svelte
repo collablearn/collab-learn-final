@@ -23,7 +23,11 @@
 				</div>
 
 				<div class="">
-					<button class="text-[14px] text-submain underline">EDIT PROFILE</button>
+					<a
+						href="/edit-profile"
+						class="text-[14px] text-submain underline"
+						on:click={() => (showMobileSlider = false)}>EDIT PROFILE</a
+					>
 				</div>
 			</div>
 
