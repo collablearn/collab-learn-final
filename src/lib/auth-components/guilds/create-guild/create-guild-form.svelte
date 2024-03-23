@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Loader from '$lib/general-components/loader.svelte';
 </script>
 
 <div class="flex flex-col gap-[10px]">
@@ -28,4 +29,29 @@
 
 <div class="mt-[35px]">
 	<h3 class="text-[16px] text-main font-semibold">Guild Visibility</h3>
+	<div class="flex items-center gap-[10px] mt-[10px]">
+		<div class="flex items-center gap-[5px]">
+			<input name="visibility" type="radio" class="" />
+			<p class="text-[14px] text-main">Public</p>
+		</div>
+
+		<div class="flex items-center gap-[5px]">
+			<input name="visibility" type="radio" class="" />
+			<p class="text-[14px] text-main">Private</p>
+		</div>
+	</div>
 </div>
+
+<form class="flex flex-col gap-[10px] mt-[40px]">
+	<button
+		class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+	>
+		<Loader name="Create" txtColor="text-submain text-[14px]" />
+	</button>
+
+	<button
+		class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain border-[1px] border-main"
+	>
+		<Loader name="Back" />
+	</button>
+</form>
