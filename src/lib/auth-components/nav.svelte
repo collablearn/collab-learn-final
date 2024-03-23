@@ -36,7 +36,7 @@
 <nav class="bg-main w-full px-[23px] py-[20px]">
 	<div class="flex items-center justify-between">
 		<div>
-			<button>
+			<button on:click={() => (showMobileSlider = true)}>
 				<img src={burgerIcon} alt="burger-icon" />
 			</button>
 		</div>
@@ -62,4 +62,4 @@
 	</div>
 {/if}
 
-<MobileSlider {selections} />
+<MobileSlider {selections} bind:showMobileSlider />

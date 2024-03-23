@@ -1,54 +1,45 @@
 <script lang="ts">
-	import Nav from '$lib/auth-components/nav.svelte';
 </script>
 
-<div class=" bg-submain">
-	<div class="sticky top-0">
-		<Nav />
-	</div>
-
-	<div class="min-h-screen">
-		Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro ipsa sed dignissimos, odio
-		tempore delectus quasi hic dolore voluptas? Voluptates in laborum ratione. Sapiente quam dolore
-		reprehenderit facilis saepe maxime eius voluptatibus natus harum reiciendis delectus impedit ea
-		nihil quaerat, minima quibusdam a molestias at vel! Similique molestiae illo ex repudiandae quia
-		deleniti totam adipisci, optio eligendi excepturi provident assumenda quos neque earum autem
-		soluta! Illum sit sequi nesciunt incidunt assumenda culpa officiis deleniti, sunt corporis,
-		voluptatem ab vel? Ratione, assumenda incidunt! Amet excepturi quod et molestias, explicabo
-		officiis recusandae rem, exercitationem rerum nam magni molestiae cumque velit consequuntur
-		veniam dolorum, laborum minus esse ducimus perspiciatis eos non? Ullam perspiciatis vel pariatur
-		necessitatibus suscipit ea debitis ipsa, in placeat quidem ipsum voluptatum, nulla sapiente
-		doloribus recusandae id reprehenderit saepe soluta, blanditiis eligendi totam dolorem numquam.
-		Molestiae quaerat earum nihil veniam beatae ipsam odit corrupti dolores ipsum corporis
-		voluptates temporibus eveniet distinctio, doloremque voluptate facilis excepturi mollitia
-		recusandae possimus ducimus porro eos quae voluptatum enim. Doloribus dolore facilis in saepe
-		vitae deleniti excepturi, iste unde sunt quos veritatis eveniet, repudiandae alias laudantium.
-		Voluptates iure non, doloremque delectus exercitationem natus fugiat veritatis est id provident
-		placeat, sint nesciunt quidem, totam deleniti nostrum ex deserunt reprehenderit ratione sequi
-		tempore dicta tenetur eaque! Inventore alias vel in culpa praesentium sit similique sapiente rem
-		dolore adipisci, tempore aspernatur ut tenetur cupiditate, quod eos porro molestiae officia
-		animi quas illo nostrum. Aut, omnis architecto doloremque enim odio dolorem impedit sequi
-		voluptate quis facere. Ipsa non eos voluptas est eligendi, ducimus dolor esse quod vero
-		molestias itaque labore unde qui numquam cum doloremque dolore vitae quisquam soluta cumque hic?
-		Sequi iste nisi exercitationem placeat quas explicabo officia ratione tempore unde sunt ipsa rem
-		obcaecati debitis dolore possimus culpa facere voluptates velit eos, quaerat hic, eligendi
-		reiciendis expedita! Voluptatum, cum rem debitis voluptates harum, tenetur alias dolor
-		perferendis dolores dicta optio aspernatur architecto delectus esse? Optio quas adipisci
-		excepturi ipsam, omnis quis distinctio voluptatem tenetur ab magnam placeat molestiae dolores
-		dolorum, aliquid veritatis error ratione doloremque tempore nam! Itaque accusantium, repudiandae
-		enim et nisi sapiente! Quis expedita tenetur sequi excepturi, quidem officiis consectetur
-		reiciendis itaque, assumenda aliquid eius cupiditate! Quam soluta facilis facere, quos possimus
-		iste consequatur fuga, ducimus aspernatur vel earum praesentium voluptates odio similique
-		perferendis consequuntur. Quas expedita dolorum quis modi odio? Dolorem obcaecati aperiam
-		accusamus, neque voluptate praesentium amet distinctio ipsum facere vel unde inventore vitae
-		nulla natus, qui fugiat accusantium perspiciatis officia reiciendis excepturi facilis deleniti!
-		Unde necessitatibus nostrum cupiditate amet quas inventore accusamus voluptates quam nobis?
-		Laboriosam adipisci corrupti dolorem unde a vel veniam blanditiis, ducimus aut asperiores illum
-		praesentium tempora atque doloribus repellendus sunt facere quisquam perspiciatis omnis culpa
-		voluptatem nemo ab. Exercitationem fugiat eligendi dolorum quae deserunt est ratione
-		perspiciatis architecto eius esse voluptates expedita provident quia inventore numquam, maiores
-		alias rerum non iste repellat voluptatibus dolores optio! Quisquam cupiditate pariatur eos vitae
-		ipsa ex odio dolore optio ullam, perferendis expedita asperiores porro illo labore. Aspernatur
-		fugit tenetur enim deserunt dolore.
-	</div>
+<div class="">
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nisi vero repudiandae, hic qui dolores
+	perferendis nesciunt ducimus, facere id fuga ad maiores eos, iure quia est! Iusto doloribus,
+	voluptatem commodi error sit blanditiis dolorem nostrum odio voluptatibus, quas possimus aperiam
+	itaque ipsum officiis, quis est quos magni reiciendis in provident. Quisquam, natus? Illo
+	veritatis nam repellat laudantium eius fugit hic fuga, rem, quibusdam asperiores ex maiores.
+	Recusandae fugiat sequi corrupti beatae veniam nesciunt quod accusamus laudantium iure! Veritatis
+	vitae sint nesciunt! Porro fuga sequi doloremque tempore enim illum velit ipsum aliquam voluptate
+	nam asperiores, voluptatem reprehenderit quam eveniet dolore, assumenda dolor sit magnam est
+	exercitationem. Reprehenderit cumque facilis hic laboriosam necessitatibus dolore accusamus magni
+	sequi fugit? Praesentium vel, assumenda dolore amet quae natus rem nulla obcaecati incidunt iure
+	facilis odit nemo ratione corrupti quos aliquid delectus sit aspernatur sequi quisquam itaque
+	commodi dolor eaque. Reiciendis vel quod, incidunt a aliquid necessitatibus omnis perferendis
+	saepe sunt ut ullam, nostrum beatae sapiente quasi laudantium quam, id molestiae eum aliquam
+	provident. Cum corporis, quaerat maxime quod amet, repellat itaque impedit ullam, tenetur
+	doloribus fugiat facere vero. Sed enim, ullam odio animi nisi fugiat corrupti, itaque voluptatem
+	atque autem, ut dolores? Asperiores pariatur consequatur explicabo veniam voluptatibus veritatis
+	aut sapiente rerum dolorem possimus placeat, eligendi porro tempore iure nesciunt dolore! Impedit
+	facere quos earum aliquid saepe optio, nihil perferendis molestiae! Voluptas, impedit, deleniti
+	dolore soluta blanditiis odio architecto repellendus, fugit magni neque exercitationem numquam
+	iusto. Dignissimos reprehenderit labore at, exercitationem aut ea cum voluptatem consectetur est
+	veritatis unde! Suscipit non exercitationem dolorem ipsam enim placeat tenetur dolore similique
+	nulla, cupiditate quidem sed! Totam, repellendus aut dolorem iure quod nemo ipsum earum quisquam
+	esse suscipit accusantium minima ad, eligendi accusamus nihil molestiae corporis, est nisi cum
+	praesentium beatae exercitationem assumenda. Voluptate totam cum, distinctio impedit fugit iure!
+	Incidunt, optio temporibus aut esse nesciunt doloremque autem unde exercitationem tempore
+	accusamus dolores asperiores recusandae voluptatum enim perferendis ipsam iste ipsum itaque quia
+	laboriosam et debitis! Consequatur alias iure ex temporibus esse porro quisquam exercitationem quo
+	a delectus cum sit dignissimos laborum natus vitae, quae fuga harum nisi. Earum nulla, temporibus
+	laudantium enim necessitatibus pariatur aut beatae odio laborum voluptatum molestias sint
+	assumenda. Ipsa, repellendus eum sunt esse commodi nihil rem labore earum reprehenderit impedit
+	incidunt quae. Fugiat eveniet, at quaerat in repellendus exercitationem repudiandae ducimus rem
+	quis cumque voluptatibus autem, rerum molestias eligendi dolorum eaque odio! Omnis tempore
+	temporibus eius recusandae architecto ad et, tempora quae beatae consequatur cum laborum enim eum
+	possimus! Sequi laboriosam incidunt repellendus, aperiam ea pariatur facilis placeat molestias
+	quae ratione inventore voluptas obcaecati a perspiciatis delectus illo voluptatum mollitia nihil
+	atque modi. Exercitationem eius quis eligendi a sed quaerat tenetur quam eum fugit atque?
+	Cupiditate, amet quia. Aspernatur omnis atque corrupti, voluptas maxime sapiente harum aut
+	expedita neque consequatur velit asperiores veritatis nam, temporibus impedit minima vero aliquam,
+	doloribus placeat. Eveniet, explicabo. Et hic vitae dolorem natus eum rem iure fugiat quasi dicta
+	saepe, illo quae quo quibusdam, quidem asperiores deserunt?
 </div>
