@@ -1,9 +1,36 @@
 <script lang="ts">
 	import burgerIcon from '$lib/assets/burger.svg';
 	import userIcon from '$lib/assets/user_icon_320.svg';
+	import MobileSlider from './navigation/mobile-slider.svelte';
 	import UserModal from './navigation/user-modal.svelte';
 
 	export let showUserMenu = false;
+	export let showMobileSlider = false;
+
+	let selections = [
+		{
+			title: 'DASHBOARD',
+			url: '/dashboard'
+		},
+		{
+			title: 'GUILDS',
+			url: '/guilds'
+		},
+
+		{
+			title: 'PROJECTS',
+			url: '/projects'
+		},
+
+		{
+			title: 'LEARNING MODULES',
+			url: '/learning-modules'
+		},
+		{
+			title: 'WORKSPACES',
+			url: '/workspaces'
+		}
+	];
 </script>
 
 <nav class="bg-main w-full px-[23px] py-[20px]">
@@ -15,7 +42,7 @@
 		</div>
 
 		<div class="flex items-center justify-center">
-			<button on:click={() => (showUserMenu = !showUserMenu)}>
+			<button on:click={() => (showUserMenu = true)}>
 				<img src={userIcon} alt="user-icon" />
 			</button>
 		</div>
@@ -34,3 +61,5 @@
 		</div>
 	</div>
 {/if}
+
+<MobileSlider {selections} />

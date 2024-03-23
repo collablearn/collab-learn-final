@@ -16,6 +16,7 @@ export default {
       colors: {
         "main": "#800000",
         "submain": "#E9BA46",
+        "subwhite": "#D9D9D9",
 
       }
     }
