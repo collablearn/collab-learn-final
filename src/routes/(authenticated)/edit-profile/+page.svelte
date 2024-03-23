@@ -13,7 +13,7 @@
 	<div class="flex flex-col gap-[10px] mt-[20px]">
 		{#each selections as selection}
 			<button
-				class="text-main text-[14px] max-w-fit underline {activeItem === selection
+				class="text-main text-[14px] max-w-fit underline transition-all {activeItem === selection
 					? 'font-semibold shadow-xs shadow-black'
 					: ''}"
 				on:click={() => (activeItem = selection)}>{selection}</button
@@ -21,7 +21,7 @@
 		{/each}
 	</div>
 
-	<div class="">
+	<div class="mt-[27px]">
 		{#if activeItem === 'Personal Information'}
 			<PersonalInformation />
 		{:else if activeItem === 'Change Password'}
