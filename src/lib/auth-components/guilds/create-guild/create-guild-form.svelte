@@ -49,9 +49,10 @@
 		<Loader name="Create" txtColor="text-submain text-[14px]" />
 	</button>
 
-	<button
+	<a
+		href="/guilds"
 		class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain border-[1px] border-main"
 	>
 		<Loader name="Back" />
-	</button>
+	</a>
 </form>
