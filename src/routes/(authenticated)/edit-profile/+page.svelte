@@ -21,5 +21,11 @@
 		{/each}
 	</div>
 
-	<div class=""></div>
+	<div class="">
+		{#if activeItem === 'Personal Information'}
+			<PersonalInformation />
+		{:else if activeItem === 'Change Password'}
+			<ChangePassword />
+		{/if}
+	</div>
 </div>
