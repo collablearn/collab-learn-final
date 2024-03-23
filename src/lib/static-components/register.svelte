@@ -1,6 +1,9 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
+	import { getStaticState } from '$lib';
+
+	const childStaticState = getStaticState();
 </script>
 
 <div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
@@ -57,7 +60,10 @@
 			<div class="mt-[40px]">
 				<p class="text-white text-[14px] text-center">Already have an account?</p>
 				<div class=" flex justify-center mt-[20px]">
-					<button class="text-[14px] text-white underline">Log in here</button>
+					<button
+						class="text-[14px] text-submain underline"
+						on:click={() => ($childStaticState.isRegistering = false)}>Log in here</button
+					>
 				</div>
 			</div>
 		</div>
