@@ -48,7 +48,7 @@
 			<div class="flex flex-col gap-[10px]">
 				{#each selections as selection}
 					<a
-						on:click={() => {}}
+						on:click={() => (showMobileSlider = false)}
 						href={selection.url}
 						class="py-[10px] px-[20px] text-left font-semibold text-[16px]
                     {$page.url.pathname === selection.url
