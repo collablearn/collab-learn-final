@@ -2,8 +2,8 @@
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 </script>
 
-<div class="fixed bottom-0 right-0 m-[20px]">
-	<button class="">
+<div class="">
+	<a href="/guilds/create-guild" class="">
 		<img src={createIcon} alt="create-icon" class="" />
-	</button>
+	</a>
 </div>

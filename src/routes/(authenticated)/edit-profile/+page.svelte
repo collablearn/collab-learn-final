@@ -6,7 +6,7 @@
 	const selections = ['Personal Information', 'Change Password'];
 </script>
 
-<div class="py-[44px] px-[22px]">
+<div class="">
 	<p class="text-[16px] text-main font-semibold">Edit Profile</p>
 
 	<!--Switch Here-->
