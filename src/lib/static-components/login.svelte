@@ -1,7 +1,6 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
-
 </script>
 
 <div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
@@ -32,7 +31,7 @@
 			</button>
 
 			<div class="mt-[40px] flex justify-center">
-				<button class="text-[14px] text-submain underline" on:click={() => }>Forgot Password?</button>
+				<button class="text-[14px] text-submain underline">Forgot Password?</button>
 			</div>
 
 			<div class="mt-[40px] flex justify-center">
