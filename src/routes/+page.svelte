@@ -2,19 +2,6 @@
 	import Login from '$lib/static-components/login.svelte';
 	import Register from '$lib/static-components/register.svelte';
 	import ResetPassword from '$lib/static-components/reset-password.svelte';
-	import UpdatePassword from '$lib/static-components/reset-password/update-password.svelte';
-	import VeryfyAccount from '$lib/static-components/reset-password/veryfy-account.svelte';
-
-	import { setStaticState, getStaticState } from '$lib';
-
-	const staticObject = {
-		isRegistering: false,
-		isResetting: false,
-		isVerifying: false,
-		isUpdating: false
-	};
-	setStaticState(staticObject);
-	const staticState = getStaticState();
 </script>
 
 <div class=""></div>
