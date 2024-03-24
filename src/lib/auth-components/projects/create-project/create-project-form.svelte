@@ -70,7 +70,7 @@
 	</button>
 
 	<a
-		href="/guilds"
+		href="/projects"
 		class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center border-[1px] border-main"
 	>
 		Back
