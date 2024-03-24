@@ -3,6 +3,7 @@
 	import { getActiveItem } from '$lib';
 	import LearningModuleSearch from '$lib/auth-components/learning-module/learning-module-search.svelte';
 	import UploadModuleBtn from '$lib/auth-components/learning-module/upload-module-btn.svelte';
+	import LearnongModuleCard from '$lib/auth-components/learning-module/learnong-module-card.svelte';
 
 	let activeItem = getActiveItem();
 
@@ -20,7 +21,7 @@
 
 	<div class="flex flex-col gap-[20px] mt-[35px]">
 		{#each Array(10) as sample}
-			<GuildCard />
+			<LearnongModuleCard />
 		{/each}
 
 		<div class="">
