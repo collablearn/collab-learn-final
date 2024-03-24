@@ -7,12 +7,27 @@
 	import PrivateJoin from './join-project/private-join.svelte';
 
 	export let projectObj: ProjectTypes;
+
+	let showPrivateJoin = false;
+	let showPublicJoin = false;
+
+	const handleJoin = () => {
+		if (projectObj.isPrivate) {
+			showPrivateJoin = true;
+			showPublicJoin = false;
+		} else {
+			showPrivateJoin = false;
+			showPublicJoin = true;
+		}
+	};
 </script>
 
-<PublicJoin />
+<PrivateJoin bind:showPrivateJoin {projectObj} />
+<PublicJoin bind:showPublicJoin {projectObj} />
 
 <button
 	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left"
+	on:click={handleJoin}
 >
 	<div class="grid grid-cols-3 gap-[10px]">
 		<!--For project image-->

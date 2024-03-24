@@ -16,7 +16,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: true,
 			onlineCount: 10,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Rodrigo'
 		},
 
 		{
@@ -25,7 +26,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 3,
-			maxUsers: 30
+			maxUsers: 30,
+			hostName: 'Tigrel'
 		},
 
 		{
@@ -34,7 +36,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 2,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Granger'
 		},
 
 		{
@@ -43,7 +46,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 0,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Kimmy'
 		},
 
 		{
@@ -52,7 +56,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: true,
 			onlineCount: 10,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Vexana'
 		},
 
 		{
@@ -61,7 +66,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: true,
 			onlineCount: 3,
-			maxUsers: 30
+			maxUsers: 30,
+			hostName: 'Lesley'
 		},
 
 		{
@@ -70,7 +76,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 2,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: ''
 		},
 
 		{
@@ -79,7 +86,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 0,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Balmond'
 		},
 
 		{
@@ -88,7 +96,8 @@
 			projectDescription: 'To make enrollment online ',
 			isPrivate: false,
 			onlineCount: 1,
-			maxUsers: 50
+			maxUsers: 50,
+			hostName: 'Hayabusa'
 		}
 	];
 </script>
