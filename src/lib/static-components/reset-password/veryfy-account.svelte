@@ -38,7 +38,7 @@
 		<div class="mt-[40px]">
 			<button
 				on:click={veryfyContinueHandler}
-				class="bg-submain w-full rounded-[20.5px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
 				<Loader name="CONTINUE" />
 			</button>

@@ -3,7 +3,7 @@
 	import DashboardRecentProjects from '$lib/auth-components/dashboard/dashboard-recent-projects.svelte';
 </script>
 
-<div class="pt-[50px] px-[22px]">
+<div class="">
 	<div class="">
 		<DashboardRecentProjects />
 	</div>
