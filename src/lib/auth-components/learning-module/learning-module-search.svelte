@@ -4,7 +4,7 @@
 
 <div class="relative flex items-center">
 	<input
-		placeholder="Search Guild Name"
+		placeholder="Search Module Name"
 		type="text"
 		class="outline-none w-full text-[14px] py-[11px] pl-[20px] pr-[40px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 	/>
