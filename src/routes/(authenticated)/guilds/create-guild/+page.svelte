@@ -1,5 +1,10 @@
 <script lang="ts">
+	import { getActiveItem } from '$lib';
 	import CreateGuildForm from '$lib/auth-components/guilds/create-guild/create-guild-form.svelte';
+
+	let activeItem = getActiveItem();
+
+	$activeItem = '/guilds';
 </script>
 
 <div class="">
