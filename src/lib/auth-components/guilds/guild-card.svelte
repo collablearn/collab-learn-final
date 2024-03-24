@@ -3,7 +3,7 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 </script>
 
-<div class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black">
+<button class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black">
 	<div class="grid grid-cols-3 gap-[10px]">
 		<div class="">
 			<img src={sampleIcon} alt="sample-icon" />
@@ -21,4 +21,4 @@
 			<p class="text-[14px] text-main">7/15</p>
 		</div>
 	</div>
-</div>
+</button>
