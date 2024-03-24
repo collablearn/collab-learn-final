@@ -6,4 +6,5 @@ export type ProjectTypes = {
     projectDescription: string
     isPrivate: boolean
     onlineCount: number
+    maxUsers: number
 };
