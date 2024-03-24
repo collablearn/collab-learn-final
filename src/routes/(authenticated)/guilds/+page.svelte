@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
+	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 </script>
 
@@ -12,5 +13,7 @@
 		<SearchGuilds />
 	</div>
 
-	<div class=""></div>
+	<div class="">
+		<GuildCard />
+	</div>
 </div>
