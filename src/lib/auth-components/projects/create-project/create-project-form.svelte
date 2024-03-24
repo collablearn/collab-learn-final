@@ -9,7 +9,7 @@
 
 <div class="flex flex-col gap-[10px]">
 	<label>
-		<span class="text-main text-[14px] transition-all">Guild Name</span>
+		<span class="text-main text-[14px] transition-all">Project Name</span>
 		<input
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
@@ -33,7 +33,7 @@
 </div>
 
 <div class="mt-[35px]">
-	<h3 class="text-[16px] text-main font-semibold">Guild Visibility</h3>
+	<h3 class="text-[16px] text-main font-semibold">Project Visibility</h3>
 	<div class="flex items-center gap-[10px] mt-[10px]">
 		{#each visibilitySelection as selection}
 			<div class="flex items-center gap-[5px]">
@@ -70,7 +70,7 @@
 	</button>
 
 	<a
-		href="/guilds"
+		href="/projects"
 		class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center border-[1px] border-main"
 	>
 		Back
