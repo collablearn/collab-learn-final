@@ -8,10 +8,8 @@
 </script>
 
 <div class="">
-	<h3 class="text-[16px] text-main font-semibold">Create Guild</h3>
-	<p class="text-[14px] text-main mt-[15px]">
-		Start collaborating to your co-peers thhrough guild.
-	</p>
+	<h3 class="text-[16px] text-main font-semibold">Create Project</h3>
+	<p class="text-[14px] text-main mt-[15px]">Creatte a project to start collaboration.</p>
 
 	<div class="mt-[19px]">
 		<CreateProjectForm />

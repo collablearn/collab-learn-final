@@ -33,7 +33,7 @@
 </div>
 
 <div class="mt-[35px]">
-	<h3 class="text-[16px] text-main font-semibold">Guild Visibility</h3>
+	<h3 class="text-[16px] text-main font-semibold">Project Visibility</h3>
 	<div class="flex items-center gap-[10px] mt-[10px]">
 		{#each visibilitySelection as selection}
 			<div class="flex items-center gap-[5px]">
