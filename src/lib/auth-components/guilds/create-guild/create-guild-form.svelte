@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Loader from '$lib/general-components/loader.svelte';
+	import { fade } from 'svelte/transition';
 
 	const visibilitySelection = ['Public', 'Private'];
 
-	let value = 'Public';
+	let visibilityValue = 'Public';
 </script>
 
 <div class="flex flex-col gap-[10px]">
@@ -36,11 +37,29 @@
 	<div class="flex items-center gap-[10px] mt-[10px]">
 		{#each visibilitySelection as selection}
 			<div class="flex items-center gap-[5px]">
-				<input name="visibility" type="radio" class="" value={selection} bind:group={value} />
+				<input
+					name="visibility"
+					type="radio"
+					class=""
+					value={selection}
+					bind:group={visibilityValue}
+				/>
 				<p class="text-[14px] text-main">{selection}</p>
 			</div>
 		{/each}
 	</div>
+
+	{#if visibilityValue === 'Private'}
+		<div class="mt-[10px]" in:fade>
+			<label>
+				<span class="text-main text-[14px] transition-all">Passcode</span>
+				<input
+					type="password"
+					class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+				/>
+			</label>
+		</div>
+	{/if}
 </div>
 
 <form class="flex flex-col gap-[10px] mt-[40px]">
