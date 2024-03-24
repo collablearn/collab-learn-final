@@ -1,8 +1,8 @@
 <script lang="ts">
-	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import { getActiveItem } from '$lib';
 	import CreateProjectBtn from '$lib/auth-components/projects/create-project-btn.svelte';
 	import SearchProject from '$lib/auth-components/projects/search-project.svelte';
+	import ProjectCard from '$lib/auth-components/projects/project-card.svelte';
 
 	let activeItem = getActiveItem();
 
@@ -20,7 +20,7 @@
 
 	<div class="flex flex-col gap-[20px] mt-[35px]">
 		{#each Array(10) as sample}
-			<GuildCard />
+			<ProjectCard />
 		{/each}
 
 		<div class="">
