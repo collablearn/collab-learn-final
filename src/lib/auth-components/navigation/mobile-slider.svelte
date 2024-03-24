@@ -2,10 +2,13 @@
 	import closeIcon from '$lib/assets/close_icon_320.svg';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import { page } from '$app/stores';
+	import { getActiveItem } from '$lib';
 
 	export let selections: { title: string; url: string }[];
 
 	export let showMobileSlider = false;
+
+	let activeItem = getActiveItem();
 </script>
 
 {#if showMobileSlider}
@@ -52,10 +55,13 @@
 			<div class="flex flex-col gap-[10px]">
 				{#each selections as selection}
 					<a
-						on:click={() => (showMobileSlider = false)}
+						on:click={() => {
+							showMobileSlider = false;
+							$activeItem = selection.url;
+						}}
 						href={selection.url}
 						class="py-[10px] px-[20px] text-left font-semibold text-[16px]
-                    {$page.url.pathname === selection.url
+                    {$activeItem === selection.url
 							? 'bg-[#911F1F] text-submain'
 							: 'bg-main text-subwhite'} "
 					>
