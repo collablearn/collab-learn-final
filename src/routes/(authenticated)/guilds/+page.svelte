@@ -8,5 +8,9 @@
 </div>
 
 <div class="">
-	<SearchGuilds />
+	<div class="">
+		<SearchGuilds />
+	</div>
+
+	<div class=""></div>
 </div>
