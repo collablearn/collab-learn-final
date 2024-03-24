@@ -1,5 +1,9 @@
 <script lang="ts">
 	import Loader from '$lib/general-components/loader.svelte';
+
+	const visibilitySelection = ['Public', 'Private'];
+
+	let value = 'Public';
 </script>
 
 <div class="flex flex-col gap-[10px]">
@@ -30,15 +34,12 @@
 <div class="mt-[35px]">
 	<h3 class="text-[16px] text-main font-semibold">Guild Visibility</h3>
 	<div class="flex items-center gap-[10px] mt-[10px]">
-		<div class="flex items-center gap-[5px]">
-			<input name="visibility" type="radio" class="" />
-			<p class="text-[14px] text-main">Public</p>
-		</div>
-
-		<div class="flex items-center gap-[5px]">
-			<input name="visibility" type="radio" class="" />
-			<p class="text-[14px] text-main">Private</p>
-		</div>
+		{#each visibilitySelection as selection}
+			<div class="flex items-center gap-[5px]">
+				<input name="visibility" type="radio" class="" value={selection} bind:group={value} />
+				<p class="text-[14px] text-main">{selection}</p>
+			</div>
+		{/each}
 	</div>
 </div>
 
