@@ -5,7 +5,10 @@
 
 <div class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black">
 	<div class="grid grid-cols-3 gap-[10px]">
+		<!--For project image-->
 		<div class="w-[100%] h-[100px] bg-white"></div>
+
+		<!--For project details-->
 		<div class="  w-[100%] col-span-2">
 			<h3 class="text-[16px] text-main font-semibold truncate">Enrollment System</h3>
 			<p class="text-[14px] text-main line-clamp-3">
