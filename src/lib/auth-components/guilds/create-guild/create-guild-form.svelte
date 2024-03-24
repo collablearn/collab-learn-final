@@ -52,8 +52,8 @@
 
 	<a
 		href="/guilds"
-		class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain border-[1px] border-main"
+		class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center border-[1px] border-main"
 	>
-		back
+		Back
 	</a>
 </form>
