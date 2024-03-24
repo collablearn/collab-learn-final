@@ -6,6 +6,13 @@
 	export let txtColor = 'text-main text-[14px]';
 </script>
 
+<!--
+	@component
+	default values:
+	style = "border-b-submain border-main"
+	txtColor = "text-main text-[14px]"
+-->
+
 <div class="">
 	{#if loader}
 		<div class="flex items-center gap-[2px]">
