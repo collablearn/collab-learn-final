@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
+	import { getActiveItem, setActiveItem } from '$lib';
+
+	setActiveItem('/dashboard');
 </script>
 
 <div class=" bg-submain">
