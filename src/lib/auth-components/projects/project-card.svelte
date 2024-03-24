@@ -3,9 +3,13 @@
 	import offlineIcon from '$lib/assets/project_offline_icon_320.svg';
 	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
 	import type { ProjectTypes } from '$lib/types';
+	import PublicJoin from './join-project/public-join.svelte';
+	import PrivateJoin from './join-project/private-join.svelte';
 
 	export let projectObj: ProjectTypes;
 </script>
+
+<PublicJoin />
 
 <button
 	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left"
