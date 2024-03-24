@@ -15,8 +15,28 @@
 	</div>
 
 	<div class="flex flex-col gap-[20px] mt-[35px]">
-		{#each Array(30) as sample}
+		{#each Array(10) as sample}
 			<GuildCard />
 		{/each}
+
+		<div class="">
+			<button class="text-[14px] text-main px-[10px] rounded-[5px] active:border-[1px] border-main">
+				1
+			</button>
+
+			<button class="text-[14px] text-main px-[10px] rounded-[5px] active:border-[1px] border-main">
+				2
+			</button>
+
+			<button class="text-[14px] text-main px-[10px] rounded-[5px] active:border-[1px] border-main">
+				3
+			</button>
+
+			...
+
+			<button class="text-[14px] text-main px-[10px] rounded-[5px] active:border-[1px] border-main">
+				10
+			</button>
+		</div>
 	</div>
 </div>
