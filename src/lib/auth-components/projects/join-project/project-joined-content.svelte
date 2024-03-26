@@ -13,6 +13,9 @@
 	const authState = getAuthState();
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+
 <div class="">
 	<div class="bg-main p-[20px] flex items-center justify-between">
 		<div class="">
@@ -39,7 +42,11 @@
 				</button>
 
 				<!-- Simple Overlay for edit tools-->
-				<div class="fixed left-0 right-0 top-0 bottom-0 bg-black"></div>
+
+				<div
+					class="fixed left-0 right-0 top-0 bottom-0 bg-black"
+					on:click={() => ($authState.projects.showEditTools = false)}
+				></div>
 
 				<div
 					class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"

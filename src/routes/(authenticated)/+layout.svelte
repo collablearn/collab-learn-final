@@ -6,7 +6,8 @@
 	const defaultAuthState = {
 		activeItem: '/dashboard',
 		projects: {
-			joinedProject: false
+			joinedProject: false,
+			showEditTools: false
 		},
 		joinedGuild: false
 	};

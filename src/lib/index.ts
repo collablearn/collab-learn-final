@@ -15,6 +15,7 @@ interface AuthStateStore {
 
     projects: {
         joinedProject: boolean
+        showEditTools: boolean
     }
     joinedGuild: boolean
 
