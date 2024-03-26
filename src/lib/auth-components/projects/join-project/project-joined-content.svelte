@@ -3,6 +3,11 @@
 	import projectAttachIcon from '$lib/assets/project_attach_icon_320.svg';
 	import projectShareScreenIcon from '$lib/assets/project_sharescreen_icon_320.svg';
 	import projectSettingsIcon from '$lib/assets/projects_settings_icon_320.svg';
+	import editTool1 from '$lib/assets/project_edit1_icon_320.svg';
+	import editTool2 from '$lib/assets/project_edit2_icon_320.svg';
+	import editTool3 from '$lib/assets/project_edit3_icon_320.svg';
+	import editTool4 from '$lib/assets/project_edit4_icon_320.svg';
+
 	import { getAuthState } from '$lib';
 
 	const authState = getAuthState();
@@ -28,12 +33,33 @@
 				<input id="file-upload" type="file" />
 			</div>
 
-			<div class="flex flex-row-reverse relative">
+			<div class="flex flex-row-reverse">
 				<button>
 					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
 				</button>
 
-				<div class="absolute bg-black mt-[50px]">settings here alsdjalskdjalksjdkl jalksjdkals</div>
+				<!-- Simple Overlay for edit tools-->
+				<div class="fixed left-0 right-0 top-0 bottom-0 bg-black"></div>
+
+				<div
+					class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"
+				>
+					<div class="w-full flex items-center">
+						<button><img src={editTool1} alt="edit-1-icon" /></button>
+					</div>
+
+					<div class="w-full flex items-center">
+						<button><img src={editTool2} alt="edit-2-icon" /></button>
+					</div>
+
+					<div class="w-full flex items-center">
+						<button><img src={editTool3} alt="edit-3-icon" /></button>
+					</div>
+
+					<div class="w-full flex items-center">
+						<button><img src={editTool4} alt="edit-4-icon" /></button>
+					</div>
+				</div>
 			</div>
 
 			<div class="">
