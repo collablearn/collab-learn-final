@@ -10,22 +10,48 @@
 
 <div class="">
 	<div class="bg-main p-[20px] flex items-center justify-between">
-		<button on:click={() => ($authState.projects.joinedProject = false)}>
-			<img src={projectsBackIcon} alt="project-back-icon" />
-		</button>
+		<div class="">
+			<button on:click={() => ($authState.projects.joinedProject = false)}>
+				<img src={projectsBackIcon} alt="project-back-icon" />
+			</button>
+		</div>
 
 		<div class="flex items-center gap-[20px]">
-			<button>
-				<img src={projectAttachIcon} alt="project-attach-icon" />
-			</button>
+			<div class="">
+				<label for="file-upload">
+					<img
+						src={projectAttachIcon}
+						alt="project-attach-icon"
+						class="transition-all active:scale-105"
+					/>
+				</label>
+				<input id="file-upload" type="file" />
+			</div>
 
-			<button>
-				<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
-			</button>
+			<div class="">
+				<button>
+					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
+				</button>
+			</div>
 
-			<button>
-				<img src={projectSettingsIcon} alt="project-settings-icon" />
-			</button>
+			<div class="">
+				<button>
+					<img src={projectSettingsIcon} alt="project-settings-icon" />
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	input[type='file'] {
+		display: none;
+	}
+
+	.custom-file-upload {
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 6px 12px;
+		cursor: pointer;
+	}
+</style>
