@@ -92,7 +92,21 @@
 	<div class=""></div>
 
 	<!--Footer-->
-	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full">asdasd</div>
+	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full">
+		<div class="bg-main flex items-center justify-center gap-[10px] py-[10px] px-[15px]">
+			{#each Array(3) as userScreen}
+				<div class="w-[30%] bg-subwhite rounded-[10px] p-[10px] h-[70px] relative">
+					<div class="absolute bottom-0 left-0 right-0 px-[15px]">
+						<p class="truncate text-[14px] text-main">Peter name</p>
+					</div>
+				</div>
+			{/each}
+
+			<div class="text-[14px] text-white">
+				<p>+10</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
