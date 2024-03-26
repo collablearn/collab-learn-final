@@ -10,10 +10,12 @@
 	};
 
 	setAuthState(defaultAuthState);
+
+	const authState = getAuthState();
 </script>
 
 <div class=" bg-submain">
-	{#if true}
+	{#if $authState.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
 		<div class="sticky top-0 z-20">
