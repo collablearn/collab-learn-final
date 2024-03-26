@@ -2,8 +2,12 @@
 	import Loader from '$lib/general-components/loader.svelte';
 	import type { ProjectTypes } from '$lib/types';
 	import { fade, scale } from 'svelte/transition';
+	import { getAuthState } from '$lib';
+
 	export let projectObj: ProjectTypes;
 	export let showPrivateJoin = false;
+
+	const authState = getAuthState();
 </script>
 
 {#if showPrivateJoin}
@@ -27,6 +31,7 @@
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
 				<button
+					on:click={() => ($authState.projects.joinedProject = true)}
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
 					<Loader name="Join" txtColor="text-submain text-[14px]" />

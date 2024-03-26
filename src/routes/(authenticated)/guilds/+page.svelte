@@ -2,11 +2,11 @@
 	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/guilds';
+	$authState.activeItem = '/guilds';
 </script>
 
 <div class="fixed bottom-0 right-0 m-[20px] z-10">

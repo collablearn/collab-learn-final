@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 	import CreateGuildForm from '$lib/auth-components/guilds/create-guild/create-guild-form.svelte';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/guilds';
+	$authState.activeItem = '/guilds';
 </script>
 
 <div class="">
