@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 	import CreateProjectBtn from '$lib/auth-components/projects/create-project-btn.svelte';
 	import SearchProject from '$lib/auth-components/projects/search-project.svelte';
 	import ProjectCard from '$lib/auth-components/projects/project-card.svelte';
 	import type { ProjectTypes } from '$lib/types';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/projects';
+	$authState.activeItem = '/projects';
 
 	let sampleMockData: ProjectTypes[] = [
 		{
