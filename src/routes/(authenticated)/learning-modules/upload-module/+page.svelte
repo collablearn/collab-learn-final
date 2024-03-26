@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 	import UploadModuleForm from '$lib/auth-components/learning-module/upload-module/upload-module-form.svelte';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/learning-modules';
+	$authState.activeItem = '/learning-modules';
 </script>
 
 <div class="">
