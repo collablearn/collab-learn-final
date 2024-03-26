@@ -10,7 +10,7 @@
 
 <div class="">
 	<div class="bg-main p-[20px] flex items-center justify-between">
-		<button on:click={() => ($authState.joinedProject = false)}>
+		<button on:click={() => ($authState.projects.joinedProject = false)}>
 			<img src={projectsBackIcon} alt="project-back-icon" />
 		</button>
 

@@ -5,7 +5,9 @@
 
 	const defaultAuthState = {
 		activeItem: '/dashboard',
-		joinedProject: false,
+		projects: {
+			joinedProject: false
+		},
 		joinedGuild: false
 	};
 
@@ -15,7 +17,7 @@
 </script>
 
 <div class=" bg-submain">
-	{#if $authState.joinedProject}
+	{#if $authState.projects.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
 		<div class="sticky top-0 z-20">

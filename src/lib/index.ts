@@ -12,7 +12,10 @@ interface StaticStateTypes {
 // for auth store
 interface AuthStateStore {
     activeItem: string
-    joinedProject: boolean
+
+    projects: {
+        joinedProject: boolean
+    }
     joinedGuild: boolean
 
 }
