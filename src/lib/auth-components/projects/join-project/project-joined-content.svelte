@@ -7,6 +7,10 @@
 	import editTool2 from '$lib/assets/project_edit2_icon_320.svg';
 	import editTool3 from '$lib/assets/project_edit3_icon_320.svg';
 	import editTool4 from '$lib/assets/project_edit4_icon_320.svg';
+	import footerIcon1 from '$lib/assets/joined_project_footer1_320.svg';
+	import footerIcon2 from '$lib/assets/joined_project_footer2_320.svg';
+	import footerIcon3 from '$lib/assets/joined_project_footer3_320.svg';
+	import footerIcon4 from '$lib/assets/joined_project_footer4_320.svg';
 
 	import { getAuthState } from '$lib';
 	import { fade } from 'svelte/transition';
@@ -18,6 +22,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div class="">
+	<!--Header-->
 	<div class="bg-main p-[20px] flex items-center justify-between">
 		<div class="">
 			<button on:click={() => ($authState.projects.joinedProject = false)}>
@@ -82,6 +87,12 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Camera Body-->
+	<div class=""></div>
+
+	<!--Footer-->
+	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full">asdasd</div>
 </div>
 
 <style>
