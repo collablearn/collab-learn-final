@@ -1,13 +1,13 @@
 <script lang="ts">
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 	import LearningModuleSearch from '$lib/auth-components/learning-module/learning-module-search.svelte';
 	import UploadModuleBtn from '$lib/auth-components/learning-module/upload-module-btn.svelte';
 	import LearnongModuleCard from '$lib/auth-components/learning-module/learnong-module-card.svelte';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/learning-modules';
+	$authState.activeItem = '/learning-modules';
 </script>
 
 <div class="fixed bottom-0 right-0 m-[20px] z-10">
