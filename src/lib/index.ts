@@ -9,6 +9,18 @@ interface StaticStateTypes {
     isUpdating: boolean
 }
 
+// for auth store
+interface AuthStateStore {
+    activeItem: string
+
+    projects: {
+        joinedProject: boolean
+        showEditTools: boolean
+    }
+    joinedGuild: boolean
+
+}
+
 export const setStaticState = (state: StaticStateTypes) => {
     let stateGenerator = writable(state);
     setContext("staticState", stateGenerator);
@@ -20,11 +32,13 @@ export const getStaticState = () => {
 
 
 // for authenticated nav store
-export const setActiveItem = (state: string) => {
+export const setAuthState = (state: AuthStateStore) => {
     let stateGenerator = writable(state);
-    setContext("activeItem", stateGenerator);
+    setContext("authState", stateGenerator);
 };
 
-export const getActiveItem = () => {
-    return getContext<Writable<string>>("activeItem");
+export const getAuthState = () => {
+    return getContext<Writable<AuthStateStore>>("authState");
 }
+
+

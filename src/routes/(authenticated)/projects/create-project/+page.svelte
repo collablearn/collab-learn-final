@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getActiveItem } from '$lib';
+	import { getAuthState } from '$lib';
 	import CreateProjectForm from '$lib/auth-components/projects/create-project/create-project-form.svelte';
 
-	let activeItem = getActiveItem();
+	let authState = getAuthState();
 
-	$activeItem = '/projects';
+	$authState.activeItem = '/projects';
 </script>
 
 <div class="">
