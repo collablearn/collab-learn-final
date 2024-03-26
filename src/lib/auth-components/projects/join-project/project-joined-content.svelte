@@ -28,10 +28,12 @@
 				<input id="file-upload" type="file" />
 			</div>
 
-			<div class="">
+			<div class="flex flex-row-reverse relative">
 				<button>
 					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
 				</button>
+
+				<div class="absolute bg-black mt-[50px]">settings here alsdjalskdjalksjdkl jalksjdkals</div>
 			</div>
 
 			<div class="">
