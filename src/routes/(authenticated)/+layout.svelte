@@ -1,9 +1,15 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
-	import { getActiveItem, setActiveItem } from '$lib';
+	import { getAuthState, setAuthState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 
-	setActiveItem('/dashboard');
+	const defaultAuthState = {
+		activeItem: '/dashboard',
+		joinedProject: false,
+		joinedGuild: false
+	};
+
+	setAuthState(defaultAuthState);
 </script>
 
 <div class=" bg-submain">
