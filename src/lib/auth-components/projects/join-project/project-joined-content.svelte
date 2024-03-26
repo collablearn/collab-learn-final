@@ -92,7 +92,7 @@
 	<div class=""></div>
 
 	<!--Footer-->
-	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full">
+	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full py-[20px]">
 		<div class="bg-main flex items-center justify-center gap-[10px] py-[10px] px-[15px]">
 			{#each Array(3) as userScreen}
 				<div class="w-[30%] bg-subwhite rounded-[10px] p-[10px] h-[70px] relative">
@@ -104,6 +104,24 @@
 
 			<div class="text-[14px] text-white">
 				<p>+10</p>
+			</div>
+		</div>
+
+		<div class="flex justify-center">
+			<div class="mt-[16px] flex items-center gap-[25px]">
+				<button>
+					<img src={footerIcon1} alt="footer-icon-1" />
+				</button>
+
+				<button>
+					<img src={footerIcon2} alt="footer-icon-2" />
+				</button>
+				<button>
+					<img src={footerIcon3} alt="footer-icon-3" />
+				</button>
+				<button>
+					<img src={footerIcon4} alt="footer-icon-4" />
+				</button>
 			</div>
 		</div>
 	</div>
