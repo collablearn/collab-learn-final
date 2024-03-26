@@ -9,6 +9,7 @@
 	import editTool4 from '$lib/assets/project_edit4_icon_320.svg';
 
 	import { getAuthState } from '$lib';
+	import { fade } from 'svelte/transition';
 
 	const authState = getAuthState();
 </script>
@@ -37,36 +38,41 @@
 			</div>
 
 			<div class="flex flex-row-reverse">
-				<button>
+				<button
+					class="transition-all active:scale-105"
+					on:click={() => ($authState.projects.showEditTools = true)}
+				>
 					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
 				</button>
 
 				<!-- Simple Overlay for edit tools-->
+				{#if $authState.projects.showEditTools}
+					<div
+						class="fixed left-0 right-0 top-0 bottom-0"
+						on:click={() => ($authState.projects.showEditTools = false)}
+					></div>
 
-				<div
-					class="fixed left-0 right-0 top-0 bottom-0 bg-black"
-					on:click={() => ($authState.projects.showEditTools = false)}
-				></div>
+					<div
+						in:fade
+						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"
+					>
+						<div class="w-full flex items-center">
+							<button><img src={editTool1} alt="edit-1-icon" /></button>
+						</div>
 
-				<div
-					class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"
-				>
-					<div class="w-full flex items-center">
-						<button><img src={editTool1} alt="edit-1-icon" /></button>
+						<div class="w-full flex items-center">
+							<button><img src={editTool2} alt="edit-2-icon" /></button>
+						</div>
+
+						<div class="w-full flex items-center">
+							<button><img src={editTool3} alt="edit-3-icon" /></button>
+						</div>
+
+						<div class="w-full flex items-center">
+							<button><img src={editTool4} alt="edit-4-icon" /></button>
+						</div>
 					</div>
-
-					<div class="w-full flex items-center">
-						<button><img src={editTool2} alt="edit-2-icon" /></button>
-					</div>
-
-					<div class="w-full flex items-center">
-						<button><img src={editTool3} alt="edit-3-icon" /></button>
-					</div>
-
-					<div class="w-full flex items-center">
-						<button><img src={editTool4} alt="edit-4-icon" /></button>
-					</div>
-				</div>
+				{/if}
 			</div>
 
 			<div class="">
