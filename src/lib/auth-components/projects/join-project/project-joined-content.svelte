@@ -3,11 +3,14 @@
 	import projectAttachIcon from '$lib/assets/project_attach_icon_320.svg';
 	import projectShareScreenIcon from '$lib/assets/project_sharescreen_icon_320.svg';
 	import projectSettingsIcon from '$lib/assets/projects_settings_icon_320.svg';
+	import { getAuthState } from '$lib';
+
+	const authState = getAuthState();
 </script>
 
 <div class="">
 	<div class="bg-main p-[20px] flex items-center justify-between">
-		<button>
+		<button on:click={() => ($authState.joinedProject = false)}>
 			<img src={projectsBackIcon} alt="project-back-icon" />
 		</button>
 
