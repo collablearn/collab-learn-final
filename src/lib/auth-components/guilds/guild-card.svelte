@@ -1,6 +1,7 @@
 <script lang="ts">
 	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
+	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
 	import PrivateJoin from './join-guild/private-join.svelte';
 	import PublicJoin from './join-guild/public-join.svelte';
 
@@ -33,7 +34,13 @@
 		</div>
 	</div>
 
-	<div class="flex justify-end w-full">
+	<div class="flex {guildObj.isPrivate ? 'justify-between' : 'justify-end'} items-center w-full">
+		{#if guildObj.isPrivate}
+			<div class="">
+				<img src={lockIcon} alt="lock-icon" />
+			</div>
+		{/if}
+
 		<div class="flex items-center gap-[5px]">
 			<img src={groupIcon} alt="group-icon" />
 			<p class="text-[14px] text-main">7/15</p>
