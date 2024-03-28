@@ -14,7 +14,7 @@
 <PrivateJoin />
 
 <button
-	class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] relative shadow-sm shadow-black flex flex-col gap-[10px]"
+	class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px]"
 >
 	<p class="text-[16px] text-main text-left font-semibold">
 		{guildObj.guildName}
@@ -33,10 +33,10 @@
 		</div>
 	</div>
 
-	<!-- <div class="absolute right-0 top-0 mr-[10px] mt-[74px]">
+	<div class="flex justify-end w-full">
 		<div class="flex items-center gap-[5px]">
 			<img src={groupIcon} alt="group-icon" />
 			<p class="text-[14px] text-main">7/15</p>
 		</div>
-	</div> -->
+	</div>
 </button>
