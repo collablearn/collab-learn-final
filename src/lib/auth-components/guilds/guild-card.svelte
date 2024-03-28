@@ -6,7 +6,7 @@
 
 	import { getAuthState } from '$lib';
 
-	const childAuthState = getAuthState();
+	const authState = getAuthState();
 </script>
 
 <PrivateJoin />

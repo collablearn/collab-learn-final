@@ -9,3 +9,13 @@ export type ProjectTypes = {
     isPrivate: boolean
     onlineCount: number
 };
+
+export type GuildTypes = {
+    imageUrl: string
+    hostName: string
+    maxUsers: number
+    guildName: string
+    guildDescription: string
+    isPrivate: boolean
+    onlineCount: number
+}
