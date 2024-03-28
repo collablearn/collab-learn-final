@@ -35,10 +35,31 @@
 			{/each}
 		</div>
 	{:else}
-		<div class="mt-[20px] flex flex-col gap-[15px]">
+		<div class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto">
 			{#each Array(15) as sample}
 				<ChatCard />
 			{/each}
 		</div>
+
+		<div class="flex items-center gap-[10px] mt-[10px]">
+			<textarea
+				placeholder="Say something..."
+				class="outline-none border-[1px] border-main bg-submain rounded-[10px] text-main text-[14px] p-[10px] w-full"
+			/>
+
+			<button class="bg-main text-submain h-[40px] rounded-[10px] w-[100px]">Send</button>
+		</div>
 	{/if}
 </div>
+
+<style>
+	::placeholder {
+		color: #800000;
+		opacity: 1; /* Firefox */
+	}
+
+	::-ms-input-placeholder {
+		/* Edge 12 -18 */
+		color: #800000;
+	}
+</style>
