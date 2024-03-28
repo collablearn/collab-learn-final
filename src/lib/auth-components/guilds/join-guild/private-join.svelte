@@ -3,7 +3,7 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
-	import GuildJoinedContent from './guild-joined-content.svelte';
+
 	import { getAuthState } from '$lib';
 	export let guildObj: GuildTypes;
 
