@@ -10,7 +10,7 @@
 	$authState.activeItem = '/guilds';
 </script>
 
-{#if $authState}
+{#if $authState.guilds.joinedGuild}
 	<GuildJoinedContent />
 {:else}
 	<div class="fixed bottom-0 right-0 m-[20px] z-10">

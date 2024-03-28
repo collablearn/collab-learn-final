@@ -44,7 +44,7 @@ export const setAuthState = (state: AuthStateStoreTypes) => {
 };
 
 export const getAuthState = () => {
-    return getContext<Writable<AuthStateStore>>("authState");
+    return getContext<Writable<AuthStateStoreTypes>>("authState");
 }
 
 
