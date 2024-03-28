@@ -13,7 +13,7 @@
 
 {#if showPrivateJoin}
 	{#if joinedGuildContent}
-		<GuildJoinedContent />
+		<GuildJoinedContent {guildObj} />
 	{:else}
 		<div
 			class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
@@ -41,6 +41,7 @@
 
 				<div class="mt-[30px] flex flex-col gap-[10px]">
 					<button
+						on:click={() => (joinedGuildContent = true)}
 						class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 					>
 						<Loader name="Join" txtColor="text-submain text-[14px]" />
