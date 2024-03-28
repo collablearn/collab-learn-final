@@ -10,7 +10,16 @@
 			showEditTools: false
 		},
 		guilds: {
-			joinedGuild: false
+			joinedGuild: false,
+			guildObj: {
+				imageUrl: '',
+				hostName: '',
+				maxUsers: '',
+				guildName: '',
+				guildDescription: '',
+				isPrivate: '',
+				joinedCount: ''
+			}
 		}
 	};
 
