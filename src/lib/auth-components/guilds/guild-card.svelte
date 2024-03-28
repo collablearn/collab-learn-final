@@ -15,11 +15,14 @@
 	let showPublicJoin = false;
 </script>
 
-<PrivateJoin bind:showPrivateJoin {guildObj} />
-<PublicJoin bind:showPublicJoin {guildObj} />
+{#if guildObj.isPrivate}
+	<PrivateJoin bind:showPrivateJoin {guildObj} />
+{:else}
+	<PublicJoin bind:showPublicJoin {guildObj} />
+{/if}
 
 <button
-	on:click={() => (showPrivateJoin = true)}
+	on:click={() => (guildObj.isPrivate ? (showPrivateJoin = true) : (showPublicJoin = true))}
 	class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px]"
 >
 	<p class="text-[16px] text-main text-left font-semibold">
