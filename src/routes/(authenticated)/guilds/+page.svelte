@@ -20,7 +20,7 @@
 
 	<div class="flex flex-col gap-[20px] mt-[35px]">
 		{#each $mockDatas.guilds as guildObj}
-			<GuildCard />
+			<GuildCard {guildObj} />
 		{/each}
 
 		<div class="">

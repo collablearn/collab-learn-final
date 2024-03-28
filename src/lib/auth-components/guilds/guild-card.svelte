@@ -5,7 +5,9 @@
 	import PublicJoin from './join-guild/public-join.svelte';
 
 	import { getAuthState } from '$lib';
+	import type { GuildTypes } from '$lib/types';
 
+	export let guildObj: GuildTypes;
 	const authState = getAuthState();
 </script>
 
@@ -18,8 +20,8 @@
 		</div>
 
 		<div class="text-right col-span-2">
-			<p class="text-[16px] text-main truncate">INFO-GRAMMERS X</p>
-			<p class="text-[14px] text-main truncate">John Dave S. Sequilla</p>
+			<p class="text-[16px] text-main truncate">{guildObj.guildName}</p>
+			<p class="text-[14px] text-main truncate">{guildObj.hostName}</p>
 		</div>
 	</div>
 

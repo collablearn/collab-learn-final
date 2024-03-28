@@ -151,8 +151,8 @@ export const mockDatas = writable({
     guilds: [
         {
             imageUrl: '',
-            projectName: 'Hellenic Scholar Society',
-            projectDescription:
+            guildName: 'Hellenic Scholar Society',
+            guildDescription:
                 "A society dedicated to scholarly pursuits focused on ancient Greek civilization and culture.",
             isPrivate: true,
             onlineCount: 10,
@@ -162,8 +162,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Philhellenic Research Institute',
-            projectDescription:
+            guildName: 'Philhellenic Research Institute',
+            guildDescription:
                 'An institute committed to conducting research and studies aimed at promoting appreciation and understanding of Greek history and traditions.',
             isPrivate: false,
             onlineCount: 3,
@@ -173,8 +173,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Athenas Archive Circle',
-            projectDescription:
+            guildName: 'Athenas Archive Circle',
+            guildDescription:
                 'A circle of individuals gathering to preserve and explore knowledge related to Athena, the Greek goddess of wisdom and warfare.',
             isPrivate: false,
             onlineCount: 2,
@@ -184,8 +184,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Olympian Historiography Guild',
-            projectDescription:
+            guildName: 'Olympian Historiography Guild',
+            guildDescription:
                 'A guild specializing in the study and documentation of historical events and narratives pertaining to the Olympian gods and goddesses.',
             isPrivate: false,
             onlineCount: 0,
@@ -195,8 +195,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Parthenon Research Consortium',
-            projectDescription:
+            guildName: 'Parthenon Research Consortium',
+            guildDescription:
                 'A consortium engaged in research endeavors concerning the Parthenon, an iconic ancient Greek temple located in Athens.',
             isPrivate: true,
             onlineCount: 10,
@@ -206,8 +206,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Delphic Historians Association',
-            projectDescription:
+            guildName: 'Delphic Historians Association',
+            guildDescription:
                 'An association dedicated to the exploration and interpretation of historical records and artifacts associated with the Oracle of Delphi.',
             isPrivate: true,
             onlineCount: 3,
@@ -217,8 +217,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Spartan Scholar Society',
-            projectDescription: 'A society emphasizing rigorous academic pursuits and intellectual endeavors inspired by the ethos of ancient Sparta.',
+            guildName: 'Spartan Scholar Society',
+            guildDescription: 'A society emphasizing rigorous academic pursuits and intellectual endeavors inspired by the ethos of ancient Sparta.',
             isPrivate: false,
             onlineCount: 2,
             maxUsers: 50,
@@ -227,8 +227,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Muses of Mythos Research Group',
-            projectDescription:
+            guildName: 'Muses of Mythos Research Group',
+            guildDescription:
                 'A research group focusing on the myths and legends of ancient Greece, guided by the inspiration of the Muses.',
             isPrivate: false,
             onlineCount: 0,
@@ -238,8 +238,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Helios Historiographers Union',
-            projectDescription:
+            guildName: 'Helios Historiographers Union',
+            guildDescription:
                 'A union of historians and scholars dedicated to shedding light on various aspects of Greek history, culture, and civilization, inspired by Helios, the sun god.',
             isPrivate: false,
             onlineCount: 1,
