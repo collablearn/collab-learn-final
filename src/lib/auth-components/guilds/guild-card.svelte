@@ -12,9 +12,11 @@
 	const authState = getAuthState();
 
 	let showPrivateJoin = false;
+	let showPublicJoin = false;
 </script>
 
 <PrivateJoin bind:showPrivateJoin {guildObj} />
+<PublicJoin bind:showPublicJoin {guildObj} />
 
 <button
 	on:click={() => (showPrivateJoin = true)}
