@@ -3,9 +3,12 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
+	import { getAuthState } from '$lib';
 	export let guildObj: GuildTypes;
 
 	export let showPublicJoin = false;
+
+	const authState = getAuthState();
 </script>
 
 {#if showPublicJoin}
@@ -25,6 +28,10 @@
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
 				<button
+					on:click={() => {
+						$authState.guilds.guildObj = guildObj;
+						$authState.guilds.joinedGuild = true;
+					}}
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
 					<Loader name="Join" txtColor="text-submain text-[14px]" />
