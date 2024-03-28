@@ -29,7 +29,7 @@
 		<div class="text-[16px] text-main flex flex-col text-left">
 			<p class="font-semibold">Host: {guildObj.hostName}</p>
 			<p title={guildObj.guildDescription} class="line-clamp-2">
-				{guildObj.guildDescription}asdasdasdasdasdasdasd
+				{guildObj.guildDescription}
 			</p>
 		</div>
 	</div>
