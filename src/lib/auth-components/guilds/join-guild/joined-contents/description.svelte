@@ -7,11 +7,13 @@
 	let activeItem = "Guild's Wall";
 </script>
 
-<div class="fixed bottom-0 right-0 mr-[33px] mb-[33px] z-20">
-	<button class="transition-all active:scale-105">
-		<img src={createIcon} alt="add-description-icon" />
-	</button>
-</div>
+{#if activeItem === "Guild's Wall"}
+	<div class="fixed bottom-0 right-0 mr-[33px] mb-[33px] z-20">
+		<button class="transition-all active:scale-105">
+			<img src={createIcon} alt="add-description-icon" />
+		</button>
+	</div>
+{/if}
 
 <div class="mt-[40px]">
 	<div class="flex items-center gap-[10px]">
