@@ -10,11 +10,14 @@
 
 	export let guildObj: GuildTypes;
 	const authState = getAuthState();
+
+	let showPrivateJoin = false;
 </script>
 
-<PrivateJoin />
+<PrivateJoin bind:showPrivateJoin {guildObj} />
 
 <button
+	on:click={() => (showPrivateJoin = true)}
 	class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px]"
 >
 	<p class="text-[16px] text-main text-left font-semibold">
