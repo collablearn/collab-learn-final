@@ -1,7 +1,15 @@
 <script lang="ts">
 	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
+	import PrivateJoin from './join-guild/private-join.svelte';
+	import PublicJoin from './join-guild/public-join.svelte';
+
+	import { getAuthState } from '$lib';
+
+	const childAuthState = getAuthState();
 </script>
+
+<PrivateJoin />
 
 <button class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black">
 	<div class="grid grid-cols-3 gap-[10px]">

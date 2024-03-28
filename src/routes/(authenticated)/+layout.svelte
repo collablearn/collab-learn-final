@@ -9,7 +9,9 @@
 			joinedProject: false,
 			showEditTools: false
 		},
-		joinedGuild: false
+		guilds: {
+			joinedGuild: false
+		}
 	};
 
 	setAuthState(defaultAuthState);
