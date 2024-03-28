@@ -6,11 +6,14 @@
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 
 	import { getAuthState } from '$lib';
-	export let guildObj: GuildTypes;
 
 	let showAddNote = false;
 
 	const authState = getAuthState();
+
+	const {
+		guilds: { guildObj }
+	} = $authState;
 </script>
 
 <div class="fixed bottom-0 right-0 mr-[33px] mb-[33px]">
