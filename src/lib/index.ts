@@ -1,5 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
+import type { GuildTypes } from "./types";
 
 // for static store
 interface StaticStateTypes {
@@ -20,6 +21,7 @@ interface AuthStateStore {
 
     guilds: {
         joinedGuild: boolean,
+        guildObj: GuildTypes
 
     }
 

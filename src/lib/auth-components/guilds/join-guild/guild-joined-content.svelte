@@ -1,4 +1,9 @@
 <script lang="ts">
+	import { getAuthState } from '$lib';
+
+	const authState = getAuthState();
 </script>
 
-<div class="">asdasasdasd</div>
+<div class="">
+	{$authState.guilds.guildObj.guildName}
+</div>

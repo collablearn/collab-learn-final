@@ -13,13 +13,12 @@
 
 	let showPrivateJoin = false;
 	let showPublicJoin = false;
-	let joinedGuildContent = false;
 </script>
 
 {#if guildObj.isPrivate}
-	<PrivateJoin bind:showPrivateJoin bind:joinedGuildContent {guildObj} />
+	<PrivateJoin bind:showPrivateJoin {guildObj} />
 {:else}
-	<PublicJoin bind:showPublicJoin bind:joinedGuildContent {guildObj} />
+	<PublicJoin bind:showPublicJoin {guildObj} />
 {/if}
 
 <button

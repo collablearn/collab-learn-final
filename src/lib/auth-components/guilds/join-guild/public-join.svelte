@@ -6,7 +6,6 @@
 	export let guildObj: GuildTypes;
 
 	export let showPublicJoin = false;
-	export let joinedGuildContent = false;
 </script>
 
 {#if showPublicJoin}
