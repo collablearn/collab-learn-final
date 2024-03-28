@@ -15,13 +15,18 @@
 	let activeItem = 'Description';
 </script>
 
-<div class="pt-[145px]">
+<button
+	class="underline text-main text-[14px] font-semibold"
+	on:click={() => (($authState.guilds.joinedGuild = false), ($authState.guilds.guildObj = null))}
+	>Back</button
+>
+<div class="pt-[130px]">
 	<div class="flex flex-col justify-center items-center gap-[10px]">
-		<p class="text-[24px] text-main">{guildObj.guildName}</p>
+		<p class="text-[24px] text-main">{guildObj?.guildName}</p>
 		<div class="">
 			<img src={groupIcon} alt="group-icon" />
 			<p class="text-[14px] text-main">
-				{guildObj.joinedCount}/{guildObj.maxUsers}
+				{guildObj?.joinedCount}/{guildObj?.maxUsers}
 			</p>
 		</div>
 

@@ -21,7 +21,7 @@ interface AuthStateStoreTypes {
 
     guilds: {
         joinedGuild: boolean,
-        guildObj: GuildTypes
+        guildObj: GuildTypes | null
 
     }
 
