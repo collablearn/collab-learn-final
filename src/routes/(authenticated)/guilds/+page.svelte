@@ -2,53 +2,58 @@
 	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
-	import { getAuthState } from '$lib';
+	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
+	import { getAuthState, mockDatas } from '$lib';
 
 	let authState = getAuthState();
 
 	$authState.activeItem = '/guilds';
 </script>
 
-<div class="fixed bottom-0 right-0 m-[20px] z-10">
-	<CreateGuildBtn />
-</div>
-
-<div class="">
-	<div class="">
-		<SearchGuilds />
+{#if $authState.guilds.joinedGuild}
+	<GuildJoinedContent />
+{:else}
+	<div class="fixed bottom-0 right-0 m-[20px] z-10">
+		<CreateGuildBtn />
 	</div>
 
-	<div class="flex flex-col gap-[20px] mt-[35px]">
-		{#each Array(10) as sample}
-			<GuildCard />
-		{/each}
-
+	<div class="">
 		<div class="">
-			<button
-				class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-			>
-				1
-			</button>
+			<SearchGuilds />
+		</div>
 
-			<button
-				class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-			>
-				2
-			</button>
+		<div class="flex flex-col gap-[20px] mt-[35px]">
+			{#each $mockDatas.guilds as guildObj}
+				<GuildCard {guildObj} />
+			{/each}
 
-			<button
-				class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-			>
-				3
-			</button>
+			<div class="">
+				<button
+					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
+				>
+					1
+				</button>
 
-			...
+				<button
+					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
+				>
+					2
+				</button>
 
-			<button
-				class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-			>
-				10
-			</button>
+				<button
+					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
+				>
+					3
+				</button>
+
+				...
+
+				<button
+					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
+				>
+					10
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
+{/if}

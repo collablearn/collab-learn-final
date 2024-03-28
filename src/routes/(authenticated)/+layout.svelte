@@ -9,7 +9,18 @@
 			joinedProject: false,
 			showEditTools: false
 		},
-		joinedGuild: false
+		guilds: {
+			joinedGuild: false,
+			guildObj: {
+				imageUrl: '',
+				hostName: '',
+				maxUsers: 0,
+				guildName: '',
+				guildDescription: '',
+				isPrivate: false,
+				joinedCount: 0
+			}
+		}
 	};
 
 	setAuthState(defaultAuthState);
