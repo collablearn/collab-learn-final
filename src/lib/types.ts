@@ -17,5 +17,5 @@ export type GuildTypes = {
     guildName: string
     guildDescription: string
     isPrivate: boolean
-    onlineCount: number
+    joinedCount: number
 }

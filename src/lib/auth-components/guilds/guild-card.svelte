@@ -46,7 +46,7 @@
 
 		<div class="flex items-center gap-[5px]">
 			<img src={groupIcon} alt="group-icon" />
-			<p class="text-[14px] text-main">7/15</p>
+			<p class="text-[14px] text-main">{guildObj.joinedCount}/{guildObj.maxUsers}</p>
 		</div>
 	</div>
 </button>

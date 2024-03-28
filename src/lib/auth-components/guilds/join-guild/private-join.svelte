@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { GuildTypes } from '$lib/types';
-	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
+	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
 	export let guildObj: GuildTypes;
@@ -12,10 +12,15 @@
 	<div
 		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
-		<div class="bg-submain py-[50px] px-[22px] w-full" in:scale out:fade>
+		<div class="bg-submain py-[50px] px-[22px] w-full relative" in:scale out:fade>
 			<div class="flex flex-col gap-[10px]">
 				<h3 class="text-[24px] text-main">{guildObj.guildName}</h3>
 				<p class="text-[14px] text-main">{guildObj.guildDescription}</p>
+			</div>
+
+			<div class="flex items-center gap-[5px] absolute top-0 right-0 m-[20px]">
+				<img src={groupIcon} alt="group-icon" />
+				<p class="text-[14px] text-main">{guildObj.joinedCount}/{guildObj.maxUsers}</p>
 			</div>
 
 			<div class="mt-[20px]">

@@ -155,7 +155,7 @@ export const mockDatas = writable({
             guildDescription:
                 "A society dedicated to scholarly pursuits focused on ancient Greek civilization and culture.",
             isPrivate: true,
-            onlineCount: 10,
+            joinedCount: 10,
             maxUsers: 50,
             hostName: 'Rodrigo'
         },
@@ -166,7 +166,7 @@ export const mockDatas = writable({
             guildDescription:
                 'An institute committed to conducting research and studies aimed at promoting appreciation and understanding of Greek history and traditions.',
             isPrivate: false,
-            onlineCount: 3,
+            joinedCount: 3,
             maxUsers: 30,
             hostName: 'Tigrel'
         },
@@ -177,7 +177,7 @@ export const mockDatas = writable({
             guildDescription:
                 'A circle of individuals gathering to preserve and explore knowledge related to Athena, the Greek goddess of wisdom and warfare.',
             isPrivate: false,
-            onlineCount: 2,
+            joinedCount: 2,
             maxUsers: 50,
             hostName: 'Granger'
         },
@@ -188,7 +188,7 @@ export const mockDatas = writable({
             guildDescription:
                 'A guild specializing in the study and documentation of historical events and narratives pertaining to the Olympian gods and goddesses.',
             isPrivate: false,
-            onlineCount: 0,
+            joinedCount: 0,
             maxUsers: 50,
             hostName: 'Kimmy'
         },
@@ -199,7 +199,7 @@ export const mockDatas = writable({
             guildDescription:
                 'A consortium engaged in research endeavors concerning the Parthenon, an iconic ancient Greek temple located in Athens.',
             isPrivate: true,
-            onlineCount: 10,
+            joinedCount: 10,
             maxUsers: 50,
             hostName: 'Vexana'
         },
@@ -210,7 +210,7 @@ export const mockDatas = writable({
             guildDescription:
                 'An association dedicated to the exploration and interpretation of historical records and artifacts associated with the Oracle of Delphi.',
             isPrivate: true,
-            onlineCount: 3,
+            joinedCount: 3,
             maxUsers: 30,
             hostName: 'Lesley'
         },
@@ -220,7 +220,7 @@ export const mockDatas = writable({
             guildName: 'Spartan Scholar Society',
             guildDescription: 'A society emphasizing rigorous academic pursuits and intellectual endeavors inspired by the ethos of ancient Sparta.',
             isPrivate: false,
-            onlineCount: 2,
+            joinedCount: 2,
             maxUsers: 50,
             hostName: ''
         },
@@ -231,7 +231,7 @@ export const mockDatas = writable({
             guildDescription:
                 'A research group focusing on the myths and legends of ancient Greece, guided by the inspiration of the Muses.',
             isPrivate: false,
-            onlineCount: 0,
+            joinedCount: 0,
             maxUsers: 50,
             hostName: 'Balmond'
         },
@@ -242,7 +242,7 @@ export const mockDatas = writable({
             guildDescription:
                 'A union of historians and scholars dedicated to shedding light on various aspects of Greek history, culture, and civilization, inspired by Helios, the sun god.',
             isPrivate: false,
-            onlineCount: 1,
+            joinedCount: 1,
             maxUsers: 50,
             hostName: 'Hayabusa'
         }
