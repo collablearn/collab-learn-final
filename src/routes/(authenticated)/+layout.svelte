@@ -14,11 +14,11 @@
 			guildObj: {
 				imageUrl: '',
 				hostName: '',
-				maxUsers: '',
+				maxUsers: 0,
 				guildName: '',
 				guildDescription: '',
-				isPrivate: '',
-				joinedCount: ''
+				isPrivate: false,
+				joinedCount: 0
 			}
 		}
 	};

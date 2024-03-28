@@ -11,7 +11,7 @@ interface StaticStateTypes {
 }
 
 // for auth store
-interface AuthStateStore {
+interface AuthStateStoreTypes {
     activeItem: string
 
     projects: {
@@ -38,7 +38,7 @@ export const getStaticState = () => {
 
 
 // for authenticated nav store
-export const setAuthState = (state: AuthStateStore) => {
+export const setAuthState = (state: AuthStateStoreTypes) => {
     let stateGenerator = writable(state);
     setContext("authState", stateGenerator);
 };
