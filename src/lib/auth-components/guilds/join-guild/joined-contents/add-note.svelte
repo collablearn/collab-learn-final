@@ -53,3 +53,15 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	::placeholder {
+		color: #800000;
+		opacity: 1; /* Firefox */
+	}
+
+	::-ms-input-placeholder {
+		/* Edge 12-18 */
+		color: #800000;
+	}
+</style>
