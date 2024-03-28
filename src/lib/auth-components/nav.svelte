@@ -27,8 +27,8 @@
 			url: '/learning-modules'
 		},
 		{
-			title: 'WORKSPACES',
-			url: '/workspaces'
+			title: 'FRIENDS',
+			url: '/friends'
 		}
 	];
 </script>

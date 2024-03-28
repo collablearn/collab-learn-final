@@ -26,12 +26,6 @@
 			/>
 
 			<input
-				type="text"
-				placeholder="Student ID"
-				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
-			/>
-
-			<input
 				type="email"
 				placeholder="Email Address"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
