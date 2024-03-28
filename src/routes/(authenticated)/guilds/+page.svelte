@@ -2,7 +2,7 @@
 	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
-	import { getAuthState } from '$lib';
+	import { getAuthState, mockDatas } from '$lib';
 
 	let authState = getAuthState();
 
@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="flex flex-col gap-[20px] mt-[35px]">
-		{#each Array(10) as sample}
+		{#each $mockDatas.guilds as guildObj}
 			<GuildCard />
 		{/each}
 
