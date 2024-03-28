@@ -13,22 +13,30 @@
 
 <PrivateJoin />
 
-<button class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black">
-	<div class="grid grid-cols-3 gap-[10px]">
-		<div class="">
+<button
+	class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] relative shadow-sm shadow-black flex flex-col gap-[10px]"
+>
+	<p class="text-[16px] text-main text-left font-semibold">
+		{guildObj.guildName}
+	</p>
+
+	<div class="flex flex-col gap-[10px] w-full">
+		<div class="mx-auto">
 			<img src={sampleIcon} alt="sample-icon" />
 		</div>
 
-		<div class="text-right col-span-2">
-			<p class="text-[16px] text-main truncate">{guildObj.guildName}</p>
-			<p class="text-[14px] text-main truncate">{guildObj.hostName}</p>
+		<div class="text-[16px] text-main flex flex-col text-left">
+			<p class="font-semibold">Host: {guildObj.hostName}</p>
+			<p title={guildObj.guildDescription} class="line-clamp-2">
+				{guildObj.guildDescription}asdasdasdasdasdasdasd
+			</p>
 		</div>
 	</div>
 
-	<div class="absolute right-0 top-0 mr-[10px] mt-[74px]">
+	<!-- <div class="absolute right-0 top-0 mr-[10px] mt-[74px]">
 		<div class="flex items-center gap-[5px]">
 			<img src={groupIcon} alt="group-icon" />
 			<p class="text-[14px] text-main">7/15</p>
 		</div>
-	</div>
+	</div> -->
 </button>
