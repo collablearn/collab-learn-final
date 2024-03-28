@@ -7,6 +7,7 @@
 
 	import { getAuthState } from '$lib';
 	import type { GuildTypes } from '$lib/types';
+	import GuildJoinedContent from './join-guild/guild-joined-content.svelte';
 
 	export let guildObj: GuildTypes;
 	const authState = getAuthState();
@@ -19,6 +20,10 @@
 	<PrivateJoin bind:showPrivateJoin {guildObj} />
 {:else}
 	<PublicJoin bind:showPublicJoin {guildObj} />
+{/if}
+
+{#if $authState.guilds.joinedGuild}
+	<GuildJoinedContent />
 {/if}
 
 <button

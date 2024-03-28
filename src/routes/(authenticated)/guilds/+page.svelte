@@ -2,6 +2,7 @@
 	import CreateGuildBtn from '$lib/auth-components/guilds/create-guild-btn.svelte';
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
+	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
 	import { getAuthState, mockDatas } from '$lib';
 
 	let authState = getAuthState();
