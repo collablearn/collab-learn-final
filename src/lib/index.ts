@@ -151,9 +151,9 @@ export const mockDatas = writable({
     guilds: [
         {
             imageUrl: '',
-            projectName: 'Registration Hub',
+            projectName: 'Hellenic Scholar Society',
             projectDescription:
-                'A comprehensive system for managing student enrollment processes efficiently.',
+                "A society dedicated to scholarly pursuits focused on ancient Greek civilization and culture.",
             isPrivate: true,
             onlineCount: 10,
             maxUsers: 50,
@@ -162,9 +162,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Student Management System',
+            projectName: 'Philhellenic Research Institute',
             projectDescription:
-                'An integrated platform to oversee various aspects of student administration and enrollment.',
+                'An institute committed to conducting research and studies aimed at promoting appreciation and understanding of Greek history and traditions.',
             isPrivate: false,
             onlineCount: 3,
             maxUsers: 30,
@@ -173,9 +173,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Enrollment Nexus',
+            projectName: 'Athenas Archive Circle',
             projectDescription:
-                'A centralized hub connecting students, faculty, and administrative staff for streamlined enrollment procedures.',
+                'A circle of individuals gathering to preserve and explore knowledge related to Athena, the Greek goddess of wisdom and warfare.',
             isPrivate: false,
             onlineCount: 2,
             maxUsers: 50,
@@ -184,9 +184,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Academic Records Keeper',
+            projectName: 'Olympian Historiography Guild',
             projectDescription:
-                'A digital repository for maintaining accurate and up-to-date academic records, including enrollment data.',
+                'A guild specializing in the study and documentation of historical events and narratives pertaining to the Olympian gods and goddesses.',
             isPrivate: false,
             onlineCount: 0,
             maxUsers: 50,
@@ -195,9 +195,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Registration Central',
+            projectName: 'Parthenon Research Consortium',
             projectDescription:
-                'The go-to platform for all enrollment-related activities, ensuring ease of access and smooth operations.',
+                'A consortium engaged in research endeavors concerning the Parthenon, an iconic ancient Greek temple located in Athens.',
             isPrivate: true,
             onlineCount: 10,
             maxUsers: 50,
@@ -206,9 +206,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Enrollment Gateway',
+            projectName: 'Delphic Historians Association',
             projectDescription:
-                ' An intuitive portal facilitating seamless enrollment procedures for students and administrators alike.',
+                'An association dedicated to the exploration and interpretation of historical records and artifacts associated with the Oracle of Delphi.',
             isPrivate: true,
             onlineCount: 3,
             maxUsers: 30,
@@ -217,8 +217,8 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Enrollment System',
-            projectDescription: 'To make enrollment online ',
+            projectName: 'Spartan Scholar Society',
+            projectDescription: 'A society emphasizing rigorous academic pursuits and intellectual endeavors inspired by the ethos of ancient Sparta.',
             isPrivate: false,
             onlineCount: 2,
             maxUsers: 50,
@@ -227,9 +227,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Student Enrollment Porta',
+            projectName: 'Muses of Mythos Research Group',
             projectDescription:
-                'A user-friendly interface empowering students to navigate enrollment processes efficiently.',
+                'A research group focusing on the myths and legends of ancient Greece, guided by the inspiration of the Muses.',
             isPrivate: false,
             onlineCount: 0,
             maxUsers: 50,
@@ -238,9 +238,9 @@ export const mockDatas = writable({
 
         {
             imageUrl: '',
-            projectName: 'Academic Hub Manager',
+            projectName: 'Helios Historiographers Union',
             projectDescription:
-                'A versatile tool for managing diverse academic functions, including enrollment management and record-keeping.',
+                'A union of historians and scholars dedicated to shedding light on various aspects of Greek history, culture, and civilization, inspired by Helios, the sun god.',
             isPrivate: false,
             onlineCount: 1,
             maxUsers: 50,
