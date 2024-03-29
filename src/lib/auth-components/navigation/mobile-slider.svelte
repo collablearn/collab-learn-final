@@ -22,7 +22,7 @@
 	>
 		<div
 			class="fixed left-0 top-0 bottom-0 bg-main w-[260px] px-[20px] py-[20px]"
-			transition:fly={{ x: -200, duration: 450 }}
+			in:fly={{ x: -200, duration: 450 }}
 		>
 			<div class="flex justify-end">
 				<button class="p-2" on:click={() => (showMobileSlider = false)}>
