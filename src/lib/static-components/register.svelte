@@ -67,7 +67,7 @@
 					: 'bg-submain'}  w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
 				{#if registerLoader}
-					Creating..
+					Registering...
 				{:else}
 					Register
 				{/if}
