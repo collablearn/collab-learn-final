@@ -71,7 +71,7 @@
 	action="?/registerAction"
 	enctype="multipart/form-data"
 	use:enhance={registerActionNews}
-	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
+	class="bg-main min-h-screen px-[35px] py-[35px] flex flex-col justify-center items-center"
 >
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
