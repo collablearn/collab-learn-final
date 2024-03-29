@@ -3,6 +3,7 @@
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import { page } from '$app/stores';
 	import { getAuthState, getSessionState } from '$lib';
+	import { fly } from 'svelte/transition';
 
 	export let selections: { title: string; url: string }[];
 
@@ -13,8 +14,16 @@
 </script>
 
 {#if showMobileSlider}
-	<div class="fixed left-0 right-0 top-0 bottom-0 bg-[#00000050]">
-		<div class="fixed left-0 top-0 bottom-0 bg-main w-[260px] px-[20px] py-[20px]">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
+		class="fixed left-0 right-0 top-0 bottom-0 bg-[#00000050]"
+		on:click|self={() => (showMobileSlider = false)}
+	>
+		<div
+			class="fixed left-0 top-0 bottom-0 bg-main w-[260px] px-[20px] py-[20px]"
+			transition:fly={{ x: -200, duration: 450 }}
+		>
 			<div class="flex justify-end">
 				<button class="p-2" on:click={() => (showMobileSlider = false)}>
 					<img src={closeIcon} alt="close-icon" class="" />
@@ -37,7 +46,8 @@
 
 			<div class="mt-[25px]">
 				<p class="text-[16px] text-subwhite font-bold">
-					{$clientSession?.user.id}
+					{$clientSession?.user.user_metadata.lastname},
+					{$clientSession?.user.user_metadata.firstname}
 				</p>
 
 				<div class="text-[14px] text-subwhite mt-[20px]">
