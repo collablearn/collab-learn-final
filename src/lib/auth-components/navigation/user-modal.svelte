@@ -2,9 +2,49 @@
 	import bellIcon from '$lib/assets/bell_icon_320.svg';
 	import feedBackIcon from '$lib/assets/feedback_icon_320.svg';
 	import exitIcon from '$lib/assets/exit_icon_320.svg';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import { getSessionState } from '$lib';
+	import { goto } from '$app/navigation';
+
+	const sessionState = getSessionState();
+
+	let logoutLoader = false;
+
+	const logoutActionNews: SubmitFunction = () => {
+		logoutLoader = true;
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					toast.success('Log out', {
+						description: `Thank you for using our system come back again! ${$sessionState?.user.user_metadata.firstname}.`
+					});
+					logoutLoader = false;
+					goto('/');
+					break;
+
+				case 401:
+					logoutLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<div class="w-full bg-main rounded-[10px] p-[14px]">
+<form
+	method="post"
+	action="/?/logoutAction"
+	enctype="multipart/form-data"
+	use:enhance={logoutActionNews}
+	class="w-full bg-main rounded-[10px] p-[14px]"
+>
 	<div class="flex flex-col gap-[10px]">
 		<button class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={bellIcon} alt="bell-icon" class="" />
@@ -18,9 +58,17 @@
 
 		<hr class="border-[1px] border-submain" />
 
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button
+			disabled={logoutLoader}
+			type="submit"
+			class="flex items-center text-white text-[14px] justify-between w-full"
+		>
 			<img src={exitIcon} alt="exit-icon" class="" />
-			<p>Log out</p>
+			{#if logoutLoader}
+				Logging out...
+			{:else}
+				Log out
+			{/if}
 		</button>
 	</div>
-</div>
+</form>

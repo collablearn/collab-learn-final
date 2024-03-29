@@ -37,6 +37,7 @@
 		"@k4ung/svelte-otp": "^0.0.9",
 		"@supabase/ssr": "^0.1.0",
 		"@supabase/supabase-js": "^2.39.8",
+		"check-password-strength": "^2.0.10",
 		"svelte-sonner": "^0.3.19",
 		"zod": "^3.22.4"
 	}
