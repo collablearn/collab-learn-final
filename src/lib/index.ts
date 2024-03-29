@@ -251,11 +251,11 @@ export const mockDatas = writable({
 });
 
 
-export const setSessionState = (state: Session) => {
+export const setSessionState = (state: Session | null) => {
     let stateGenerator = writable(state);
     setContext("sessionState", stateGenerator);
 };
 
-// for sessions
-export const getSessionState = () => getContext<Writable<Session>>("sessionSate");
+// for client session
+export const getSessionState = () => getContext<Writable<Session | null>>("sessionSate");
 
