@@ -25,10 +25,6 @@
 		{
 			title: 'LEARNING MODULES',
 			url: '/learning-modules'
-		},
-		{
-			title: 'FRIENDS',
-			url: '/friends'
 		}
 	];
 </script>
