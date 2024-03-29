@@ -76,6 +76,7 @@
 		</div>
 
 		<div class="mt-[20px] flex flex-col gap-[20px]">
+			<input name="passwordStrength" type="hidden" value={passwordCheck} />
 			<input
 				name="firstName"
 				type="text"
@@ -113,9 +114,13 @@
 				placeholder="Password"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
-			{#each formActionError?.password ?? [] as errMsg}
-				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
-			{/each}
+			{#if password}
+				<p class="text-submain text-[14px]" in:fade>{passwordCheck}</p>
+			{:else}
+				{#each formActionError?.password ?? [] as errMsg}
+					<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+				{/each}
+			{/if}
 
 			<input
 				name="confirmPassword"

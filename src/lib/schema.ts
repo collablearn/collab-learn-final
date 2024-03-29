@@ -14,10 +14,11 @@ export const registerSchema = z.object({
 }).superRefine(({ password, confirmPassword }, ctx) => {
 
     if (password !== confirmPassword) {
+
         ctx.addIssue({
             code: "custom",
             message: "Password and Confirm Password must match",
-            path: ["password"]
+            path: ["confirmPassword"]
         });
 
     }
