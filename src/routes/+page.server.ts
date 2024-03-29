@@ -24,13 +24,40 @@ export const actions: Actions = {
         }
     },
 
-    registerAction: async ({ locals: { supabase }, request }) => {
+    registerAction: async ({ locals: { supabase, supabaseAdmin }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
         try {
             const result = registerSchema.parse(formData);
 
             if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
+
+            const { data: { user }, error: registerError } = await supabase.auth.signUp({
+                email: result.email,
+                password: result.password,
+                options: {
+                    data: {
+                        firstname: result.firstName,
+                        lastname: result.lastName
+                    }
+                }
+            });
+
+            if (registerError) return fail(401, { msg: registerError.message });
+            else if (user) {
+                const { error: insertError } = await supabase.from("user_list_tb").insert([{
+                    user_id: user.id,
+                    user_email: user.email,
+                    user_firstname: user.user_metadata.firstname,
+                    user_lastname: user.user_metadata.lastname
+                }]);
+
+                if (insertError) {
+                    const { error: deleteUserError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
+                    if (deleteUserError) return fail(401, { msg: deleteUserError.message });
+                    else return fail(401, { msg: "There is an error try again." });
+                } else return fail(200, { msg: "Registered Successfully." });
+            }
 
         } catch (error) {
             const zodError = error as ZodError;
