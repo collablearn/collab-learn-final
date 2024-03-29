@@ -1,12 +1,15 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
+	import { passwordStrength } from 'check-password-strength';
 
 	const childStaticState = getStaticState();
+
+	let password = '';
+	$: passwordCheck = passwordStrength(password).value;
 
 	interface RegisterVal {
 		firstName: string[];
@@ -25,17 +28,21 @@
 	let registerLoader = false;
 
 	const registerActionNews: SubmitFunction = () => {
+		registerLoader = true;
 		return async ({ result, update }) => {
 			const { status } = result as ResultModel<RegisterAction>;
 
 			switch (status) {
 				case 200:
+					registerLoader = false;
 					break;
 
 				case 400:
+					registerLoader = false;
 					break;
 
 				case 401:
+					registerLoader = false;
 					break;
 
 				default:
@@ -81,6 +88,7 @@
 			/>
 
 			<input
+				bind:value={password}
 				name="password"
 				type="password"
 				placeholder="Password"
