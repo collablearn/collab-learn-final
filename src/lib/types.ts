@@ -1,4 +1,8 @@
-
+export interface ResultModel<T> {
+    status: number
+    type: string
+    data: T
+}
 
 export type ProjectTypes = {
     imageUrl: string

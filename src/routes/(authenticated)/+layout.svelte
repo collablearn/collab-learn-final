@@ -1,7 +1,10 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
-	import { getAuthState, setAuthState } from '$lib';
+	import { getAuthState, getSessionState, setAuthState, setSessionState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
+	import type { LayoutServerData } from '../$types';
+
+	export let data: LayoutServerData;
 
 	const defaultAuthState = {
 		activeItem: '/dashboard',
@@ -23,6 +26,7 @@
 		}
 	};
 
+	setSessionState(data.session);
 	setAuthState(defaultAuthState);
 
 	const authState = getAuthState();

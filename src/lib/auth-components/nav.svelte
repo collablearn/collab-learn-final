@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { getSessionState } from '$lib';
 	import burgerIcon from '$lib/assets/burger.svg';
 	import userIcon from '$lib/assets/user_icon_320.svg';
+	import { fly, scale } from 'svelte/transition';
 	import MobileSlider from './navigation/mobile-slider.svelte';
 	import UserModal from './navigation/user-modal.svelte';
 
@@ -27,6 +29,8 @@
 			url: '/learning-modules'
 		}
 	];
+
+	const clientSession = getSessionState();
 </script>
 
 <nav class="bg-main w-full px-[23px] py-[20px]">
@@ -52,7 +56,7 @@
 		on:click|self={() => (showUserMenu = false)}
 		class="fixed left-0 right-0 top-0 bottom-0 bg-[#00000050] flex flex-row-reverse pt-[74px] pr-[20px]"
 	>
-		<div class="w-[150px] h-fit">
+		<div class="w-[150px] h-fit" in:fly={{ x: 80, duration: 300 }}>
 			<UserModal />
 		</div>
 	</div>

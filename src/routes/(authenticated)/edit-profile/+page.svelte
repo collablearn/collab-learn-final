@@ -1,12 +1,17 @@
 <script lang="ts">
 	import PersonalInformation from '$lib/auth-components/edit-profile/personal-information.svelte';
 	import ChangePassword from '$lib/auth-components/edit-profile/change-password.svelte';
+	import { fade } from 'svelte/transition';
+	import { getAuthState } from '$lib';
+
+	const authState = getAuthState();
+	$authState.activeItem = '';
 
 	let activeItem = 'Personal Information';
 	const selections = ['Personal Information', 'Change Password'];
 </script>
 
-<div class="">
+<div class="" in:fade>
 	<p class="text-[16px] text-main font-semibold">Edit Profile</p>
 
 	<!--Switch Here-->

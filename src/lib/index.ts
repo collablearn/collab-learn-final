@@ -1,6 +1,7 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
 import type { GuildTypes } from "./types";
+import type { Session } from "@supabase/supabase-js";
 
 // for static store
 interface StaticStateTypes {
@@ -9,6 +10,16 @@ interface StaticStateTypes {
     isVerfying: boolean
     isUpdating: boolean
 }
+
+
+export const setStaticState = (state: StaticStateTypes) => {
+    let stateGenerator = writable(state);
+    setContext("staticState", stateGenerator);
+};
+
+export const getStaticState = () => getContext<Writable<StaticStateTypes>>("staticState");
+
+
 
 // for auth store
 interface AuthStateStoreTypes {
@@ -24,18 +35,7 @@ interface AuthStateStoreTypes {
         guildObj: GuildTypes | null
 
     }
-
 }
-
-export const setStaticState = (state: StaticStateTypes) => {
-    let stateGenerator = writable(state);
-    setContext("staticState", stateGenerator);
-};
-
-export const getStaticState = () => {
-    return getContext<Writable<StaticStateTypes>>("staticState");
-}
-
 
 // for authenticated nav store
 export const setAuthState = (state: AuthStateStoreTypes) => {
@@ -43,9 +43,8 @@ export const setAuthState = (state: AuthStateStoreTypes) => {
     setContext("authState", stateGenerator);
 };
 
-export const getAuthState = () => {
-    return getContext<Writable<AuthStateStoreTypes>>("authState");
-}
+export const getAuthState = () => getContext<Writable<AuthStateStoreTypes>>("authState");
+
 
 
 
@@ -249,5 +248,14 @@ export const mockDatas = writable({
             hostName: 'Hayabusa'
         }
     ]
-})
+});
+
+
+export const setSessionState = (state: Session | null) => {
+    let stateGenerator = writable(state);
+    setContext("sessionState", stateGenerator);
+};
+
+// for client session
+export const getSessionState = () => getContext<Writable<Session | null>>("sessionState");
 
