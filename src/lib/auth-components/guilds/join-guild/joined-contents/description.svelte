@@ -2,17 +2,14 @@
 	import DescriptionCard from './description-card.svelte';
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 	import ChatCard from './chat-card.svelte';
+	import AddNote from './add-note.svelte';
 
 	const selections = ["Guild's Wall", 'Chat Feed'];
 	let activeItem = "Guild's Wall";
 </script>
 
 {#if activeItem === "Guild's Wall"}
-	<div class="fixed bottom-0 right-0 mr-[33px] mb-[33px] z-20">
-		<button class="transition-all active:scale-105">
-			<img src={createIcon} alt="add-description-icon" />
-		</button>
-	</div>
+	<AddNote />
 {/if}
 
 <div class="mt-[40px]">
