@@ -70,12 +70,14 @@
 
 		<div class="mt-[73px] flex flex-col gap-[20px]">
 			<input
+				name="email"
 				type="email"
 				placeholder="Enter your email"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
 
 			<input
+				name="password"
 				type="password"
 				placeholder="Enter your password"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
@@ -84,10 +86,17 @@
 
 		<div class="mt-[40px]">
 			<button
+				disabled={loginLoader}
 				type="submit"
-				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				class="{loginLoader
+					? 'cursor-not-allowed'
+					: ''} bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				<Loader name="LOG IN" />
+				{#if loginLoader}
+					Logging in...
+				{:else}
+					Log in
+				{/if}
 			</button>
 
 			<div class="mt-[40px] flex justify-center">
