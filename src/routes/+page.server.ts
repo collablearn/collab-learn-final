@@ -8,6 +8,14 @@ export const actions: Actions = {
 
         try {
             const result = loginSchema.parse(formData);
+
+            const { data: { user }, error: loginError } = await supabase.auth.signInWithPassword({
+                email: result.email,
+                password: result.password
+            });
+
+            if (loginError) return fail(401, { msg: loginError.message });
+            else return fail(200, { msg: "Log in success." });
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
