@@ -5,6 +5,8 @@
 	import { enhance } from '$app/forms';
 
 	const childStaticState = getStaticState();
+
+	let registerLoader = false;
 </script>
 
 <form
@@ -58,10 +60,17 @@
 
 		<div class="mt-[40px]">
 			<button
+				disabled={registerLoader}
 				type="submit"
-				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center"
+				class="{registerLoader
+					? 'cursor-not-allowed bg-submain/50'
+					: 'bg-submain'}  w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				Sign Up
+				{#if registerLoader}
+					Creating..
+				{:else}
+					Register
+				{/if}
 			</button>
 
 			<div class="mt-[40px]">
