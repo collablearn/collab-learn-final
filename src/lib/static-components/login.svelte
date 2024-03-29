@@ -6,6 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
+	import { fade } from 'svelte/transition';
 
 	const childStaticState = getStaticState();
 
@@ -75,6 +76,9 @@
 				placeholder="Enter your email"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.email ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 
 			<input
 				name="password"
@@ -82,6 +86,9 @@
 				placeholder="Enter your password"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.password ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</div>
 
 		<div class="mt-[40px]">
