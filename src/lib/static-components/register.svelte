@@ -3,17 +3,54 @@
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
 
 	const childStaticState = getStaticState();
 
+	interface RegisterVal {
+		firstName: string[];
+		lastName: string[];
+		email: string[];
+		password: string[];
+		confirmPassword: string[];
+	}
+
+	interface RegisterAction {
+		msg: string;
+		errors: RegisterVal;
+	}
+
+	let formActionError: RegisterVal | null = null;
 	let registerLoader = false;
+
+	const registerActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result as ResultModel<RegisterAction>;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <form
 	method="post"
 	action="?/registerAction"
 	enctype="multipart/form-data"
-	use:enhance
+	use:enhance={registerActionNews}
 	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
 >
 	<div class="w-[100%]">
