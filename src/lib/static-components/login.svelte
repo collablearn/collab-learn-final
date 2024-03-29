@@ -5,21 +5,37 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
+	import { toast } from 'svelte-sonner';
 
 	const childStaticState = getStaticState();
 
+	interface LoginVal {
+		email: string[];
+		password: string[];
+	}
+
+	interface LoginAction {
+		msg: string;
+		errors: LoginVal;
+	}
+
 	const loginActionNews: SubmitFunction = () => {
 		return async ({ result, update }) => {
-			const { status } = result as ResultModel<{ any: unknown }>;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<LoginAction>;
 
 			switch (status) {
 				case 200:
+					toast.success('Log in', { description: msg });
 					break;
 
 				case 400:
 					break;
 
 				case 401:
+					toast.error('Log in', { description: msg });
 					break;
 
 				default:
