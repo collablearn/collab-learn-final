@@ -19,6 +19,9 @@
 		errors: LoginVal;
 	}
 
+	let formActionError: LoginVal | null = null;
+	let loginLoader = false;
+
 	const loginActionNews: SubmitFunction = () => {
 		return async ({ result, update }) => {
 			const {
@@ -28,13 +31,17 @@
 
 			switch (status) {
 				case 200:
+					formActionError = null;
 					toast.success('Log in', { description: msg });
 					break;
 
 				case 400:
+					formActionError = errors;
+
 					break;
 
 				case 401:
+					formActionError = null;
 					toast.error('Log in', { description: msg });
 					break;
 
