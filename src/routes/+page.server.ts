@@ -1,7 +1,14 @@
 import { loginSchema, registerSchema } from "$lib/schema";
-import { fail, type Actions } from "@sveltejs/kit";
+import { fail, type Actions, redirect } from "@sveltejs/kit";
 import { passwordStrength } from "check-password-strength";
 import type { ZodError } from "zod";
+import type { PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = async ({ locals: { isLogged } }) => {
+    const loginCheck = isLogged();
+
+    if (loginCheck === "has auth") redirect(302, "/dashboard");
+};
 
 export const actions: Actions = {
     loginAction: async ({ locals: { supabase }, request }) => {
@@ -64,5 +71,12 @@ export const actions: Actions = {
             const { fieldErrors } = zodError.flatten();
             return fail(400, { errors: fieldErrors });
         }
+    },
+
+    logoutAction: async ({ locals: { supabase } }) => {
+        const { error: logoutError } = await supabase.auth.signOut();
+
+        if (logoutError) return fail(401, { msg: logoutError.message });
+        else return fail(200, { msg: "Log out success." });
     }
 };

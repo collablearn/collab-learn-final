@@ -6,7 +6,7 @@
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	const childStaticState = getStaticState();
 
@@ -36,6 +36,7 @@
 					formActionError = null;
 					toast.success('Log in', { description: msg });
 					loginLoader = false;
+					invalidateAll();
 					goto('/dashboard');
 					break;
 

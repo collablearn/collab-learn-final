@@ -4,19 +4,30 @@
 	import exitIcon from '$lib/assets/exit_icon_320.svg';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import { getSessionState } from '$lib';
+	import { goto } from '$app/navigation';
+
+	const sessionState = getSessionState();
+
+	let logoutLoader = false;
 
 	const logoutActionNews: SubmitFunction = () => {
+		logoutLoader = true;
 		return async ({ result, update }) => {
 			const { status } = result;
 
 			switch (status) {
 				case 200:
-					break;
-
-				case 400:
+					toast.success('Log out', {
+						description: `Thank you for using our system come back again! ${$sessionState?.user.user_metadata.firstname}.`
+					});
+					logoutLoader = false;
+					goto('/');
 					break;
 
 				case 401:
+					logoutLoader = false;
 					break;
 
 				default:
@@ -29,7 +40,7 @@
 
 <form
 	method="post"
-	action="?/logoutAction"
+	action="/?/logoutAction"
 	enctype="multipart/form-data"
 	use:enhance={logoutActionNews}
 	class="w-full bg-main rounded-[10px] p-[14px]"
@@ -47,9 +58,17 @@
 
 		<hr class="border-[1px] border-submain" />
 
-		<button type="submit" class="flex items-center text-white text-[14px] justify-between w-full">
+		<button
+			disabled={logoutLoader}
+			type="submit"
+			class="flex items-center text-white text-[14px] justify-between w-full"
+		>
 			<img src={exitIcon} alt="exit-icon" class="" />
-			<p>Log out</p>
+			{#if logoutLoader}
+				Logging out...
+			{:else}
+				Log out
+			{/if}
 		</button>
 	</div>
 </form>
