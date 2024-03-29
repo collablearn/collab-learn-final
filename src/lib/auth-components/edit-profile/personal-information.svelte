@@ -3,6 +3,11 @@
 
 <form class="flex flex-col gap-[10px]">
 	<label>
+		<span class="text-main text-[14px] transition-all">Upload Profile</span>
+		<input type="file" />
+	</label>
+
+	<label>
 		<span class="text-main text-[14px] transition-all">First Name</span>
 		<input
 			type="text"
