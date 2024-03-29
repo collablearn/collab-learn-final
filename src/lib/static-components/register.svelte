@@ -40,6 +40,7 @@
 			switch (status) {
 				case 200:
 					formActionError = null;
+					passwordCheck = '';
 					toast.success('Register', { description: msg });
 					registerLoader = false;
 					break;
