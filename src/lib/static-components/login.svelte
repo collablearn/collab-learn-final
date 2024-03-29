@@ -6,6 +6,7 @@
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	const childStaticState = getStaticState();
 
