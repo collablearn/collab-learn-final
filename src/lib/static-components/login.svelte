@@ -2,11 +2,18 @@
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
+	import { enhance } from '$app/forms';
 
 	const childStaticState = getStaticState();
 </script>
 
-<div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
+<form
+	method="post"
+	action="?/loginAction"
+	enctype="multipart/form-data"
+	use:enhance
+	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
+>
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
 			<img src={icon_320} alt="icon-320" />
@@ -28,6 +35,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				type="submit"
 				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
 				<Loader name="LOG IN" />
@@ -35,6 +43,7 @@
 
 			<div class="mt-[40px] flex justify-center">
 				<button
+					type="button"
 					class="text-[14px] text-submain underline"
 					on:click={() => ($childStaticState.isResetting = true)}>Forgot Password?</button
 				>
@@ -42,10 +51,11 @@
 
 			<div class="mt-[40px] flex justify-center">
 				<button
+					type="button"
 					class="text-[14px] text-submain underline"
 					on:click={() => ($childStaticState.isRegistering = true)}>Create Account</button
 				>
 			</div>
 		</div>
 	</div>
-</div>
+</form>
