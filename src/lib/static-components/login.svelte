@@ -35,6 +35,7 @@
 					formActionError = null;
 					toast.success('Log in', { description: msg });
 					loginLoader = false;
+					goto('/dashboard');
 					break;
 
 				case 400:

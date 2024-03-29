@@ -7,6 +7,7 @@
 	import { passwordStrength } from 'check-password-strength';
 	import { fade } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
 
 	const childStaticState = getStaticState();
 
@@ -43,6 +44,7 @@
 					passwordCheck = '';
 					toast.success('Register', { description: msg });
 					registerLoader = false;
+					goto('/dashboard');
 					break;
 
 				case 400:
