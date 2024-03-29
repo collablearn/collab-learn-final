@@ -23,6 +23,7 @@
 	let loginLoader = false;
 
 	const loginActionNews: SubmitFunction = () => {
+		loginLoader = true;
 		return async ({ result, update }) => {
 			const {
 				status,
@@ -33,16 +34,18 @@
 				case 200:
 					formActionError = null;
 					toast.success('Log in', { description: msg });
+					loginLoader = false;
 					break;
 
 				case 400:
 					formActionError = errors;
-
+					loginLoader = false;
 					break;
 
 				case 401:
 					formActionError = null;
 					toast.error('Log in', { description: msg });
+					loginLoader = false;
 					break;
 
 				default:
