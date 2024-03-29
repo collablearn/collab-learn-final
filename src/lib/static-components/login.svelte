@@ -1,6 +1,5 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
