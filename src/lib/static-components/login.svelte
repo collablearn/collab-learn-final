@@ -3,15 +3,37 @@
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const childStaticState = getStaticState();
+
+	const loginActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <form
 	method="post"
 	action="?/loginAction"
 	enctype="multipart/form-data"
-	use:enhance
+	use:enhance={loginActionNews}
 	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
 >
 	<div class="w-[100%]">
