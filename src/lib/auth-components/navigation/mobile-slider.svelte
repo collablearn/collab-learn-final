@@ -2,13 +2,14 @@
 	import closeIcon from '$lib/assets/close_icon_320.svg';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import { page } from '$app/stores';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getSessionState } from '$lib';
 
 	export let selections: { title: string; url: string }[];
 
 	export let showMobileSlider = false;
 
 	let authState = getAuthState();
+	const clientSession = getSessionState();
 </script>
 
 {#if showMobileSlider}
@@ -35,7 +36,9 @@
 			</div>
 
 			<div class="mt-[25px]">
-				<p class="text-[16px] text-subwhite font-bold">JUAN DELA CRUZ JR.</p>
+				<p class="text-[16px] text-subwhite font-bold">
+					{$clientSession?.user.id}
+				</p>
 
 				<div class="text-[14px] text-subwhite mt-[20px]">
 					<div class="flex items-center gap-[2px]">

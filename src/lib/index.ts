@@ -257,5 +257,5 @@ export const setSessionState = (state: Session | null) => {
 };
 
 // for client session
-export const getSessionState = () => getContext<Writable<Session | null>>("sessionSate");
+export const getSessionState = () => getContext<Writable<Session | null>>("sessionState");
 

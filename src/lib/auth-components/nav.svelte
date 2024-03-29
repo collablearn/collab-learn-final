@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getSessionState } from '$lib';
 	import burgerIcon from '$lib/assets/burger.svg';
 	import userIcon from '$lib/assets/user_icon_320.svg';
 	import MobileSlider from './navigation/mobile-slider.svelte';
@@ -31,6 +32,8 @@
 			url: '/friends'
 		}
 	];
+
+	const clientSession = getSessionState();
 </script>
 
 <nav class="bg-main w-full px-[23px] py-[20px]">
