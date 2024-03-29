@@ -6,6 +6,7 @@
 	import type { ResultModel } from '$lib/types';
 	import { passwordStrength } from 'check-password-strength';
 	import { fade } from 'svelte/transition';
+	import { toast } from 'svelte-sonner';
 
 	const childStaticState = getStaticState();
 
@@ -31,18 +32,26 @@
 	const registerActionNews: SubmitFunction = () => {
 		registerLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result as ResultModel<RegisterAction>;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<RegisterAction>;
 
 			switch (status) {
 				case 200:
+					formActionError = null;
+					toast.success('Register', { description: msg });
 					registerLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
 					registerLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
+					toast.error('Register', { description: msg });
 					registerLoader = false;
 					break;
 
