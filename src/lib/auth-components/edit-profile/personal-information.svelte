@@ -1,10 +1,16 @@
 <script lang="ts">
+	let file: FileList;
 </script>
 
 <form class="flex flex-col gap-[10px]">
+	<span class="text-main text-[14px] transition-all">Upload Profile</span>
 	<label>
-		<span class="text-main text-[14px] transition-all">Upload Profile</span>
-		<input type="file" />
+		<div
+			class="outline-none w-full border-dashed text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+		>
+			<span class="font-semibold text-[14px]">{file ? file[0].name : 'Choose a file'}</span>
+			<input name="" type="file" class="hidden" accept=".png" bind:files={file} />
+		</div>
 	</label>
 
 	<label>
