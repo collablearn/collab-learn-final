@@ -2,9 +2,38 @@
 	import bellIcon from '$lib/assets/bell_icon_320.svg';
 	import feedBackIcon from '$lib/assets/feedback_icon_320.svg';
 	import exitIcon from '$lib/assets/exit_icon_320.svg';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+
+	const logoutActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<div class="w-full bg-main rounded-[10px] p-[14px]">
+<form
+	method="post"
+	action="?/logoutAction"
+	enctype="multipart/form-data"
+	use:enhance={logoutActionNews}
+	class="w-full bg-main rounded-[10px] p-[14px]"
+>
 	<div class="flex flex-col gap-[10px]">
 		<button class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={bellIcon} alt="bell-icon" class="" />
@@ -18,9 +47,9 @@
 
 		<hr class="border-[1px] border-submain" />
 
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button type="submit" class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={exitIcon} alt="exit-icon" class="" />
 			<p>Log out</p>
 		</button>
 	</div>
-</div>
+</form>
