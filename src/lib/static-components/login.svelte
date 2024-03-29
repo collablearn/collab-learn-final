@@ -4,12 +4,13 @@
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
 
 	const childStaticState = getStaticState();
 
 	const loginActionNews: SubmitFunction = () => {
 		return async ({ result, update }) => {
-			const { status } = result;
+			const { status } = result as ResultModel<{ any: unknown }>;
 
 			switch (status) {
 				case 200:
