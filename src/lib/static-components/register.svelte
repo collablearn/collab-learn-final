@@ -5,6 +5,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { passwordStrength } from 'check-password-strength';
+	import { fade } from 'svelte/transition';
 
 	const childStaticState = getStaticState();
 
@@ -72,6 +73,9 @@
 				placeholder="First Name"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.firstName ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 
 			<input
 				name="lastName"
@@ -79,6 +83,9 @@
 				placeholder="Last Name"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.lastName ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 
 			<input
 				name="email"
@@ -86,6 +93,9 @@
 				placeholder="Email Address"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.email ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 
 			<input
 				bind:value={password}
@@ -94,6 +104,9 @@
 				placeholder="Password"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.password ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 
 			<input
 				name="confirmPassword"
@@ -101,6 +114,9 @@
 				placeholder="Confirm Password"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.confirmPassword ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</div>
 
 		<div class="mt-[40px]">
