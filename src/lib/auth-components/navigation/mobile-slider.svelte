@@ -1,8 +1,7 @@
 <script lang="ts">
 	import closeIcon from '$lib/assets/close_icon_320.svg';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
-	import { page } from '$app/stores';
-	import { getAuthState, getSessionState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { fly } from 'svelte/transition';
 
 	export let selections: { title: string; url: string }[];
@@ -10,7 +9,8 @@
 	export let showMobileSlider = false;
 
 	let authState = getAuthState();
-	const clientSession = getSessionState();
+
+	const userState = getUserState();
 </script>
 
 {#if showMobileSlider}
@@ -32,7 +32,11 @@
 
 			<div class="flex items-center gap-[9px] mt-[35px]">
 				<div class="flex max-w-fit">
-					<img src={sampleDisplayIcon} alt="sample-display-icon" class="" />
+					<img
+						src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
+						alt="sample-display-icon"
+						class="w-[79px] h-[79px] rounded-full"
+					/>
 				</div>
 
 				<div class="">
@@ -46,11 +50,13 @@
 
 			<div class="mt-[25px]">
 				<p class="text-[16px] text-subwhite font-bold">
-					{$clientSession?.user.user_metadata.lastname},
-					{$clientSession?.user.user_metadata.firstname}
+					{$userState?.user_metadata.lastname},
+					{$userState?.user_metadata.firstname}
 				</p>
 
-				<div class="text-[14px] text-subwhite mt-[20px]">
+				<!--Removed for a while -->
+
+				<!-- <div class="text-[14px] text-subwhite mt-[20px]">
 					<div class="flex items-center gap-[2px]">
 						<p class="font-semibold">Student ID :</p>
 						<p class=" font-semibold">12345678</p>
@@ -60,7 +66,7 @@
 						<p class="font-semibold">Year and Section :</p>
 						<p class=" font-semibold">11 - Makatao</p>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<hr class="border-[1px] border-white my-[20px]" />
