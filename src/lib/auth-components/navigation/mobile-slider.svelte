@@ -33,7 +33,7 @@
 			<div class="flex items-center gap-[9px] mt-[35px]">
 				<div class="flex max-w-fit">
 					<img
-						src={$userState?.user_metadata.profileLink}
+						src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
 						alt="sample-display-icon"
 						class="w-[79px] h-[79px] rounded-full"
 					/>

@@ -126,7 +126,7 @@ export const actions: Actions = {
 
                 const { data: { user }, error: updateUserError } = await supabase.auth.updateUser({
                     data: {
-                        profileLink: publicUrl
+                        profileLink: `${publicUrl}?${Math.random()}`
                     }
                 });
 

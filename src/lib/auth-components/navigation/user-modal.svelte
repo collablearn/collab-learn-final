@@ -23,6 +23,7 @@
 						description: `Thank you for using our system come back again! ${$userState?.user_metadata.firstname}.`
 					});
 					logoutLoader = false;
+					$userState = null;
 					goto('/');
 					break;
 

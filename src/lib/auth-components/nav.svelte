@@ -4,9 +4,12 @@
 	import { fly, scale } from 'svelte/transition';
 	import MobileSlider from './navigation/mobile-slider.svelte';
 	import UserModal from './navigation/user-modal.svelte';
+	import { getUserState } from '$lib';
 
 	export let showUserMenu = false;
 	export let showMobileSlider = false;
+
+	const userState = getUserState();
 
 	let selections = [
 		{
@@ -40,7 +43,11 @@
 
 		<div class="flex items-center justify-center">
 			<button on:click={() => (showUserMenu = true)}>
-				<img src={userIcon} alt="user-icon" />
+				<img
+					src={$userState?.user_metadata.profileLink ?? userIcon}
+					alt="user-icon"
+					class="w-[25px] h-[25px] rounded-full"
+				/>
 			</button>
 		</div>
 	</div>
