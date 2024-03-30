@@ -287,9 +287,12 @@
 	<button
 		disabled={updateInfoLoader}
 		type="submit"
-		class="{updateInfoLoader
-			? 'cursor-not-allowed bg-main/50'
-			: 'bg-main'} py-[11px] font-semibold text-[14px] flex items-center justify-center rounded-[10px] text-white"
-		>Save Information
+		class="{updateInfoLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'} 
+			py-[11px] font-semibold text-[14px] flex items-center justify-center rounded-[10px] text-submain"
+		>{#if updateInfoLoader}
+			Saving...
+		{:else}
+			Save Information
+		{/if}
 	</button>
 </form>
