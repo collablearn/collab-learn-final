@@ -46,12 +46,12 @@
 	class="w-full bg-main rounded-[10px] p-[14px]"
 >
 	<div class="flex flex-col gap-[10px]">
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button type="button" class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={bellIcon} alt="bell-icon" class="" />
 			<p>Notifications</p>
 		</button>
 
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button type="button" class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={feedBackIcon} alt="feedback-icon" class="" />
 			<p>Give Feedback</p>
 		</button>
