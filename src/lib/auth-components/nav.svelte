@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { getSessionState } from '$lib';
 	import burgerIcon from '$lib/assets/burger.svg';
 	import userIcon from '$lib/assets/user_icon_320.svg';
 	import { fly, scale } from 'svelte/transition';
 	import MobileSlider from './navigation/mobile-slider.svelte';
 	import UserModal from './navigation/user-modal.svelte';
+	import { getUserState } from '$lib';
 
 	export let showUserMenu = false;
 	export let showMobileSlider = false;
+
+	const userState = getUserState();
 
 	let selections = [
 		{
@@ -29,8 +31,6 @@
 			url: '/learning-modules'
 		}
 	];
-
-	const clientSession = getSessionState();
 </script>
 
 <nav class="bg-main w-full px-[23px] py-[20px]">
@@ -43,7 +43,11 @@
 
 		<div class="flex items-center justify-center">
 			<button on:click={() => (showUserMenu = true)}>
-				<img src={userIcon} alt="user-icon" />
+				<img
+					src={$userState?.user_metadata.profileLink ?? userIcon}
+					alt="user-icon"
+					class="w-[25px] h-[25px] rounded-full"
+				/>
 			</button>
 		</div>
 	</div>

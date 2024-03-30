@@ -1,6 +1,6 @@
-import { loginSchema, registerSchema } from "$lib/schema";
+import { loginSchema, registerSchema, updateInformationSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
-import { passwordStrength } from "check-password-strength";
+
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
@@ -78,5 +78,58 @@ export const actions: Actions = {
 
         if (logoutError) return fail(401, { msg: logoutError.message });
         else return fail(200, { msg: "Log out success." });
+    },
+
+    updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        const checkLogin = isLogged();
+        const session = await getSession();
+
+        if (checkLogin === "has auth" && session) {
+            try {
+                const result = updateInformationSchema.parse(formData);
+
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
+        } else redirect(302, "/");
+    },
+
+    uploadProfileAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+
+        const profilePicture = (await request.formData()).get("uploadProfile") as File;
+
+        const checkLogin = isLogged();
+        const session = await getSession();
+
+        if (checkLogin === "has auth" && session) {
+
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
+                cacheControl: "3600",
+                upsert: true
+            });
+
+            if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
+            else if (uploadPicture) {
+                const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadPicture.path)
+
+                const { data: { user }, error: updateUserError } = await supabase.auth.updateUser({
+                    data: {
+                        profileLink: `${publicUrl}?${Math.random()}`
+                    }
+                });
+
+                if (updateUserError) {
+                    //this is alternative atm transaction comming soon
+                    await supabase.storage.from("collab-bucket").remove([session.user.id])
+                    return fail(401, { msg: updateUserError.message });
+                } else if (user) return fail(200, { msg: "Upload successfully", user })
+            }
+
+        } else redirect(302, "/");
+
     }
 };

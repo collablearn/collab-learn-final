@@ -5,10 +5,10 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { getSessionState } from '$lib';
 	import { goto } from '$app/navigation';
+	import { getUserState } from '$lib';
 
-	const sessionState = getSessionState();
+	const userState = getUserState();
 
 	let logoutLoader = false;
 
@@ -20,9 +20,10 @@
 			switch (status) {
 				case 200:
 					toast.success('Log out', {
-						description: `Thank you for using our system come back again! ${$sessionState?.user.user_metadata.firstname}.`
+						description: `Thank you for using our system come back again! ${$userState?.user_metadata.firstname}.`
 					});
 					logoutLoader = false;
+					$userState = null;
 					goto('/');
 					break;
 
@@ -46,12 +47,12 @@
 	class="w-full bg-main rounded-[10px] p-[14px]"
 >
 	<div class="flex flex-col gap-[10px]">
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button type="button" class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={bellIcon} alt="bell-icon" class="" />
 			<p>Notifications</p>
 		</button>
 
-		<button class="flex items-center text-white text-[14px] justify-between w-full">
+		<button type="button" class="flex items-center text-white text-[14px] justify-between w-full">
 			<img src={feedBackIcon} alt="feedback-icon" class="" />
 			<p>Give Feedback</p>
 		</button>
