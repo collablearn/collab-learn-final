@@ -1,13 +1,14 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import { getStaticState } from '$lib';
+	import { getStaticState, samplePasswords } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { passwordStrength } from 'check-password-strength';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
+	import { tick } from 'svelte';
 
 	const childStaticState = getStaticState();
 
@@ -109,6 +110,26 @@
 			{#each formActionError?.email ?? [] as errMsg}
 				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 			{/each}
+
+			{#if password}
+				<div
+					class="bg-submain p-[10px] rounded-[10px] flex flex-col gap-[10px] transition-all"
+					in:fade
+				>
+					<p class="text-main text-[14px]">
+						Create a complex password with a mix of uppercase and lowercase letters, numbers, and
+						symbols.
+					</p>
+
+					<div class="">
+						<p class="text-main text-[14px]">Sample:</p>
+
+						<p class=" max-w-fit bg-main text-submain text-[14px]">
+							{samplePasswords[Math.floor(Math.random() * 20)]}
+						</p>
+					</div>
+				</div>
+			{/if}
 
 			<input
 				bind:value={password}

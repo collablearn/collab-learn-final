@@ -259,3 +259,28 @@ export const setSessionState = (state: Session | null) => {
 // for client session
 export const getSessionState = () => getContext<Writable<Session | null>>("sessionState");
 
+
+
+//for password guide only
+export const samplePasswords = [
+    "Tr0p!c@lVibes",
+    "%M0unta1nAir",
+    "F1eryC0met",
+    "S@ndySh0re$",
+    "Cl@ssicRock!",
+    "Sp@ceExpl0r3r",
+    "%Myst3ryBook",
+    "F0restGlade#",
+    "C0d3M@ster",
+    "Cr@ftC0ffee",
+    "%Hi$t0ryBuff",
+    "Tr@velBug",
+    "S@f@riSunset",
+    "%C0micFan",
+    "G@mingR1g",
+    "Sc1-FiNerd",
+    "%ArtsySoul",
+    "C0okingWiz",
+    "%MusicLover",
+    "W@nderlust",
+]
