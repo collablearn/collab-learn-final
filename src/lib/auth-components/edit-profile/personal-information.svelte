@@ -84,19 +84,25 @@
 			type="submit"
 			class="{file
 				? ''
-				: 'hidden'} cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
+				: 'hidden'} transition-all active:bg-main/80 cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
 			>Upload</button
 		>
 
 		<div class={file ? 'hidden' : ''}>
 			<label>
 				<div
-					class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+					class="transition-all active:bg-main/80 cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
 				>
 					<div class="flex items-end gap-[10px]">
 						<img src={uploadIcon} alt="upload-icon" />
 						<span>Upload Profile</span>
-						<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
+						<input
+							type="file"
+							name="uploadProfile"
+							class="hidden"
+							bind:files={file}
+							accept=".png, .jpg, .jpeg"
+						/>
 					</div>
 				</div>
 			</label>
