@@ -97,6 +97,7 @@
 					toast.success('Upload Profile', { description: msg });
 					uploadLoader = false;
 					file = undefined;
+					previewURL = undefined;
 					break;
 
 				case 401:
