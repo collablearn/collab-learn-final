@@ -47,6 +47,8 @@
 					formActionError = null;
 					toast.success('Personal Information', { description: msg });
 					updateInfoLoader = false;
+					file = undefined;
+					previewURL = undefined;
 					break;
 
 				case 400:
@@ -68,6 +70,19 @@
 	};
 
 	let uploadLoader = false;
+	let previewURL: string | undefined;
+
+	const handleFileChange = (event: InputEvent) => {
+		const fileInput = event.currentTarget as HTMLInputElement;
+		const file = fileInput.files?.[0];
+		if (file && file.type.startsWith('image/')) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				previewURL = reader.result as string;
+			};
+			reader.readAsDataURL(file);
+		}
+	};
 	const uploadProfileActionNews: SubmitFunction = () => {
 		uploadLoader = true;
 		return async ({ result, update }) => {
@@ -107,31 +122,34 @@
 	class="flex items-end justify-between"
 >
 	<div class="">
-		<img
-			src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
-			alt="sample-icon"
-			class="h-[71px] w-[71px] rounded-full"
-		/>
+		{#if previewURL}
+			<img src={previewURL} alt="sample-icon" class="h-[71px] w-[71px] rounded-full" />
+
+			<button
+				class="flex items-center gap-[10px] w-[100px]"
+				on:click={() => {
+					file = undefined;
+					previewURL = undefined;
+				}}
+			>
+				<p class="text-[14px] text-main line-clamp-1 font-semibold">Preview</p>
+				<img src={clearIcon} alt="clear-icon" class="" />
+			</button>
+		{:else}
+			<img
+				src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
+				alt="sample-icon"
+				class="h-[71px] w-[71px] rounded-full"
+			/>
+		{/if}
 	</div>
 
 	<div class="flex flex-col gap-[20px] w-[165px]">
-		{#if file}
-			{#if file[0].name}
-				<button class="flex items-center gap-[10px] w-[100px]" on:click={() => (file = undefined)}>
-					<p class="text-[14px] text-main line-clamp-1">
-						{file ? (file[0] ? file[0].name : '') : ''}asdasdasdasdadadasdadasdasdasdasd
-					</p>
-					<img src={clearIcon} alt="clear-icon" class="" />
-				</button>
-			{/if}
-		{/if}
-
 		<button
 			disabled={uploadLoader}
 			type="submit"
-			class="{file
-				? ''
-				: 'hidden'} transition-all active:bg-main/80 cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
+			class="{file ? '' : 'hidden'} {uploadLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+				transition-all active:bg-main/80 cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] text-submain px-[10px]"
 			>{#if uploadLoader}
 				Uploading...
 			{:else}
@@ -152,6 +170,7 @@
 							name="uploadProfile"
 							class="hidden"
 							bind:files={file}
+							on:change={handleFileChange}
 							accept=".png, .jpg, .jpeg"
 						/>
 					</div>
