@@ -46,7 +46,6 @@ export const actions: Actions = {
                     data: {
                         firstname: result.firstName,
                         lastname: result.lastName,
-
                     }
                 }
             });

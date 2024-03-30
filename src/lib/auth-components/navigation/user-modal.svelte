@@ -5,7 +5,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { getUserState } from '$lib';
 
 	const userState = getUserState();
@@ -23,7 +23,7 @@
 						description: `Thank you for using our system come back again! ${$userState?.user_metadata.firstname}.`
 					});
 					logoutLoader = false;
-					$userState = null;
+					invalidateAll();
 					goto('/');
 					break;
 
