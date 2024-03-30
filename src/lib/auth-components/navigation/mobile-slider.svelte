@@ -54,19 +54,9 @@
 					{$userState?.user_metadata.firstname}
 				</p>
 
-				<!--Removed for a while -->
-
-				<!-- <div class="text-[14px] text-subwhite mt-[20px]">
-					<div class="flex items-center gap-[2px]">
-						<p class="font-semibold">Student ID :</p>
-						<p class=" font-semibold">12345678</p>
-					</div>
-
-					<div class="flex items-center gap-[2px]">
-						<p class="font-semibold">Year and Section :</p>
-						<p class=" font-semibold">11 - Makatao</p>
-					</div>
-				</div> -->
+				<div class="text-[14px] text-subwhite mt-[20px] rounded-[10px] max-h-[100px] overflow-auto">
+					<p>{$userState?.user_metadata.bio ?? 'You have no bio.'}</p>
+				</div>
 			</div>
 
 			<hr class="border-[1px] border-white my-[20px]" />
