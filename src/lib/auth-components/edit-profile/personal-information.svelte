@@ -30,6 +30,7 @@
 	interface UpdatePersonalInformation {
 		msg: string;
 		errors: UpdateInformationVal;
+		user: User;
 	}
 
 	let updateInfoLoader = false;
@@ -39,16 +40,15 @@
 		return async ({ result, update }) => {
 			const {
 				status,
-				data: { msg, errors }
+				data: { msg, errors, user }
 			} = result as ResultModel<UpdatePersonalInformation>;
 
 			switch (status) {
 				case 200:
+					$userState = user;
 					formActionError = null;
 					toast.success('Personal Information', { description: msg });
 					updateInfoLoader = false;
-					file = undefined;
-					previewURL = undefined;
 					break;
 
 				case 400:
@@ -69,6 +69,7 @@
 		};
 	};
 
+	//for uploading profile
 	let uploadLoader = false;
 	let previewURL: string | undefined;
 
