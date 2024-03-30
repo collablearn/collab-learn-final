@@ -7,7 +7,7 @@
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 
-	let file: FileList;
+	let file: FileList | undefined;
 
 	interface UpdateInformationVal {
 		bio: string[];
@@ -61,6 +61,35 @@
 			await update();
 		};
 	};
+
+	let uploadLoader = false;
+	const uploadProfileActionNews: SubmitFunction = () => {
+		uploadLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Upload Profile', { description: msg });
+					uploadLoader = false;
+					file = undefined;
+					break;
+
+				case 401:
+					toast.error('Upload Profile', { description: msg });
+					uploadLoader = false;
+					file = undefined;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <!--For upload profile-->
@@ -68,7 +97,7 @@
 	method="post"
 	action="/?/uploadProfileAction"
 	enctype="multipart/form-data"
-	use:enhance
+	use:enhance={uploadProfileActionNews}
 	class="flex items-end justify-between"
 >
 	<div class="">
@@ -81,12 +110,17 @@
 		</p>
 
 		<button
+			disabled={uploadLoader}
 			type="submit"
 			class="{file
 				? ''
 				: 'hidden'} transition-all active:bg-main/80 cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
-			>Upload</button
-		>
+			>{#if uploadLoader}
+				Uploading...
+			{:else}
+				Upload
+			{/if}
+		</button>
 
 		<div class={file ? 'hidden' : ''}>
 			<label>
