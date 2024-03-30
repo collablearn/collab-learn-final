@@ -8,6 +8,10 @@
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import type { User } from '@supabase/supabase-js';
 
+	import { getUserState } from '$lib';
+
+	const userState = getUserState();
+
 	let file: FileList | undefined;
 
 	interface UpdateInformationVal {
@@ -74,6 +78,7 @@
 
 			switch (status) {
 				case 200:
+					$userState = user;
 					toast.success('Upload Profile', { description: msg });
 					uploadLoader = false;
 					file = undefined;
@@ -107,7 +112,7 @@
 
 	<div class="flex flex-col gap-[10px] w-[165px]">
 		<p class="text-[14px] text-main line-clamp-1">
-			{file ? file[0].name : ''}
+			{file ? (file[0] ? file[0].name : '') : ''}
 		</p>
 
 		<button

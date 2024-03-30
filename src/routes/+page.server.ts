@@ -122,7 +122,7 @@ export const actions: Actions = {
 
             if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
             else if (uploadPicture) {
-                const { data: { publicUrl } } = await supabase.storage.from("collab-bucket").getPublicUrl(uploadPicture.path)
+                const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadPicture.path)
 
                 const { data: { user }, error: updateUserError } = await supabase.auth.updateUser({
                     data: {
