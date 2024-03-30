@@ -107,7 +107,11 @@
 	class="flex items-end justify-between"
 >
 	<div class="">
-		<img src={sampleDisplayIcon} alt="sample-icon" class="" />
+		<img
+			src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
+			alt="sample-icon"
+			class="h-[71px] w-[71px] rounded-full"
+		/>
 	</div>
 
 	<div class="flex flex-col gap-[10px] w-[165px]">

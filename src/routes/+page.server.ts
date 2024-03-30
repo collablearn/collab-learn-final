@@ -89,14 +89,6 @@ export const actions: Actions = {
         if (checkLogin === "has auth" && session) {
             try {
                 const result = updateInformationSchema.parse(formData);
-                const { data, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, result.profilePicture, {
-                    cacheControl: "3600",
-                    upsert: false
-                });
-
-                if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
-                else if (data) { }
-
 
             } catch (error) {
                 const zodError = error as ZodError;
