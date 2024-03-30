@@ -134,7 +134,7 @@ export const actions: Actions = {
                     //this is alternative atm transaction comming soon
                     await supabase.storage.from("collab-bucket").remove([session.user.id])
                     return fail(401, { msg: updateUserError.message });
-                } else if (user) return fail(200, { msg: "Upload successfully" })
+                } else if (user) return fail(200, { msg: "Upload successfully", user })
             }
 
         } else redirect(302, "/");

@@ -5,10 +5,10 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { getSessionState } from '$lib';
 	import { goto } from '$app/navigation';
+	import { getUserState } from '$lib';
 
-	const sessionState = getSessionState();
+	const userState = getUserState();
 
 	let logoutLoader = false;
 
@@ -20,7 +20,7 @@
 			switch (status) {
 				case 200:
 					toast.success('Log out', {
-						description: `Thank you for using our system come back again! ${$sessionState?.user.user_metadata.firstname}.`
+						description: `Thank you for using our system come back again! ${$userState?.user_metadata.firstname}.`
 					});
 					logoutLoader = false;
 					goto('/');

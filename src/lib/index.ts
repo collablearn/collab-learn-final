@@ -1,7 +1,7 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
 import type { GuildTypes } from "./types";
-import type { Session } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 
 // for static store
 interface StaticStateTypes {
@@ -251,13 +251,13 @@ export const mockDatas = writable({
 });
 
 
-export const setSessionState = (state: Session | null) => {
+export const setUserState = (state: User | null) => {
     let stateGenerator = writable(state);
-    setContext("sessionState", stateGenerator);
+    setContext("userState", stateGenerator);
 };
 
 // for client session
-export const getSessionState = () => getContext<Writable<Session | null>>("sessionState");
+export const getUserState = () => getContext<Writable<User | null>>("userState");
 
 
 

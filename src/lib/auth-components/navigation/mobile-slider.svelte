@@ -1,7 +1,7 @@
 <script lang="ts">
 	import closeIcon from '$lib/assets/close_icon_320.svg';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
-	import { getAuthState, getSessionState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { fly } from 'svelte/transition';
 
 	export let selections: { title: string; url: string }[];
@@ -9,7 +9,8 @@
 	export let showMobileSlider = false;
 
 	let authState = getAuthState();
-	const clientSession = getSessionState();
+
+	const userState = getUserState();
 </script>
 
 {#if showMobileSlider}
@@ -45,8 +46,8 @@
 
 			<div class="mt-[25px]">
 				<p class="text-[16px] text-subwhite font-bold">
-					{$clientSession?.user.user_metadata.lastname},
-					{$clientSession?.user.user_metadata.firstname}
+					{$userState?.user_metadata.lastname},
+					{$userState?.user_metadata.firstname}
 				</p>
 
 				<!--Removed for a while -->

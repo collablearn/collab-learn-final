@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
+	import type { User } from '@supabase/supabase-js';
 
 	let file: FileList | undefined;
 
@@ -68,8 +69,8 @@
 		return async ({ result, update }) => {
 			const {
 				status,
-				data: { msg }
-			} = result as ResultModel<{ msg: string }>;
+				data: { msg, user }
+			} = result as ResultModel<{ msg: string; user: User }>;
 
 			switch (status) {
 				case 200:
