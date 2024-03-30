@@ -1,8 +1,16 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+
 	let file: FileList;
 </script>
 
-<form class="flex flex-col gap-[10px]">
+<form
+	method="post"
+	action="/?/updatePersonalInformationAction"
+	enctype="multipart/form-data"
+	use:enhance
+	class="flex flex-col gap-[10px]"
+>
 	<span class="text-main text-[14px] transition-all">Upload Profile</span>
 	<label>
 		<div
@@ -70,6 +78,7 @@
 	</label>
 
 	<button
+		type="submit"
 		class="py-[11px] font-semibold text-[14px] flex items-center justify-center bg-main rounded-[10px] text-white"
 		>Save Information
 	</button>

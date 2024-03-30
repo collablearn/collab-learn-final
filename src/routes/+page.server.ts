@@ -78,5 +78,9 @@ export const actions: Actions = {
 
         if (logoutError) return fail(401, { msg: logoutError.message });
         else return fail(200, { msg: "Log out success." });
+    },
+
+    updatePersonalInformationAction: async () => {
+
     }
 };
