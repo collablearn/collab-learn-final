@@ -1,14 +1,68 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { ResultModel } from '$lib/types';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	let file: FileList;
+
+	interface UpdateInformationVal {
+		bio: string[];
+		firstName: string[];
+		lastName: string[];
+		address: string[];
+		barangay: string[];
+		city: string[];
+		religion: string[];
+		contactNumber: string[];
+	}
+
+	interface UpdatePersonalInformation {
+		msg: string;
+		errors: UpdateInformationVal;
+	}
+
+	let updateInfoLoader = false;
+	let formActionError: UpdateInformationVal | null = null;
+	const updatePersonalInformationActionNews: SubmitFunction = () => {
+		updateInfoLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<UpdatePersonalInformation>;
+
+			switch (status) {
+				case 200:
+					formActionError = null;
+					toast.success('Personal Information', { description: msg });
+					updateInfoLoader = false;
+					break;
+
+				case 400:
+					formActionError = errors;
+					updateInfoLoader = false;
+					break;
+
+				case 401:
+					formActionError = null;
+					toast.error('Personal Information', { description: msg });
+					updateInfoLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <form
 	method="post"
 	action="/?/updatePersonalInformationAction"
 	enctype="multipart/form-data"
-	use:enhance
+	use:enhance={updatePersonalInformationActionNews}
 	class="flex flex-col gap-[10px]"
 >
 	<span class="text-main text-[14px] transition-all">Upload Profile</span>
