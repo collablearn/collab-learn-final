@@ -80,7 +80,9 @@ export const actions: Actions = {
         else return fail(200, { msg: "Log out success." });
     },
 
-    updatePersonalInformationAction: async () => {
+    updatePersonalInformationAction: async ({ locals: { supabase }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
 
+        console.log(formData)
     }
 };

@@ -25,3 +25,19 @@ export const registerSchema = z.object({
     }
 
 });
+
+export const updateInformationSchema = z.object({
+    bio: z.string().min(5, { message: "Must enter a valid bio." }),
+    firstName: z.string().min(1, { message: "Must enter a valid first name" }),
+    lastName: z.string().min(1, { message: "Must enter a valid last name." }),
+    address: z.string().min(3, { message: "Must enter a valid address." }),
+    barangay: z.string().min(3, { message: "Must enter a valid barangay" }),
+    city: z.string().min(3, { message: "Must enter a valid city." }),
+    religion: z.string().min(3, { message: "Must enter a valid religion" }),
+    contactNumber: z.string().min(8, { message: "Must enter a valid contact number." }),
+    profilePicture: z.array(z.object({
+        name: z.string(),
+        size: z.number(),
+        type: z.string()
+    }))
+})
