@@ -45,7 +45,8 @@ export const actions: Actions = {
                 options: {
                     data: {
                         firstname: result.firstName,
-                        lastname: result.lastName
+                        lastname: result.lastName,
+
                     }
                 }
             });
@@ -98,7 +99,8 @@ export const actions: Actions = {
                         barangay: result.barangay,
                         city: result.city,
                         religion: result.religion,
-                        contactNumber: result.contactNumber
+                        contact: result.contactNumber,
+                        profileLink: session.user.user_metadata.profileLink
                     }
                 });
 
