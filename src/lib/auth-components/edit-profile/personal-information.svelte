@@ -73,7 +73,7 @@
 	let uploadLoader = false;
 	let previewURL: string | undefined;
 
-	const handleFileChange = (event: InputEvent) => {
+	const handleFileChange = (event: Event) => {
 		const fileInput = event.currentTarget as HTMLInputElement;
 		const file = fileInput.files?.[0];
 		if (file && file.type.startsWith('image/')) {
