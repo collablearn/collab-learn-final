@@ -13,6 +13,7 @@
 	const childStaticState = getStaticState();
 
 	let password = '';
+	let showPasswordGuide = false;
 	$: passwordCheck = passwordStrength(password).value;
 
 	interface RegisterVal {
@@ -111,7 +112,7 @@
 				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 			{/each}
 
-			{#if password}
+			{#if showPasswordGuide}
 				<div
 					class="bg-submain p-[10px] rounded-[10px] flex flex-col gap-[10px] transition-all"
 					in:fade
@@ -132,6 +133,8 @@
 			{/if}
 
 			<input
+				on:focusin={() => (showPasswordGuide = true)}
+				on:focusout={() => (showPasswordGuide = false)}
 				bind:value={password}
 				name="password"
 				type="password"
