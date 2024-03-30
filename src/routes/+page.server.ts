@@ -104,5 +104,11 @@ export const actions: Actions = {
                 return fail(400, { errors: fieldErrors });
             }
         } else redirect(302, "/");
+    },
+
+    uploadProfileAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+        const formData = (await request.formData()).get("uploadProfile") as File;
+
+        console.log(formData)
     }
 };

@@ -64,7 +64,13 @@
 </script>
 
 <!--For upload profile-->
-<form class="flex items-end justify-between">
+<form
+	method="post"
+	action="/?/uploadProfileAction"
+	enctype="multipart/form-data"
+	use:enhance
+	class="flex items-end justify-between"
+>
 	<div class="">
 		<img src={sampleDisplayIcon} alt="sample-icon" class="" />
 	</div>
@@ -74,29 +80,31 @@
 			{file ? file[0].name : ''}
 		</p>
 
-		{#if file}
-			<button
-				class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
-				>Upload</button
-			>
-		{:else}
-			<div class="">
-				<label>
-					<div
-						class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
-					>
-						<div class="flex items-end gap-[10px]">
-							<img src={uploadIcon} alt="upload-icon" />
-							<span>Upload Profile</span>
-							<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
-						</div>
+		<button
+			type="submit"
+			class="{file
+				? ''
+				: 'hidden'} cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
+			>Upload</button
+		>
+
+		<div class={file ? 'hidden' : ''}>
+			<label>
+				<div
+					class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+				>
+					<div class="flex items-end gap-[10px]">
+						<img src={uploadIcon} alt="upload-icon" />
+						<span>Upload Profile</span>
+						<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
 					</div>
-				</label>
-			</div>
-		{/if}
+				</div>
+			</label>
+		</div>
 	</div>
 </form>
 
+<!--For Update Information-->
 <form
 	method="post"
 	action="/?/updatePersonalInformationAction"
