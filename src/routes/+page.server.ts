@@ -102,9 +102,8 @@ export const actions: Actions = {
                     }
                 });
 
-
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
-                else if (user) return fail(200, { msg: 'Information Updated Successfully.', user })
+                else if (user) return fail(200, { msg: 'Information Updated Successfully.', user });
 
 
             } catch (error) {

@@ -33,7 +33,6 @@
 	}
 
 	let updateInfoLoader = false;
-	let canUploader = false;
 	let formActionError: UpdateInformationVal | null = null;
 	const updatePersonalInformationActionNews: SubmitFunction = () => {
 		updateInfoLoader = true;
@@ -266,8 +265,11 @@
 	</label>
 
 	<button
+		disabled={updateInfoLoader}
 		type="submit"
-		class="py-[11px] font-semibold text-[14px] flex items-center justify-center bg-main rounded-[10px] text-white"
+		class="{updateInfoLoader
+			? 'cursor-not-allowed bg-main/50'
+			: 'bg-main'} py-[11px] font-semibold text-[14px] flex items-center justify-center rounded-[10px] text-white"
 		>Save Information
 	</button>
 </form>
