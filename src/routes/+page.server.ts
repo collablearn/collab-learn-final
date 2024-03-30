@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema } from "$lib/schema";
+import { loginSchema, registerSchema, updateInformationSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import { passwordStrength } from "check-password-strength";
 import type { ZodError } from "zod";
@@ -83,6 +83,13 @@ export const actions: Actions = {
     updatePersonalInformationAction: async ({ locals: { supabase }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        console.log(formData)
+        try {
+            const result = updateInformationSchema.parse(formData);
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            console.log(fieldErrors)
+            return fail(400, { errors: fieldErrors });
+        }
     }
 };

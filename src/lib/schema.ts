@@ -35,9 +35,10 @@ export const updateInformationSchema = z.object({
     city: z.string().min(3, { message: "Must enter a valid city." }),
     religion: z.string().min(3, { message: "Must enter a valid religion" }),
     contactNumber: z.string().min(8, { message: "Must enter a valid contact number." }),
-    profilePicture: z.array(z.object({
+    profilePicture: z.object({
         name: z.string(),
         size: z.number(),
         type: z.string()
-    }))
+    }).refine((file) => file.size > 0 && file.name.trim().length > 0, { message: "Invalid file" })
+
 })

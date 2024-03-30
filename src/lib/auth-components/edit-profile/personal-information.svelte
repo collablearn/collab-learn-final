@@ -17,7 +17,13 @@
 			class="outline-none w-full border-dashed text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		>
 			<span class="font-semibold text-[14px]">{file ? file[0].name : 'Choose a file'}</span>
-			<input name="profilePicture" type="file" class="hidden" accept=".png" bind:files={file} />
+			<input
+				name="profilePicture"
+				type="file"
+				class="hidden"
+				accept=".png,jpeg,.jpg"
+				bind:files={file}
+			/>
 		</div>
 	</label>
 
