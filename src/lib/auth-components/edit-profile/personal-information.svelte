@@ -27,6 +27,7 @@
 	}
 
 	let updateInfoLoader = false;
+	let canUploader = false;
 	let formActionError: UpdateInformationVal | null = null;
 	const updatePersonalInformationActionNews: SubmitFunction = () => {
 		updateInfoLoader = true;
@@ -72,17 +73,27 @@
 		<p class="text-[14px] text-main line-clamp-1">
 			{file ? file[0].name : ''}
 		</p>
-		<label>
-			<div
-				class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+
+		{#if file}
+			<button
+				class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px]"
+				>Upload</button
 			>
-				<div class="flex items-end gap-[10px]">
-					<img src={uploadIcon} alt="upload-icon" />
-					<span>Upload Profile</span>
-					<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
-				</div>
+		{:else}
+			<div class="">
+				<label>
+					<div
+						class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+					>
+						<div class="flex items-end gap-[10px]">
+							<img src={uploadIcon} alt="upload-icon" />
+							<span>Upload Profile</span>
+							<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
+						</div>
+					</div>
+				</label>
 			</div>
-		</label>
+		{/if}
 	</div>
 </form>
 
@@ -91,7 +102,7 @@
 	action="/?/updatePersonalInformationAction"
 	enctype="multipart/form-data"
 	use:enhance={updatePersonalInformationActionNews}
-	class="flex flex-col gap-[10px]"
+	class="flex flex-col gap-[10px] mt-[20px]"
 >
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>

@@ -1,6 +1,6 @@
 import { loginSchema, registerSchema, updateInformationSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
-import { passwordStrength } from "check-password-strength";
+
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
@@ -95,7 +95,7 @@ export const actions: Actions = {
                 });
 
                 if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
-                else if (data) 
+                else if (data) { }
 
 
             } catch (error) {
