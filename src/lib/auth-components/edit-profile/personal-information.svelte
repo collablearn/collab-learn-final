@@ -7,6 +7,7 @@
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import type { User } from '@supabase/supabase-js';
+	import clearIcon from '$lib/assets/clear_icon.svg';
 
 	import { getUserState } from '$lib';
 
@@ -114,10 +115,17 @@
 		/>
 	</div>
 
-	<div class="flex flex-col gap-[10px] w-[165px]">
-		<p class="text-[14px] text-main line-clamp-1">
-			{file ? (file[0] ? file[0].name : '') : ''}
-		</p>
+	<div class="flex flex-col gap-[20px] w-[165px]">
+		{#if file}
+			{#if file[0].name}
+				<button class="flex items-center gap-[10px] w-[100px]" on:click={() => (file = undefined)}>
+					<p class="text-[14px] text-main line-clamp-1">
+						{file ? (file[0] ? file[0].name : '') : ''}asdasdasdasdadadasdadasdasdasdasd
+					</p>
+					<img src={clearIcon} alt="clear-icon" class="" />
+				</button>
+			{/if}
+		{/if}
 
 		<button
 			disabled={uploadLoader}
