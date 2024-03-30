@@ -50,7 +50,9 @@
 					{$clientSession?.user.user_metadata.firstname}
 				</p>
 
-				<div class="text-[14px] text-subwhite mt-[20px]">
+				<!--Removed for a while -->
+
+				<!-- <div class="text-[14px] text-subwhite mt-[20px]">
 					<div class="flex items-center gap-[2px]">
 						<p class="font-semibold">Student ID :</p>
 						<p class=" font-semibold">12345678</p>
@@ -60,7 +62,7 @@
 						<p class="font-semibold">Year and Section :</p>
 						<p class=" font-semibold">11 - Makatao</p>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<hr class="border-[1px] border-white my-[20px]" />
