@@ -80,25 +80,29 @@ export const actions: Actions = {
         else return fail(200, { msg: "Log out success." });
     },
 
-    updatePersonalInformationAction: async ({ locals: { supabase }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
-        try {
-            const result = updateInformationSchema.parse(formData);
 
-            console.log(result.profilePicture)
+        const checkLogin = isLogged();
+        const session = await getSession();
 
-            /* const { data, error } = await supabase.storage.from("collab-bucket").upload('sample', asd, {
-                cacheControl: "3600",
-                upsert: false
-            });
+        if (checkLogin === "has auth" && session) {
+            try {
+                const result = updateInformationSchema.parse(formData);
+                const { data, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, result.profilePicture, {
+                    cacheControl: "3600",
+                    upsert: false
+                });
 
-            console.log(data?.path, error?.message) */
+                if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
+                else if (data) 
 
-        } catch (error) {
-            const zodError = error as ZodError;
-            const { fieldErrors } = zodError.flatten();
-            console.log(fieldErrors);
-            return fail(400, { errors: fieldErrors });
-        }
+
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
+        } else redirect(302, "/");
     }
 };

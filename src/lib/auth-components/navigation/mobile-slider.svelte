@@ -1,7 +1,6 @@
 <script lang="ts">
 	import closeIcon from '$lib/assets/close_icon_320.svg';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
-	import { page } from '$app/stores';
 	import { getAuthState, getSessionState } from '$lib';
 	import { fly } from 'svelte/transition';
 

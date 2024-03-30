@@ -37,6 +37,6 @@ export const updateInformationSchema = z.object({
     contactNumber: z.string().min(8, { message: "Must enter a valid contact number." }),
     profilePicture: z.instanceof(File).refine(
         (file) => file instanceof File && file.size > 0,
-        { message: "You must upload profile picture." }
+        { message: "You must upload a profile picture." }
     )
 })

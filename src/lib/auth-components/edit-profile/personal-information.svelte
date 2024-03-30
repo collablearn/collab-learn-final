@@ -4,6 +4,8 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
+	import uploadIcon from '$lib/assets/upload_icon.svg';
 
 	let file: FileList;
 
@@ -60,6 +62,30 @@
 	};
 </script>
 
+<!--For upload profile-->
+<form class="flex items-end justify-between">
+	<div class="">
+		<img src={sampleDisplayIcon} alt="sample-icon" class="" />
+	</div>
+
+	<div class="flex flex-col gap-[10px] w-[165px]">
+		<p class="text-[14px] text-main line-clamp-1">
+			{file ? file[0].name : ''}
+		</p>
+		<label>
+			<div
+				class="cursor-pointer w-full text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+			>
+				<div class="flex items-end gap-[10px]">
+					<img src={uploadIcon} alt="upload-icon" />
+					<span>Upload Profile</span>
+					<input type="file" name="uploadProfile" class="hidden" bind:files={file} />
+				</div>
+			</div>
+		</label>
+	</div>
+</form>
+
 <form
 	method="post"
 	action="/?/updatePersonalInformationAction"
@@ -67,25 +93,6 @@
 	use:enhance={updatePersonalInformationActionNews}
 	class="flex flex-col gap-[10px]"
 >
-	<span class="text-main text-[14px] transition-all">Upload Profile</span>
-	<label>
-		<div
-			class="outline-none w-full border-dashed text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
-		>
-			<span class="font-semibold text-[14px]">{file ? file[0].name : 'Choose a file'}</span>
-			<input
-				name="profilePicture"
-				type="file"
-				class="hidden"
-				accept=".png,jpeg,.jpg"
-				bind:files={file}
-			/>
-		</div>
-		{#each formActionError?.profilePicture ?? [] as errMsg}
-			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
-		{/each}
-	</label>
-
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
