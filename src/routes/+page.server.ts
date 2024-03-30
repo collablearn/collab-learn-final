@@ -82,13 +82,22 @@ export const actions: Actions = {
 
     updatePersonalInformationAction: async ({ locals: { supabase }, request }) => {
         const formData = Object.fromEntries(await request.formData());
-
         try {
             const result = updateInformationSchema.parse(formData);
+
+            console.log(result.profilePicture)
+
+            /* const { data, error } = await supabase.storage.from("collab-bucket").upload('sample', asd, {
+                cacheControl: "3600",
+                upsert: false
+            });
+
+            console.log(data?.path, error?.message) */
+
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            console.log(fieldErrors)
+            console.log(fieldErrors);
             return fail(400, { errors: fieldErrors });
         }
     }
