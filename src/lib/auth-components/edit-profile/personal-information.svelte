@@ -3,6 +3,7 @@
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
+	import { fade } from 'svelte/transition';
 
 	let file: FileList;
 
@@ -15,6 +16,7 @@
 		city: string[];
 		religion: string[];
 		contactNumber: string[];
+		profilePicture: string[];
 	}
 
 	interface UpdatePersonalInformation {
@@ -79,6 +81,9 @@
 				bind:files={file}
 			/>
 		</div>
+		{#each formActionError?.profilePicture ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -87,6 +92,9 @@
 			name="bio"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.bio ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -96,6 +104,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.firstName ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -105,6 +116,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.lastName ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -115,6 +129,9 @@
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
 	</label>
+	{#each formActionError?.address ?? [] as errMsg}
+		<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+	{/each}
 
 	<label>
 		<span class="text-main text-[14px] transition-all">Barangay</span>
@@ -123,6 +140,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.barangay ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -132,6 +152,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.city ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -141,6 +164,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.religion ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<label>
@@ -150,6 +176,9 @@
 			type="text"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
+		{#each formActionError?.contactNumber ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	</label>
 
 	<button
