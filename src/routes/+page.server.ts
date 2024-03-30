@@ -89,6 +89,23 @@ export const actions: Actions = {
         if (checkLogin === "has auth" && session) {
             try {
                 const result = updateInformationSchema.parse(formData);
+                const { data: { user }, error: updateUserError } = await supabase.auth.updateUser({
+                    data: {
+                        firstname: result.firstName,
+                        lastname: result.lastName,
+                        bio: result.bio,
+                        address: result.address,
+                        barangay: result.barangay,
+                        city: result.city,
+                        religion: result.religion,
+                        contactNumber: result.contactNumber
+                    }
+                });
+
+
+                if (updateUserError) return fail(401, { msg: updateUserError.message });
+                else if (user) return fail(200, { msg: 'Information Updated Successfully.', user })
+
 
             } catch (error) {
                 const zodError = error as ZodError;
@@ -113,6 +130,7 @@ export const actions: Actions = {
             });
 
             if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
+
             else if (uploadPicture) {
                 const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadPicture.path)
 
