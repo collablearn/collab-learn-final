@@ -8,13 +8,15 @@
 	import { fade, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
-	import { tick } from 'svelte';
 
 	const childStaticState = getStaticState();
 
 	let password = '';
 	let showPasswordGuide = false;
 	$: passwordCheck = passwordStrength(password).value;
+
+	const checkPasswordEngine = () =>
+		passwordCheck === 'Strong' ? (showPasswordGuide = false) : (showPasswordGuide = true);
 
 	interface RegisterVal {
 		firstName: string[];
@@ -115,7 +117,7 @@
 			{#if showPasswordGuide}
 				<div
 					class="bg-submain p-[10px] rounded-[10px] flex flex-col gap-[10px] transition-all"
-					in:fade
+					transition:fade
 				>
 					<p class="text-main text-[14px]">
 						Create a complex password with a mix of uppercase and lowercase letters, numbers, and
@@ -125,7 +127,7 @@
 					<div class="">
 						<p class="text-main text-[14px]">Sample:</p>
 
-						<p class=" max-w-fit bg-main text-submain text-[14px]">
+						<p class=" max-w-fit bg-main text-submain text-[14px] px-[5px] rounded-[10px]">
 							{samplePasswords[Math.floor(Math.random() * 20)]}
 						</p>
 					</div>
@@ -133,8 +135,7 @@
 			{/if}
 
 			<input
-				on:focusin={() => (showPasswordGuide = true)}
-				on:focusout={() => (showPasswordGuide = false)}
+				on:keyup={() => checkPasswordEngine()}
 				bind:value={password}
 				name="password"
 				type="password"
