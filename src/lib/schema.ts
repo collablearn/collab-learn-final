@@ -49,4 +49,4 @@ export const updatePasswordSchema = z.object({
         });
 
     }
-})
+});

@@ -1,19 +1,40 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
+	interface ChangePasswordVal {
+		newPassword: string[];
+		confirmNewPassword: string[];
+	}
+
+	interface UpdatePasswordAction {
+		msg: string;
+		errors: ChangePasswordVal;
+	}
+
+	let changePasswordLoader = false;
+	let formActionError: ChangePasswordVal | null = null;
+
 	const updatePasswordActionNews: SubmitFunction = () => {
+		changePasswordLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<UpdatePasswordAction>;
 
 			switch (status) {
 				case 200:
+					changePasswordLoader = false;
 					break;
 
 				case 400:
+					changePasswordLoader = false;
 					break;
 
 				case 401:
+					changePasswordLoader = false;
 					break;
 
 				default:
@@ -49,7 +70,13 @@
 		/>
 	</label>
 	<button
-		class="transition-all active:bg-main/50 py-[11px] font-semibold text-[14px] flex items-center justify-center bg-main rounded-[10px] text-white"
-		>Update Password
+		disabled={changePasswordLoader}
+		class="{changePasswordLoader ? 'bg-main/50 cursor-not-allowed' : 'bg-main'}
+		transition-all active:bg-main/50 py-[11px] font-semibold text-[14px] flex items-center justify-center rounded-[10px] text-white"
+		>{#if changePasswordLoader}
+			Updating...
+		{:else}
+			Update Password
+		{/if}
 	</button>
 </form>
