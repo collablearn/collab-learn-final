@@ -15,27 +15,35 @@
 		$staticState.isResetting = false;
 	};
 
+	interface ResetPasswordVal {
+		email: string[];
+	}
+
 	let resetPasswordLoader = false;
+	let formActionError: ResetPasswordVal | null = null;
 
 	const resetPasswordActionNews: SubmitFunction = () => {
 		resetPasswordLoader = true;
 		return async ({ result, update }) => {
 			const {
 				status,
-				data: { msg }
-			} = result as ResultModel<{ msg: string }>;
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: ResetPasswordVal }>;
 
 			switch (status) {
 				case 200:
+					formActionError = null;
 					toast.success('Password Recovery', { description: msg });
 					resetPasswordLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
 					resetPasswordLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
 					toast.error('Password Recovery', { description: msg });
 					resetPasswordLoader = false;
 					break;
