@@ -64,7 +64,7 @@
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.newPassword ?? [] as errMsg}
-			<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 		{/each}
 	</label>
 
