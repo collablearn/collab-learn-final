@@ -84,8 +84,9 @@
 		</div>
 
 		<div class="mt-[20px] flex flex-col gap-[20px]">
-			<input name="passwordStrength" type="hidden" value={passwordCheck} />
+			<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
 			<input
+				autocomplete="off"
 				name="firstName"
 				type="text"
 				placeholder="First Name"
@@ -96,6 +97,7 @@
 			{/each}
 
 			<input
+				autocomplete="off"
 				name="lastName"
 				type="text"
 				placeholder="Last Name"
@@ -106,6 +108,7 @@
 			{/each}
 
 			<input
+				autocomplete="off"
 				name="email"
 				type="email"
 				placeholder="Email Address"
@@ -136,6 +139,7 @@
 			{/if}
 
 			<input
+				autocomplete="off"
 				on:keyup={() => checkPasswordEngine()}
 				bind:value={password}
 				name="password"
@@ -152,6 +156,7 @@
 			{/if}
 
 			<input
+				autocomplete="off"
 				name="confirmPassword"
 				type="password"
 				placeholder="Confirm Password"
