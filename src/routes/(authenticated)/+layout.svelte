@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
-	import { getAuthState, setAuthState, setUserState } from '$lib';
+	import { getAuthState, getUserState, setAuthState, setUserState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
-	import type { LayoutServerData } from '../$types';
+	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
 
@@ -25,10 +25,11 @@
 			}
 		}
 	};
+	setUserState(data.userData.data);
+	const userState = getUserState();
+	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
 
-	$: data.session?.user ? setUserState(data.session.user) : setUserState(null);
 	setAuthState(defaultAuthState);
-
 	const authState = getAuthState();
 </script>
 

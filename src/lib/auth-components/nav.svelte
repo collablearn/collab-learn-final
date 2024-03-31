@@ -44,7 +44,7 @@
 		<div class="flex items-center justify-center">
 			<button on:click={() => (showUserMenu = true)}>
 				<img
-					src={$userState?.user_metadata.profileLink ?? userIcon}
+					src={$userState?.user_photo_link ?? userIcon}
 					alt="user-icon"
 					class="w-[25px] h-[25px] rounded-full"
 				/>
