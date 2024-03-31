@@ -8,6 +8,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	let password = '';
 	let showPasswordGuide = false;
@@ -42,6 +43,7 @@
 					toast.success('Update Password', { description: msg });
 					formActionError = null;
 					updatePasswordLoader = false;
+					goto('/dashboard');
 					break;
 
 				case 400:
