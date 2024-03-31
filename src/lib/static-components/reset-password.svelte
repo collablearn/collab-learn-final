@@ -77,6 +77,7 @@
 			</p>
 
 			<input
+				autocomplete="off"
 				name="email"
 				type="email"
 				placeholder="Enter your email"
