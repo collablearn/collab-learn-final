@@ -108,12 +108,13 @@
 					type="password"
 					placeholder="New Password"
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+					bind:value={password}
 				/>
 				{#if password}
-					<p class="text-main text-[14px]" in:fade>{passwordCheck}</p>
+					<p class="text-submain text-[14px]" in:fade>{passwordCheck}</p>
 				{:else}
 					{#each formActionError?.newPassword ?? [] as errMsg}
-						<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+						<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 					{/each}
 				{/if}
 
@@ -124,7 +125,7 @@
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 				/>
 				{#each formActionError?.confirmNewPassword ?? [] as errMsg}
-					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+					<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 				{/each}
 			</div>
 		</div>
@@ -134,9 +135,15 @@
 
 		<div class="mt-[40px]">
 			<button
-				class="active:bg-submain/50 bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				disabled={updatePasswordLoader}
+				class="{updatePasswordLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+				active:bg-submain/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				Update Password
+				{#if updatePasswordLoader}
+					Updating...
+				{:else}
+					Update Password
+				{/if}
 			</button>
 		</div>
 	</div>

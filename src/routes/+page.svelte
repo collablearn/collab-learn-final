@@ -23,7 +23,7 @@
 {:else if $staticState.isResetting}
 	{#if $staticState.isVerfying}
 		<VeryfyAccount />
-	{:else if true}
+	{:else if $staticState.isUpdating}
 		<UpdatePassword />
 	{:else}
 		<ResetPassword />
