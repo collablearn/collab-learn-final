@@ -8,17 +8,12 @@
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 
-	const childStaticState = getStaticState();
-
-	const veryfyContinueHandler = () => {
-		$childStaticState.isVerfying = false;
-		$childStaticState.isUpdating = true;
-	};
+	const staticState = getStaticState();
 
 	const cleanUpHandler = () => {
-		$childStaticState.isVerfying = false;
-		$childStaticState.isUpdating = false;
-		$childStaticState.isResetting = false;
+		$staticState.isVerfying = false;
+		$staticState.isUpdating = false;
+		$staticState.isResetting = false;
 	};
 
 	interface VerifyCodeVal {
@@ -40,6 +35,8 @@
 				case 200:
 					toast.success('Verify Code', { description: msg });
 					verifyCodeLoader = false;
+					$staticState.isVerfying = false;
+					$staticState.isUpdating = true;
 					break;
 
 				case 400:
