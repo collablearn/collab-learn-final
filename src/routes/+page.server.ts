@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema, updateInformationSchema } from "$lib/schema";
+import { loginSchema, registerSchema, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -141,12 +141,20 @@ export const actions: Actions = {
 
     },
 
-    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession } }) => {
+    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
         const checkLogin = isLogged();
         const session = await getSession();
 
         if (checkLogin === "has auth" && session) {
+            const formData = Object.fromEntries(await request.formData());
 
+            try {
+                const result = updatePasswordSchema.parse(formData);
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
 
 
         } else redirect(302, "/");
