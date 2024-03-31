@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
+import { loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -73,6 +73,45 @@ export const actions: Actions = {
 
         if (logoutError) return fail(401, { msg: logoutError.message });
         else return fail(200, { msg: "Log out success." });
+    },
+
+    resetPasswordAction: async ({ locals: { supabase }, request }) => {
+
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = resetPasswordSchema.parse(formData);
+
+            const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
+
+            if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
+            else return fail(200, { msg: `A reset code has been sent to your email address ${result.email}. Kindly check your inbox.`, email: result.email });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+
+
+    },
+
+    verifyCodeAction: async ({ locals: { supabase }, request }) => {
+
+
+        const formData = Object.fromEntries(await request.formData());
+        try {
+            const result = verifyCodeSchema.parse(formData);
+            const { data: { session }, error: verifyCodeError } = await supabase.auth.verifyOtp({ email: result.email, token: result.verifyCode, type: 'email' });
+
+            if (verifyCodeError) return fail(401, { msg: verifyCodeError.message });
+            else if (session) return fail(200, { msg: "Code Verified." });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     },
 
     updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
@@ -167,5 +206,7 @@ export const actions: Actions = {
 
 
         } else redirect(302, "/");
-    }
+    },
+
+
 };
