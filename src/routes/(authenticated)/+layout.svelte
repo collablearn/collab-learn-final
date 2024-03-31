@@ -1,8 +1,35 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState, setAuthState, setUserState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
+	import type { LayoutServerData } from './$types';
 
+	export let data: LayoutServerData;
+
+	const defaultAuthState = {
+		activeItem: '/dashboard',
+		projects: {
+			joinedProject: false,
+			showEditTools: false
+		},
+		guilds: {
+			joinedGuild: false,
+			guildObj: {
+				imageUrl: '',
+				hostName: '',
+				maxUsers: 0,
+				guildName: '',
+				guildDescription: '',
+				isPrivate: false,
+				joinedCount: 0
+			}
+		}
+	};
+	setUserState(data.userData.data);
+	const userState = getUserState();
+	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
+
+	setAuthState(defaultAuthState);
 	const authState = getAuthState();
 </script>
 

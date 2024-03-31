@@ -49,7 +49,7 @@
 					formActionError = null;
 					toast.success('Personal Information', { description: msg });
 					updateInfoLoader = false;
-					$userState = user;
+
 					break;
 
 				case 400:
@@ -142,7 +142,7 @@
 			</button>
 		{:else}
 			<img
-				src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
+				src={$userState?.user_photo_link ?? sampleDisplayIcon}
 				alt="sample-icon"
 				class="h-[71px] w-[71px] rounded-full"
 			/>
