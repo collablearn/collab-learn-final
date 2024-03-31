@@ -4,6 +4,8 @@
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import type { ResultModel } from '$lib/types';
 
 	const staticState = getStaticState();
 
@@ -13,18 +15,29 @@
 		$staticState.isResetting = false;
 	};
 
+	let resetPasswordLoader = false;
+
 	const resetPasswordActionNews: SubmitFunction = () => {
+		resetPasswordLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
 
 			switch (status) {
 				case 200:
+					toast.success('Password Recovery', { description: msg });
+					resetPasswordLoader = false;
 					break;
 
 				case 400:
+					resetPasswordLoader = false;
 					break;
 
 				case 401:
+					toast.error('Password Recovery', { description: msg });
+					resetPasswordLoader = false;
 					break;
 
 				default:
