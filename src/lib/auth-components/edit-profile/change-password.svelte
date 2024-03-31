@@ -34,6 +34,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">New Password</span>
 		<input
+			name="newPassword"
 			type="password"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
@@ -42,12 +43,13 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Confirm New Password</span>
 		<input
+			name="confirmNewPassword"
 			type="password"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
 	</label>
 	<button
-		class="py-[11px] font-semibold text-[14px] flex items-center justify-center bg-main rounded-[10px] text-white"
+		class="transition-all active:bg-main/50 py-[11px] font-semibold text-[14px] flex items-center justify-center bg-main rounded-[10px] text-white"
 		>Update Password
 	</button>
 </form>
