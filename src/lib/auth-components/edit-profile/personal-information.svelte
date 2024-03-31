@@ -14,6 +14,7 @@
 	const userState = getUserState();
 
 	let file: FileList | undefined;
+	let defaultState = true;
 
 	interface UpdateInformationVal {
 		bio: string[];
@@ -49,7 +50,7 @@
 					formActionError = null;
 					toast.success('Personal Information', { description: msg });
 					updateInfoLoader = false;
-
+					defaultState = true;
 					break;
 
 				case 400:
@@ -100,6 +101,7 @@
 					uploadLoader = false;
 					file = undefined;
 					previewURL = undefined;
+					defaultState = true;
 					break;
 
 				case 401:
@@ -116,8 +118,6 @@
 			await update();
 		};
 	};
-
-	let defaultState = true;
 </script>
 
 <!--For upload profile-->
@@ -198,7 +198,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
-			value={$userState?.user_bio}
+			value={defaultState ? $userState?.user_bio : ''}
 			disabled={defaultState}
 			name="bio"
 			class="{defaultState ? 'bg-submain' : 'bg-subwhite'} 
@@ -212,7 +212,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">First Name</span>
 		<input
-			value={$userState?.user_fullname.split(', ')[1]}
+			value={defaultState ? $userState?.user_fullname.split(', ')[1] : ''}
 			disabled={defaultState}
 			name="firstName"
 			type="text"
@@ -227,7 +227,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Last Name</span>
 		<input
-			value={$userState?.user_fullname.split(', ')[0]}
+			value={defaultState ? $userState?.user_fullname.split(', ')[0] : ''}
 			disabled={defaultState}
 			name="lastName"
 			type="text"
@@ -242,7 +242,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Address</span>
 		<input
-			value={$userState?.user_address}
+			value={defaultState ? $userState?.user_address : ''}
 			disabled={defaultState}
 			name="address"
 			type="text"
@@ -257,7 +257,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Barangay</span>
 		<input
-			value={$userState?.user_barangay}
+			value={defaultState ? $userState?.user_barangay : ''}
 			disabled={defaultState}
 			name="barangay"
 			type="text"
@@ -272,7 +272,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">City</span>
 		<input
-			value={$userState?.user_city}
+			value={defaultState ? $userState?.user_city : ''}
 			disabled={defaultState}
 			name="city"
 			type="text"
@@ -287,7 +287,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Religion</span>
 		<input
-			value={$userState?.user_religion}
+			value={defaultState ? $userState?.user_religion : ''}
 			disabled={defaultState}
 			name="religion"
 			type="text"
@@ -302,7 +302,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Contact Number</span>
 		<input
-			value={$userState?.user_contact}
+			value={defaultState ? $userState?.user_contact : ''}
 			disabled={defaultState}
 			name="contactNumber"
 			type="text"
@@ -352,3 +352,12 @@
 		{/if}
 	</div>
 </form>
+
+<style>
+	input {
+		-webkit-user-select: none; /* Safari */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* IE/Edge */
+		user-select: none; /* Standard syntax */
+	}
+</style>
