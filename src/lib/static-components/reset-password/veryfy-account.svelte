@@ -4,6 +4,9 @@
 	import { getStaticState } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
+	import type { Result } from 'postcss';
+	import type { ResultModel } from '$lib/types';
+	import { toast } from 'svelte-sonner';
 
 	const childStaticState = getStaticState();
 
@@ -18,18 +21,35 @@
 		$childStaticState.isResetting = false;
 	};
 
+	interface VerifyCodeVal {
+		verifyCode: string[];
+	}
+
+	let verifyCodeLoader = false;
+	let formActionError: VerifyCodeVal | null = null;
+
 	const verifyCodeActionNews: SubmitFunction = () => {
+		verifyCodeLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: VerifyCodeVal }>;
 
 			switch (status) {
 				case 200:
+					toast.success('Verify Code', { description: msg });
+					verifyCodeLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
+					verifyCodeLoader = false;
 					break;
 
 				case 401:
+					toast.error('Verify Code', { description: msg });
+					verifyCodeLoader = false;
 					break;
 
 				default:
