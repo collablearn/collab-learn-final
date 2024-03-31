@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema, updateInformationSchema } from "$lib/schema";
+import { loginSchema, registerSchema, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -6,7 +6,6 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
     const loginCheck = isLogged();
-    const { data, error } = await supabase.from("user_list_tb").select("*");
 
     if (loginCheck === "has auth") redirect(302, "/dashboard");
 
@@ -140,5 +139,33 @@ export const actions: Actions = {
 
         } else redirect(302, "/");
 
+    },
+
+    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+        const checkLogin = isLogged();
+        const session = await getSession();
+
+        if (checkLogin === "has auth" && session) {
+            const formData = Object.fromEntries(await request.formData());
+
+            try {
+                const result = updatePasswordSchema.parse(formData);
+                if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
+
+                const { data: { user }, error: updatePasswordError } = await supabase.auth.updateUser({
+                    password: result.newPassword
+                });
+
+                if (updatePasswordError) return fail(401, { msg: updatePasswordError.message });
+                else if (user) return fail(200, { msg: "Password Successfully Changed." });
+
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
+
+
+        } else redirect(302, "/");
     }
 };

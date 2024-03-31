@@ -73,6 +73,7 @@
 
 		<div class="mt-[73px] flex flex-col gap-[20px]">
 			<input
+				autocomplete="off"
 				name="email"
 				type="email"
 				placeholder="Enter your email"
@@ -83,6 +84,7 @@
 			{/each}
 
 			<input
+				autocomplete="off"
 				name="password"
 				type="password"
 				placeholder="Enter your password"

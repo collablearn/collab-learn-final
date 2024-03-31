@@ -35,4 +35,19 @@ export const updateInformationSchema = z.object({
     city: z.string().min(3, { message: "Must enter a valid city." }),
     religion: z.string().min(3, { message: "Must enter a valid religion" }),
     contactNumber: z.string().min(8, { message: "Must enter a valid contact number." }),
-})
+});
+
+export const updatePasswordSchema = z.object({
+    newPassword: z.string().min(8, { message: "Must choose a strong password" }),
+    confirmNewPassword: z.string(),
+    passwordStrength: z.string()
+}).superRefine(({ newPassword, confirmNewPassword }, ctx) => {
+    if (newPassword !== confirmNewPassword) {
+        ctx.addIssue({
+            code: "custom",
+            message: "Password and Confirm Password must match",
+            path: ["confirmNewPassword"]
+        });
+
+    }
+});
