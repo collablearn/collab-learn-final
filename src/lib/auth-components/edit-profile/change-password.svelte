@@ -1,4 +1,26 @@
 <script lang="ts">
+	import type { SubmitFunction } from '@sveltejs/kit';
+
+	const updatePasswordActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <form class="flex flex-col gap-[10px]">
