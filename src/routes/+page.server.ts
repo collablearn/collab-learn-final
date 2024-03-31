@@ -167,5 +167,16 @@ export const actions: Actions = {
 
 
         } else redirect(302, "/");
+    },
+
+    resetPasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+        const checkLogin = isLogged();
+        const session = await getSession();
+
+        if (checkLogin === "has auth" && session) {
+            const formData = Object.fromEntries(await request.formData());
+
+
+        } else redirect(302, "/");
     }
 };
