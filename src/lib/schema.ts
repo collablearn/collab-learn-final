@@ -30,6 +30,10 @@ export const resetPasswordSchema = z.object({
     email: z.string().email()
 });
 
+export const verifyCodeSchema = z.object({
+    verifyCode: z.string().min(6, { message: "Must enter a valid code." })
+});
+
 export const updateInformationSchema = z.object({
     bio: z.string().min(5, { message: "Must enter a valid bio." }),
     firstName: z.string().min(1, { message: "Must enter a valid first name" }),
