@@ -85,6 +85,8 @@
 		</div>
 	{/if}
 
+	<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
+
 	<label>
 		<span class="text-main text-[14px] transition-all">New Password</span>
 		<input
