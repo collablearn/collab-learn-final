@@ -10,7 +10,8 @@
 		isRegistering: false,
 		isResetting: false,
 		isVerfying: false,
-		isUpdating: false
+		isUpdating: false,
+		email: ''
 	};
 	setStaticState(staticObject);
 

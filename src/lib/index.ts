@@ -9,6 +9,7 @@ interface StaticStateTypes {
     isResetting: boolean
     isVerfying: boolean
     isUpdating: boolean
+    email: string
 }
 
 

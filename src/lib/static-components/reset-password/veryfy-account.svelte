@@ -76,6 +76,7 @@
 			</p>
 
 			<div class="flex gap-[23px] justify-center">
+				<input name="email" type="hidden" class="hidden" value={$staticState.email} />
 				<input
 					disabled={verifyCodeLoader}
 					autocomplete="off"

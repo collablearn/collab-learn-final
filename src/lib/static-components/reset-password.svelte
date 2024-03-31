@@ -28,11 +28,12 @@
 		return async ({ result, update }) => {
 			const {
 				status,
-				data: { msg, errors }
-			} = result as ResultModel<{ msg: string; errors: ResetPasswordVal }>;
+				data: { msg, errors, email }
+			} = result as ResultModel<{ msg: string; errors: ResetPasswordVal; email: string }>;
 
 			switch (status) {
 				case 200:
+					$staticState.email = email;
 					formActionError = null;
 					toast.success('Password Recovery', { description: msg });
 					resetPasswordLoader = false;
