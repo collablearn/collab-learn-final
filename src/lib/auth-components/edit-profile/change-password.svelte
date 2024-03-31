@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const updatePasswordActionNews: SubmitFunction = () => {
@@ -23,7 +24,13 @@
 	};
 </script>
 
-<form class="flex flex-col gap-[10px]">
+<form
+	method="post"
+	action="/?/updatePasswordAction"
+	enctype="multipart/form-data"
+	use:enhance={updatePasswordActionNews}
+	class="flex flex-col gap-[10px]"
+>
 	<label>
 		<span class="text-main text-[14px] transition-all">New Password</span>
 		<input
