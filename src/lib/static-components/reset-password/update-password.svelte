@@ -1,12 +1,13 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
-	import { getStaticState } from '$lib';
+	import { getStaticState, samplePasswords } from '$lib';
 	import { enhance } from '$app/forms';
 	import { passwordStrength } from 'check-password-strength';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
+	import { fade } from 'svelte/transition';
 
 	let password = '';
 	let showPasswordGuide = false;
@@ -25,11 +26,11 @@
 		errors: ChangePasswordVal;
 	}
 
-	let changePasswordLoader = false;
+	let updatePasswordLoader = false;
 	let formActionError: ChangePasswordVal | null = null;
 
 	const updatePasswordActionNews: SubmitFunction = () => {
-		changePasswordLoader = true;
+		updatePasswordLoader = true;
 		return async ({ result, update }) => {
 			const {
 				status,
@@ -38,20 +39,20 @@
 
 			switch (status) {
 				case 200:
-					toast.success('Change Password', { description: msg });
+					toast.success('Update Password', { description: msg });
 					formActionError = null;
-					changePasswordLoader = false;
+					updatePasswordLoader = false;
 					break;
 
 				case 400:
 					formActionError = errors;
-					changePasswordLoader = false;
+					updatePasswordLoader = false;
 					break;
 
 				case 401:
-					toast.error('Change Password', { description: msg });
+					toast.error('Update Password', { description: msg });
 					formActionError = null;
-					changePasswordLoader = false;
+					updatePasswordLoader = false;
 					break;
 
 				default:
@@ -77,13 +78,42 @@
 		<div class="mt-[73px] flex flex-col gap-[20px]">
 			<p class="text-[20px] font-semibold text-white">Update Password</p>
 
+			{#if showPasswordGuide}
+				<div
+					class="bg-submain p-[10px] rounded-[10px] flex flex-col gap-[10px] transition-all"
+					transition:fade
+				>
+					<p class="text-main text-[14px]">
+						Create a complex password with a mix of uppercase and lowercase letters, numbers, and
+						symbols.
+					</p>
+
+					<div class="max-w-fit">
+						<p class="text-main text-[14px]">Sample:</p>
+
+						<p class="  text-main text-[14px] rounded-[10px]">
+							{samplePasswords[Math.floor(Math.random() * 20)]}
+						</p>
+					</div>
+				</div>
+			{/if}
+
+			<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
 			<div class="flex flex-col gap-[20px] justify-center">
 				<input
+					on:keyup={checkPasswordEngine}
 					name="newPassword"
 					type="password"
 					placeholder="New Password"
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 				/>
+				{#if password}
+					<p class="text-main text-[14px]" in:fade>{passwordCheck}</p>
+				{:else}
+					{#each formActionError?.newPassword ?? [] as errMsg}
+						<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+					{/each}
+				{/if}
 
 				<input
 					name="confirmNewPassword"
@@ -91,6 +121,9 @@
 					placeholder="Confirm New Password"
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 				/>
+				{#each formActionError?.confirmNewPassword ?? [] as errMsg}
+					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+				{/each}
 			</div>
 		</div>
 		<p class="text-[12px] text-slate-500 mt-[10px]">
