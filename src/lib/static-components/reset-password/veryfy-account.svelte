@@ -80,6 +80,7 @@
 
 			<div class="flex gap-[23px] justify-center">
 				<input
+					disabled={verifyCodeLoader}
 					autocomplete="off"
 					name="verifyCode"
 					type="text"
@@ -91,7 +92,9 @@
 
 		<div class="mt-[40px]">
 			<button
-				class="active:bg-submain/50 transition-all bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				disabled={verifyCodeLoader}
+				class="{verifyCodeLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+				active:bg-submain/50 transition-all w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
 				Check Code
 			</button>
