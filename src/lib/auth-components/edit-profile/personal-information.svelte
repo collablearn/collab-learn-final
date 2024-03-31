@@ -8,8 +8,8 @@
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import type { User } from '@supabase/supabase-js';
 	import clearIcon from '$lib/assets/clear_icon.svg';
-
 	import { getUserState } from '$lib';
+	import { invalidateAll } from '$app/navigation';
 
 	const userState = getUserState();
 
@@ -45,10 +45,11 @@
 
 			switch (status) {
 				case 200:
-					$userState = user;
+					invalidateAll();
 					formActionError = null;
 					toast.success('Personal Information', { description: msg });
 					updateInfoLoader = false;
+					$userState = user;
 					break;
 
 				case 400:
@@ -94,7 +95,7 @@
 
 			switch (status) {
 				case 200:
-					$userState = user;
+					invalidateAll();
 					toast.success('Upload Profile', { description: msg });
 					uploadLoader = false;
 					file = undefined;
@@ -105,6 +106,8 @@
 					toast.error('Upload Profile', { description: msg });
 					uploadLoader = false;
 					file = undefined;
+					previewURL = undefined;
+					console.log(msg);
 					break;
 
 				default:

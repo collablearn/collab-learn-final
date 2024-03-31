@@ -33,10 +33,10 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					formActionError = null;
 					toast.success('Log in', { description: msg });
 					loginLoader = false;
-					invalidateAll();
 					goto('/dashboard');
 					break;
 

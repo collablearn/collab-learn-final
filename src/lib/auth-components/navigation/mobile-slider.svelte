@@ -50,8 +50,7 @@
 
 			<div class="mt-[25px]">
 				<p class="text-[16px] text-subwhite font-bold">
-					{$userState?.user_metadata.lastname},
-					{$userState?.user_metadata.firstname}
+					{$userState?.user_metadata.fullname}
 				</p>
 
 				<div class="text-[14px] text-subwhite mt-[20px] rounded-[10px] max-h-[100px] overflow-auto">
