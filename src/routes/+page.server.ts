@@ -141,7 +141,7 @@ export const actions: Actions = {
 
     },
 
-    updatePasswordActin: async ({ locals: { supabase, isLogged, getSession } }) => {
+    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession } }) => {
         const checkLogin = isLogged();
         const session = await getSession();
 
