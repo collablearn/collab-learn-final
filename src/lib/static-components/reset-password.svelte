@@ -93,8 +93,10 @@
 
 		<div class="mt-[40px]">
 			<button
+				disabled={resetPasswordLoader}
 				type="submit"
-				class="active:bg-submain/50 bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				class="{resetPasswordLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+				active:bg-submain/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
 				Continue
 			</button>

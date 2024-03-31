@@ -179,7 +179,7 @@ export const actions: Actions = {
             const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
 
             if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
-            else return fail(200, { msg: `An email has been sent to ${result.email}  with instructions on how to recover your password.` });
+            else return fail(200, { msg: `A reset code has been sent to your email address ${result.email}. Kindly check your inbox.` });
 
         } catch (error) {
             const zodError = error as ZodError;
