@@ -75,6 +75,40 @@ export const actions: Actions = {
         else return fail(200, { msg: "Log out success." });
     },
 
+    resetPasswordAction: async ({ locals: { supabase }, request }) => {
+
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = resetPasswordSchema.parse(formData);
+
+            const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
+
+            if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
+            else return fail(200, { msg: `A reset code has been sent to your email address ${result.email}. Kindly check your inbox.` });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+
+
+    },
+
+    verifyCodeAction: async ({ locals: { supabase }, request }) => {
+
+        /*  const { data: { session }, error: verifyCodeError } = await supabase.auth.verifyOtp({ email: "", token: "", type: 'email' }); */
+        const formData = Object.fromEntries(await request.formData());
+        try {
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errros: fieldErrors });
+        }
+    },
+
     updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
@@ -169,24 +203,5 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
-    resetPasswordAction: async ({ locals: { supabase }, request }) => {
 
-        const formData = Object.fromEntries(await request.formData());
-
-        try {
-            const result = resetPasswordSchema.parse(formData);
-
-            const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
-
-            if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
-            else return fail(200, { msg: `A reset code has been sent to your email address ${result.email}. Kindly check your inbox.` });
-
-        } catch (error) {
-            const zodError = error as ZodError;
-            const { fieldErrors } = zodError.flatten();
-            return fail(400, { errors: fieldErrors });
-        }
-
-
-    }
 };

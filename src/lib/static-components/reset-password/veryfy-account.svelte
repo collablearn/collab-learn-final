@@ -59,7 +59,7 @@
 
 <form
 	method="post"
-	action="?/veryfyCodeAction"
+	action="?/verifyCodeAction"
 	enctype="multipart/form-data"
 	use:enhance={verifyCodeActionNews}
 	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
