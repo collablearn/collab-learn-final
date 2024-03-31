@@ -100,9 +100,16 @@
 				</div>
 			{/if}
 
-			<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
+			<input
+				disabled={updatePasswordLoader}
+				autocomplete="off"
+				name="passwordStrength"
+				type="hidden"
+				value={passwordCheck}
+			/>
 			<div class="flex flex-col gap-[20px] justify-center">
 				<input
+					disabled={updatePasswordLoader}
 					on:keyup={checkPasswordEngine}
 					name="newPassword"
 					type="password"
@@ -119,6 +126,7 @@
 				{/if}
 
 				<input
+					disabled={updatePasswordLoader}
 					name="confirmNewPassword"
 					type="password"
 					placeholder="Confirm New Password"
