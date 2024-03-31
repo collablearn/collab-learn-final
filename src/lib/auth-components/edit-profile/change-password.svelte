@@ -26,14 +26,17 @@
 
 			switch (status) {
 				case 200:
+					formActionError = null;
 					changePasswordLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
 					changePasswordLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
 					changePasswordLoader = false;
 					break;
 
