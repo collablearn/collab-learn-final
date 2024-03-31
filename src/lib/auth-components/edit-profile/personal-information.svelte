@@ -195,43 +195,6 @@
 	use:enhance={updatePersonalInformationActionNews}
 	class="flex flex-col gap-[10px] mt-[20px]"
 >
-	<div class="flex items-center gap-[10px]">
-		{#if defaultState}
-			<button
-				on:click={() => (defaultState = false)}
-				disabled={updateInfoLoader}
-				type="button"
-				class="
-		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] bg-main text-submain"
-				>Update Information
-			</button>
-		{:else}
-			<button
-				in:fly={{ x: 200, duration: 300 }}
-				on:click={() => {
-					defaultState = true;
-					formActionError = null;
-				}}
-				disabled={updateInfoLoader}
-				type="button"
-				class=" border-[1px] border-main
-		py-[10px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-main bg-submain"
-				>Cancel
-			</button>
-			<button
-				in:fly={{ x: -200, duration: 300 }}
-				disabled={updateInfoLoader}
-				type="submit"
-				class="{updateInfoLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'} 
-		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-submain"
-				>{#if updateInfoLoader}
-					Saving...
-				{:else}
-					Save Information
-				{/if}
-			</button>
-		{/if}
-	</div>
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
@@ -350,4 +313,42 @@
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 		{/each}
 	</label>
+
+	<div class="flex items-center gap-[10px]">
+		{#if defaultState}
+			<button
+				on:click={() => (defaultState = false)}
+				disabled={updateInfoLoader}
+				type="button"
+				class="
+		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] bg-main text-submain"
+				>Update Information
+			</button>
+		{:else}
+			<button
+				in:fly={{ x: 50, duration: 300 }}
+				on:click={() => {
+					defaultState = true;
+					formActionError = null;
+				}}
+				disabled={updateInfoLoader}
+				type="button"
+				class=" border-[1px] border-main
+		py-[10px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-main bg-submain"
+				>Cancel
+			</button>
+			<button
+				in:fly={{ x: -50, duration: 300 }}
+				disabled={updateInfoLoader}
+				type="submit"
+				class="{updateInfoLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'} 
+		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-submain"
+				>{#if updateInfoLoader}
+					Saving...
+				{:else}
+					Save Information
+				{/if}
+			</button>
+		{/if}
+	</div>
 </form>
