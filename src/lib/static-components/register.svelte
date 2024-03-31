@@ -84,8 +84,9 @@
 		</div>
 
 		<div class="mt-[20px] flex flex-col gap-[20px]">
-			<input name="passwordStrength" type="hidden" value={passwordCheck} />
+			<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
 			<input
+				autocomplete="off"
 				name="firstName"
 				type="text"
 				placeholder="First Name"
@@ -96,6 +97,7 @@
 			{/each}
 
 			<input
+				autocomplete="off"
 				name="lastName"
 				type="text"
 				placeholder="Last Name"
@@ -106,6 +108,7 @@
 			{/each}
 
 			<input
+				autocomplete="off"
 				name="email"
 				type="email"
 				placeholder="Email Address"
@@ -125,10 +128,10 @@
 						symbols.
 					</p>
 
-					<div class="">
+					<div class="max-w-fit">
 						<p class="text-main text-[14px]">Sample:</p>
 
-						<p class=" max-w-fit bg-main text-submain text-[14px] px-[5px] rounded-[10px]">
+						<p class="  text-main text-[14px] rounded-[10px]">
 							{samplePasswords[Math.floor(Math.random() * 20)]}
 						</p>
 					</div>
@@ -136,7 +139,8 @@
 			{/if}
 
 			<input
-				on:keyup={() => checkPasswordEngine()}
+				autocomplete="off"
+				on:keyup={checkPasswordEngine}
 				bind:value={password}
 				name="password"
 				type="password"
@@ -152,6 +156,7 @@
 			{/if}
 
 			<input
+				autocomplete="off"
 				name="confirmPassword"
 				type="password"
 				placeholder="Confirm Password"
