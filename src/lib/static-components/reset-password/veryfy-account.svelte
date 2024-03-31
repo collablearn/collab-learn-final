@@ -1,7 +1,6 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
-	import SvelteOtp from '@k4ung/svelte-otp';
 	import { getStaticState } from '$lib';
 
 	const childStaticState = getStaticState();
@@ -31,16 +30,21 @@
 			</p>
 
 			<div class="flex gap-[23px] justify-center">
-				<SvelteOtp numberOnly inputClass="outline-none text-main" />
+				<input
+					autocomplete="off"
+					name="verifyCode"
+					type="text"
+					placeholder="Enter code"
+					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+				/>
 			</div>
 		</div>
 
 		<div class="mt-[40px]">
 			<button
-				on:click={veryfyContinueHandler}
-				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				class="active:bg-submain/50 transition-all bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				<Loader name="CONTINUE" />
+				Check Code
 			</button>
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
