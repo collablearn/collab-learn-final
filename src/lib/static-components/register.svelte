@@ -128,10 +128,10 @@
 						symbols.
 					</p>
 
-					<div class="">
+					<div class="max-w-fit">
 						<p class="text-main text-[14px]">Sample:</p>
 
-						<p class=" max-w-fit bg-main text-submain text-[14px] px-[5px] rounded-[10px]">
+						<p class="  text-main text-[14px] rounded-[10px]">
 							{samplePasswords[Math.floor(Math.random() * 20)]}
 						</p>
 					</div>
