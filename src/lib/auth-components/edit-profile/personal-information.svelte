@@ -173,6 +173,7 @@
 						<img src={uploadIcon} alt="upload-icon" />
 						<span>Upload Profile</span>
 						<input
+							autocomplete="off"
 							type="file"
 							name="uploadProfile"
 							class="hidden"
@@ -198,6 +199,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
+			autocomplete="off"
 			value={defaultState ? $userState?.user_bio : ''}
 			disabled={defaultState}
 			name="bio"
@@ -212,6 +214,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">First Name</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_fullname.split(', ')[1] : ''}
 			disabled={defaultState}
 			name="firstName"
@@ -227,6 +230,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Last Name</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_fullname.split(', ')[0] : ''}
 			disabled={defaultState}
 			name="lastName"
@@ -242,6 +246,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Address</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_address : ''}
 			disabled={defaultState}
 			name="address"
@@ -257,6 +262,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Barangay</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_barangay : ''}
 			disabled={defaultState}
 			name="barangay"
@@ -272,6 +278,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">City</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_city : ''}
 			disabled={defaultState}
 			name="city"
@@ -287,6 +294,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Religion</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_religion : ''}
 			disabled={defaultState}
 			name="religion"
@@ -302,6 +310,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Contact Number</span>
 		<input
+			autocomplete="off"
 			value={defaultState ? $userState?.user_contact : ''}
 			disabled={defaultState}
 			name="contactNumber"
