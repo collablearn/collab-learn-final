@@ -21,7 +21,7 @@
 {#if $staticState.isRegistering}
 	<Register />
 {:else if $staticState.isResetting}
-	{#if true}
+	{#if $staticState.isVerfying}
 		<VeryfyAccount />
 	{:else if $staticState.isUpdating}
 		<UpdatePassword />

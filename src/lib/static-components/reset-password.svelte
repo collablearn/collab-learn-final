@@ -37,6 +37,7 @@
 					formActionError = null;
 					toast.success('Password Recovery', { description: msg });
 					resetPasswordLoader = false;
+					$staticState.isVerfying = true;
 					break;
 
 				case 400:
@@ -99,7 +100,11 @@
 				class="{resetPasswordLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
 				active:bg-submain/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				Continue
+				{#if resetPasswordLoader}
+					Sending...
+				{:else}
+					Continue
+				{/if}
 			</button>
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
