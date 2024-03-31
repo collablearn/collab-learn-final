@@ -1,8 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { samplePasswords } from '$lib';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { passwordStrength } from 'check-password-strength';
 	import { fade } from 'svelte/transition';
+
+	let password = '';
+	let showPasswordGuide = false;
+	$: passwordCheck = passwordStrength(password).value;
+
+	const checkPasswordEngine = () =>
+		passwordCheck === 'Strong' ? (showPasswordGuide = false) : (showPasswordGuide = true);
 
 	interface ChangePasswordVal {
 		newPassword: string[];
@@ -56,16 +65,42 @@
 	use:enhance={updatePasswordActionNews}
 	class="flex flex-col gap-[10px]"
 >
+	{#if showPasswordGuide}
+		<div
+			class="bg-main p-[10px] rounded-[10px] flex flex-col gap-[10px] transition-all"
+			transition:fade
+		>
+			<p class="text-submain text-[14px]">
+				Create a complex password with a mix of uppercase and lowercase letters, numbers, and
+				symbols.
+			</p>
+
+			<div class="max-w-fit">
+				<p class="text-submain text-[14px]">Sample:</p>
+
+				<p class="  text-submain text-[14px] rounded-[10px]">
+					{samplePasswords[Math.floor(Math.random() * 20)]}
+				</p>
+			</div>
+		</div>
+	{/if}
+
 	<label>
 		<span class="text-main text-[14px] transition-all">New Password</span>
 		<input
+			on:keyup={checkPasswordEngine}
+			bind:value={password}
 			name="newPassword"
 			type="password"
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
-		{#each formActionError?.newPassword ?? [] as errMsg}
-			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
-		{/each}
+		{#if password}
+			<p class="text-main text-[14px]" in:fade>{passwordCheck}</p>
+		{:else}
+			{#each formActionError?.newPassword ?? [] as errMsg}
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+			{/each}
+		{/if}
 	</label>
 
 	<label>

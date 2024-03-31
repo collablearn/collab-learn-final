@@ -140,7 +140,7 @@
 
 			<input
 				autocomplete="off"
-				on:keyup={() => checkPasswordEngine()}
+				on:keyup={checkPasswordEngine}
 				bind:value={password}
 				name="password"
 				type="password"
