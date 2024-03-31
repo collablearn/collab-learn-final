@@ -150,6 +150,9 @@ export const actions: Actions = {
 
             try {
                 const result = updatePasswordSchema.parse(formData);
+                if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
+
+
             } catch (error) {
                 const zodError = error as ZodError;
                 const { fieldErrors } = zodError.flatten();
