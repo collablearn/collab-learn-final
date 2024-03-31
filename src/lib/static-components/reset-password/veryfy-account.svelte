@@ -2,6 +2,8 @@
 	import icon_320 from '$lib/assets/icon_320.svg';
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { enhance } from '$app/forms';
 
 	const childStaticState = getStaticState();
 
@@ -15,9 +17,36 @@
 		$childStaticState.isUpdating = false;
 		$childStaticState.isResetting = false;
 	};
+
+	const verifyCodeActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
+<form
+	method="post"
+	action="?/veryfyCodeAction"
+	enctype="multipart/form-data"
+	use:enhance={verifyCodeActionNews}
+	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
+>
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
 			<img src={icon_320} alt="icon-320" />
@@ -55,4 +84,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</form>
