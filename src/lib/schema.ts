@@ -31,6 +31,7 @@ export const resetPasswordSchema = z.object({
 });
 
 export const verifyCodeSchema = z.object({
+    email: z.string(),
     verifyCode: z.string().min(6, { message: "Must enter a valid code." })
 });
 
