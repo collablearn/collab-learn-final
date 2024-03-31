@@ -3,7 +3,7 @@
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import sampleDisplayIcon from '$lib/assets/sampelDisplayIcon.svg';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import type { User } from '@supabase/supabase-js';
@@ -116,6 +116,8 @@
 			await update();
 		};
 	};
+
+	let defaultState = true;
 </script>
 
 <!--For upload profile-->
@@ -193,11 +195,51 @@
 	use:enhance={updatePersonalInformationActionNews}
 	class="flex flex-col gap-[10px] mt-[20px]"
 >
+	<div class="flex items-center gap-[10px]">
+		{#if defaultState}
+			<button
+				on:click={() => (defaultState = false)}
+				disabled={updateInfoLoader}
+				type="button"
+				class="
+		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] bg-main text-submain"
+				>Update Information
+			</button>
+		{:else}
+			<button
+				in:fly={{ x: 200, duration: 300 }}
+				on:click={() => {
+					defaultState = true;
+					formActionError = null;
+				}}
+				disabled={updateInfoLoader}
+				type="button"
+				class=" border-[1px] border-main
+		py-[10px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-main bg-submain"
+				>Cancel
+			</button>
+			<button
+				in:fly={{ x: -200, duration: 300 }}
+				disabled={updateInfoLoader}
+				type="submit"
+				class="{updateInfoLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'} 
+		py-[11px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-submain"
+				>{#if updateInfoLoader}
+					Saving...
+				{:else}
+					Save Information
+				{/if}
+			</button>
+		{/if}
+	</div>
 	<label>
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
+			value={$userState?.user_bio}
+			disabled={defaultState}
 			name="bio"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'} 
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.bio ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -207,9 +249,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">First Name</span>
 		<input
+			value={$userState?.user_fullname.split(', ')[1]}
+			disabled={defaultState}
 			name="firstName"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'} 
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.firstName ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -219,9 +264,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Last Name</span>
 		<input
+			value={$userState?.user_fullname.split(', ')[0]}
+			disabled={defaultState}
 			name="lastName"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.lastName ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -231,9 +279,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Address</span>
 		<input
+			value={$userState?.user_address}
+			disabled={defaultState}
 			name="address"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 	</label>
 	{#each formActionError?.address ?? [] as errMsg}
@@ -243,9 +294,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Barangay</span>
 		<input
+			value={$userState?.user_barangay}
+			disabled={defaultState}
 			name="barangay"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.barangay ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -255,9 +309,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">City</span>
 		<input
+			value={$userState?.user_city}
+			disabled={defaultState}
 			name="city"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.city ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -267,9 +324,12 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Religion</span>
 		<input
+			value={$userState?.user_religion}
+			disabled={defaultState}
 			name="religion"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.religion ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
@@ -279,24 +339,15 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Contact Number</span>
 		<input
+			value={$userState?.user_contact}
+			disabled={defaultState}
 			name="contactNumber"
 			type="text"
-			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
+			class="{defaultState ? 'bg-submain' : 'bg-subwhite'}
+			outline-none w-full text-[14px] py-[11px] px-[20px] text-main border-[1px] border-main rounded-[10px] transition-all"
 		/>
 		{#each formActionError?.contactNumber ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 		{/each}
 	</label>
-
-	<button
-		disabled={updateInfoLoader}
-		type="submit"
-		class="{updateInfoLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'} 
-			py-[11px] font-semibold text-[14px] flex items-center justify-center rounded-[10px] text-submain"
-		>{#if updateInfoLoader}
-			Saving...
-		{:else}
-			Save Information
-		{/if}
-	</button>
 </form>
