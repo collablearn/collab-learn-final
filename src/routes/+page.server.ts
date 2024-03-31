@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
+import { loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -177,6 +177,12 @@ export const actions: Actions = {
             const formData = Object.fromEntries(await request.formData());
 
             try {
+                const result = resetPasswordSchema.parse(formData);
+
+                const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
+
+                if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
+                else return fail(200, { msg: `An email has been sent to ${result.email}  with instructions on how to recover your password.` });
 
             } catch (error) {
                 const zodError = error as ZodError;
