@@ -39,7 +39,8 @@ export const updateInformationSchema = z.object({
 
 export const updatePasswordSchema = z.object({
     newPassword: z.string().min(8, { message: "Must choose a strong password" }),
-    confirmNewPassword: z.string()
+    confirmNewPassword: z.string(),
+    passwordStrength: z.string()
 }).superRefine(({ newPassword, confirmNewPassword }, ctx) => {
     if (newPassword !== confirmNewPassword) {
         ctx.addIssue({
