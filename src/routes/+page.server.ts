@@ -4,10 +4,13 @@ import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals: { isLogged } }) => {
+export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
     const loginCheck = isLogged();
+    const { data, error } = await supabase.from("user_list_tb").select("*");
 
     if (loginCheck === "has auth") redirect(302, "/dashboard");
+
+
 };
 
 export const actions: Actions = {
@@ -91,7 +94,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }])
+                }]).eq("user_id", session.user.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
