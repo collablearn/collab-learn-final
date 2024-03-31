@@ -102,7 +102,10 @@ export const actions: Actions = {
         const formData = Object.fromEntries(await request.formData());
         try {
             const result = verifyCodeSchema.parse(formData);
-            const { data: { session }, error: verifyCodeError } = await supabase.auth.verifyOtp({ email: "", token: "", type: 'email' });
+            const { data: { session }, error: verifyCodeError } = await supabase.auth.verifyOtp({ email: result.email, token: result.verifyCode, type: 'email' });
+
+            if (verifyCodeError) return fail(401, { msg: verifyCodeError.message });
+            else if (session) return fail(200, { msg: "Code Verified." });
 
         } catch (error) {
             const zodError = error as ZodError;
