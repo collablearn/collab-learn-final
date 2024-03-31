@@ -92,11 +92,16 @@
 
 		<div class="mt-[40px]">
 			<button
+				type="submit"
 				disabled={verifyCodeLoader}
 				class="{verifyCodeLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
 				active:bg-submain/50 transition-all w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				Check Code
+				{#if verifyCodeLoader}
+					Checking...
+				{:else}
+					Check Code
+				{/if}
 			</button>
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
