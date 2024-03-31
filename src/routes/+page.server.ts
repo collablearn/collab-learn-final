@@ -4,10 +4,13 @@ import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals: { isLogged } }) => {
+export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
     const loginCheck = isLogged();
+    const { data, error } = await supabase.from("user_list_tb").select("*");
 
     if (loginCheck === "has auth") redirect(302, "/dashboard");
+
+
 };
 
 export const actions: Actions = {
@@ -42,12 +45,6 @@ export const actions: Actions = {
             const { data: { user }, error: registerError } = await supabase.auth.signUp({
                 email: result.email,
                 password: result.password,
-                options: {
-                    data: {
-                        firstname: result.firstName,
-                        lastname: result.lastName
-                    }
-                }
             });
 
             if (registerError) return fail(401, { msg: registerError.message });
@@ -55,14 +52,13 @@ export const actions: Actions = {
                 const { error: insertError } = await supabase.from("user_list_tb").insert([{
                     user_id: user.id,
                     user_email: user.email,
-                    user_firstname: user.user_metadata.firstname,
-                    user_lastname: user.user_metadata.lastname
+                    user_fullname: `${result.lastName}, ${result.firstName}`,
                 }]);
 
                 if (insertError) {
                     const { error: deleteUserError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
                     if (deleteUserError) return fail(401, { msg: deleteUserError.message });
-                    else return fail(401, { msg: "There is an error try again." });
+                    else return fail(401, { msg: insertError.message });
                 } else return fail(200, { msg: "Registered Successfully." });
             }
 
@@ -90,6 +86,20 @@ export const actions: Actions = {
             try {
                 const result = updateInformationSchema.parse(formData);
 
+                const { error: updateUserError } = await supabase.from("user_list_tb").update([{
+                    user_fullname: `${result.lastName}, ${result.firstName}`,
+                    user_bio: result.bio,
+                    user_address: result.address,
+                    user_barangay: result.barangay,
+                    user_city: result.city,
+                    user_religion: result.religion,
+                    user_contact: result.contactNumber
+                }]).eq("user_id", session.user.id)
+
+                if (updateUserError) return fail(401, { msg: updateUserError.message });
+                else return fail(200, { msg: 'Information Updated Successfully.' });
+
+
             } catch (error) {
                 const zodError = error as ZodError;
                 const { fieldErrors } = zodError.flatten();
@@ -113,20 +123,19 @@ export const actions: Actions = {
             });
 
             if (uploadProfileError) return fail(401, { msg: uploadProfileError.message });
+
             else if (uploadPicture) {
                 const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadPicture.path)
 
-                const { data: { user }, error: updateUserError } = await supabase.auth.updateUser({
-                    data: {
-                        profileLink: `${publicUrl}?${Math.random()}`
-                    }
-                });
+                const { error: updateUserError } = await supabase.from("user_list_tb").update([{
+                    user_photo_link: `${publicUrl}?${Math.random()}`
+                }]).eq("user_id", session.user.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
                     await supabase.storage.from("collab-bucket").remove([session.user.id])
                     return fail(401, { msg: updateUserError.message });
-                } else if (user) return fail(200, { msg: "Upload successfully", user })
+                } else return fail(200, { msg: "Upload successfully" });
             }
 
         } else redirect(302, "/");

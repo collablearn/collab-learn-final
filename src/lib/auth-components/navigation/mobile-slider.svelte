@@ -33,7 +33,7 @@
 			<div class="flex items-center gap-[9px] mt-[35px]">
 				<div class="flex max-w-fit">
 					<img
-						src={$userState?.user_metadata.profileLink ?? sampleDisplayIcon}
+						src={$userState?.user_photo_link ?? sampleDisplayIcon}
 						alt="sample-display-icon"
 						class="w-[79px] h-[79px] rounded-full"
 					/>
@@ -50,23 +50,12 @@
 
 			<div class="mt-[25px]">
 				<p class="text-[16px] text-subwhite font-bold">
-					{$userState?.user_metadata.lastname},
-					{$userState?.user_metadata.firstname}
+					{$userState?.user_fullname}
 				</p>
 
-				<!--Removed for a while -->
-
-				<!-- <div class="text-[14px] text-subwhite mt-[20px]">
-					<div class="flex items-center gap-[2px]">
-						<p class="font-semibold">Student ID :</p>
-						<p class=" font-semibold">12345678</p>
-					</div>
-
-					<div class="flex items-center gap-[2px]">
-						<p class="font-semibold">Year and Section :</p>
-						<p class=" font-semibold">11 - Makatao</p>
-					</div>
-				</div> -->
+				<div class="text-[14px] text-subwhite mt-[20px] rounded-[10px] max-h-[100px] overflow-auto">
+					<p>{$userState?.user_bio ?? 'You have no bio.'}</p>
+				</div>
 			</div>
 
 			<hr class="border-[1px] border-white my-[20px]" />
