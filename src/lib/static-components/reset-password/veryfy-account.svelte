@@ -34,6 +34,7 @@
 
 			switch (status) {
 				case 200:
+					formActionError = null;
 					toast.success('Verify Code', { description: msg });
 					verifyCodeLoader = false;
 					$staticState.isVerfying = false;
@@ -46,6 +47,7 @@
 					break;
 
 				case 401:
+					formActionError = null;
 					toast.error('Verify Code', { description: msg });
 					verifyCodeLoader = false;
 					break;
@@ -86,10 +88,10 @@
 					placeholder="Enter code"
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 				/>
-				{#each formActionError?.verifyCode ?? [] as errMsg}
-					<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
-				{/each}
 			</div>
+			{#each formActionError?.verifyCode ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</div>
 
 		<div class="mt-[40px]">
