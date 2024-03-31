@@ -14,15 +14,15 @@
 	};
 	setStaticState(staticObject);
 
-	const staticReference = getStaticState();
+	const staticState = getStaticState();
 </script>
 
-{#if $staticReference.isRegistering}
+{#if $staticState.isRegistering}
 	<Register />
-{:else if $staticReference.isResetting}
-	{#if $staticReference.isVerfying}
+{:else if $staticState.isResetting}
+	{#if $staticState.isVerfying}
 		<VeryfyAccount />
-	{:else if $staticReference.isUpdating}
+	{:else if $staticState.isUpdating}
 		<UpdatePassword />
 	{:else}
 		<ResetPassword />
