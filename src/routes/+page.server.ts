@@ -6,7 +6,6 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
     const loginCheck = isLogged();
-    const { data, error } = await supabase.from("user_list_tb").select("*");
 
     if (loginCheck === "has auth") redirect(302, "/dashboard");
 
