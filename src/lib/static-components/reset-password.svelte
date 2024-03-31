@@ -4,17 +4,12 @@
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 
-	const childStaticState = getStaticState();
-
-	const continueHandler = () => {
-		$childStaticState.isVerfying = true;
-		$childStaticState.isUpdating = false;
-	};
+	const staticState = getStaticState();
 
 	const cleanUpHandler = () => {
-		$childStaticState.isVerfying = false;
-		$childStaticState.isUpdating = false;
-		$childStaticState.isResetting = false;
+		$staticState.isVerfying = false;
+		$staticState.isUpdating = false;
+		$staticState.isResetting = false;
 	};
 </script>
 
