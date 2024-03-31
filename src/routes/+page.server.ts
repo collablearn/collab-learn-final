@@ -169,27 +169,24 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
-    resetPasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
-        const checkLogin = isLogged();
-        const session = await getSession();
+    resetPasswordAction: async ({ locals: { supabase }, request }) => {
 
-        if (checkLogin === "has auth" && session) {
-            const formData = Object.fromEntries(await request.formData());
+        const formData = Object.fromEntries(await request.formData());
 
-            try {
-                const result = resetPasswordSchema.parse(formData);
+        try {
+            const result = resetPasswordSchema.parse(formData);
 
-                const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
+            const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(result.email);
 
-                if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
-                else return fail(200, { msg: `An email has been sent to ${result.email}  with instructions on how to recover your password.` });
+            if (resetPasswordError) return fail(401, { msg: resetPasswordError.message });
+            else return fail(200, { msg: `An email has been sent to ${result.email}  with instructions on how to recover your password.` });
 
-            } catch (error) {
-                const zodError = error as ZodError;
-                const { fieldErrors } = zodError.flatten();
-                return fail(400, { errors: fieldErrors });
-            }
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
 
-        } else redirect(302, "/");
+
     }
 };
