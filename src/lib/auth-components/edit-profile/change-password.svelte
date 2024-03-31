@@ -4,6 +4,7 @@
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { passwordStrength } from 'check-password-strength';
+	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 
 	let password = '';
@@ -36,6 +37,7 @@
 
 			switch (status) {
 				case 200:
+					toast.success('Change Password', { description: msg });
 					formActionError = null;
 					changePasswordLoader = false;
 					break;
@@ -46,6 +48,7 @@
 					break;
 
 				case 401:
+					toast.error('Change Password', { description: msg });
 					formActionError = null;
 					changePasswordLoader = false;
 					break;
