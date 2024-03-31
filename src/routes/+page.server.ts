@@ -176,6 +176,13 @@ export const actions: Actions = {
         if (checkLogin === "has auth" && session) {
             const formData = Object.fromEntries(await request.formData());
 
+            try {
+
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
 
         } else redirect(302, "/");
     }
