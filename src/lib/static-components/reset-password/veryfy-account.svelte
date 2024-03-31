@@ -7,6 +7,7 @@
 	import type { Result } from 'postcss';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
+	import { fade } from 'svelte/transition';
 
 	const staticState = getStaticState();
 
@@ -85,6 +86,9 @@
 					placeholder="Enter code"
 					class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 				/>
+				{#each formActionError?.verifyCode ?? [] as errMsg}
+					<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+				{/each}
 			</div>
 		</div>
 
