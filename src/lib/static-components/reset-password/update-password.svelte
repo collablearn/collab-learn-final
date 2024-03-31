@@ -12,7 +12,7 @@
 	};
 </script>
 
-<div class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
+<form class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center">
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
 			<img src={icon_320} alt="icon-320" />
@@ -44,9 +44,9 @@
 
 		<div class="mt-[40px]">
 			<button
-				class="bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
+				class="active:bg-submain/50 bg-submain w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
 			>
-				<Loader name="UPDATE PASSWORD" />
+				Update Password
 			</button>
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
@@ -57,4 +57,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</form>
