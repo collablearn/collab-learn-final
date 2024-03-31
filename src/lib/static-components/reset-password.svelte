@@ -6,6 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
+	import { fade } from 'svelte/transition';
 
 	const staticState = getStaticState();
 
@@ -81,6 +82,9 @@
 				placeholder="Enter your email"
 				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
 			/>
+			{#each formActionError?.email ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</div>
 		<p class="text-[12px] text-slate-500 mt-[10px]">
 			You may receive email notifications from us for security and login purposes.
