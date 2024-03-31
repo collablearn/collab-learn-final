@@ -152,6 +152,12 @@ export const actions: Actions = {
                 const result = updatePasswordSchema.parse(formData);
                 if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
 
+                const { data: { user }, error: updatePasswordError } = await supabase.auth.updateUser({
+                    password: result.newPassword
+                });
+
+                if (updatePasswordError) return fail(401, { msg: updatePasswordError.message });
+                else if (user) return fail(200, { msg: "Password Successfully Changed." });
 
             } catch (error) {
                 const zodError = error as ZodError;
