@@ -139,5 +139,16 @@ export const actions: Actions = {
 
         } else redirect(302, "/");
 
+    },
+
+    updatePasswordActin: async ({ locals: { supabase, isLogged, getSession } }) => {
+        const checkLogin = isLogged();
+        const session = await getSession();
+
+        if (checkLogin === "has auth" && session) {
+
+
+
+        } else redirect(302, "/");
     }
 };
