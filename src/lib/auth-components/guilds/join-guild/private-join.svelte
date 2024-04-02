@@ -3,7 +3,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getAuthState } from '$lib';
-	import type { CreatedGuildReference } from '$lib/types';
+	import type { CreatedGuildReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -14,8 +14,6 @@
 
 	const authState = getAuthState();
 
-	let password = '';
-
 	const guildObjToServer = {
 		client_user_id: guildObj.user_id,
 		client_user_photo_link: guildObj.image_url,
@@ -25,7 +23,7 @@
 	};
 
 	//this is insecure way of joining will rethink soon for database calls
-	const handleJoin = () => {
+	/* const handleJoin = () => {
 		if (password === guildObj.passcode) {
 			toast.success('Joining Guild', { description: 'Joined Successfully' });
 			$authState.guilds.guildObj = guildObj;
@@ -35,20 +33,38 @@
 				description: `The Passcode is incorrect unable to join ${guildObj.guild_name}`
 			});
 		}
-	};
+	}; */
 
+	interface CheckPasscodeVal {
+		passcode: string[];
+	}
+
+	let formActionError: CheckPasscodeVal | null = null;
+	let checkPasscodeLoader = false;
 	const checkPasswordActionNews: SubmitFunction = () => {
+		checkPasscodeLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: CheckPasscodeVal }>;
 
 			switch (status) {
 				case 200:
+					toast.success('Join Guild', { description: msg });
+					formActionError = null;
+					checkPasscodeLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
+					checkPasscodeLoader = false;
 					break;
 
 				case 401:
+					toast.error('Join Guild', { description: msg });
+					formActionError = null;
+					checkPasscodeLoader = false;
 					break;
 
 				default:
@@ -97,6 +113,9 @@
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 					/>
+					{#each formActionError?.passcode ?? [] as errMsg}
+						<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+					{/each}
 				</label>
 			</div>
 

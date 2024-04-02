@@ -281,14 +281,21 @@ export const actions: Actions = {
     checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
 
         const formData = Object.fromEntries(await request.formData());
-
+        /* client_user_id uuid,
+        client_user_photo_link text,
+        client_user_fullname text,
+        client_guild_id int8,
+        client_guild_name text,
+        client_pass_code text */
 
         try {
             const result = checkGuildPassSchema.parse(formData);
 
             const checkLogin = await isLogged();
             if (checkLogin) {
-                const { data, error: checkPassError } = await supabase.rpc("check_password", { client_pass_code: result.passcode, client_id: 2 })
+                /* const { data, error: checkPassError } = await supabase.rpc("check_password", {
+
+                }) */
 
 
             } else redirect(302, "/");
