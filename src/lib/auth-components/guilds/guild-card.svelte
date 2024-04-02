@@ -6,16 +6,46 @@
 	import PublicJoin from './join-guild/public-join.svelte';
 
 	import { getAuthState } from '$lib';
-	import type { CreatedGuildReference } from '$lib/types';
+	import type { CreatedGuildReference, ResultModel } from '$lib/types';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	export let guildObj: CreatedGuildReference;
 	const authState = getAuthState();
 
 	let showPrivateJoin = false;
 	let showPublicJoin = false;
+	let checkIfJoinLoader = false;
 
-	/* () => (guildObj.is_private ? (showPrivateJoin = true) : (showPublicJoin = true)) */
+	const checkIfJoinedActionNews: SubmitFunction = () => {
+		checkIfJoinLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					guildObj.is_private ? (showPrivateJoin = true) : (showPublicJoin = true);
+					checkIfJoinLoader = false;
+					break;
+
+				case 401:
+					toast.error('Check If Join', { description: msg });
+					checkIfJoinLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 {#if guildObj.is_private}
@@ -24,10 +54,29 @@
 	<PublicJoin bind:showPublicJoin {guildObj} />
 {/if}
 
-<form method="post" action="/?/checkIfJoinedAction" enctype="multipart/form-data" use:enhance>
+<form
+	method="post"
+	action="/?/checkIfJoinedAction"
+	enctype="multipart/form-data"
+	use:enhance={checkIfJoinedActionNews}
+>
 	<button
-		class="bg-subwhite px-[13px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px]"
+		disabled={checkIfJoinLoader}
+		class="bg-subwhite px-[13px] h-[308px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px] relative"
 	>
+		{#if checkIfJoinLoader}
+			<div
+				class="absolute left-0 right-0 top-0 bottom-0 bg-[#0000009a] flex flex-col items-center justify-center rounded-[10px]"
+			>
+				<div class="flex flex-col items-center gap-[20px] text-submain">
+					<div
+						class="w-10 h-10 border-[5px] border-b-submain rounded-full animate-spin border-[#0000009a]"
+					></div>
+					<p class="font-bold">Checking if joined</p>
+				</div>
+			</div>
+		{/if}
+
 		<p class="text-[16px] text-main text-left font-semibold">
 			{guildObj.guild_name}
 		</p>
@@ -37,11 +86,13 @@
 				<img src={sampleIcon} alt="sample-icon" />
 			</div>
 
-			<div class="text-[16px] text-main flex flex-col gap-[20px] text-left">
-				<p class="font-semibold">Host: {guildObj.host_name}</p>
-				<p title={guildObj.description} class="line-clamp-2">
-					{guildObj.description}
-				</p>
+			<div class="h-[100px]">
+				<div class="text-[16px] text-main flex flex-col gap-[20px] text-left">
+					<p class="font-semibold">Host: {guildObj.host_name}</p>
+					<p title={guildObj.description} class="line-clamp-2">
+						{guildObj.description}
+					</p>
+				</div>
 			</div>
 		</div>
 
