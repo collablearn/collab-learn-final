@@ -177,11 +177,10 @@ export const actions: Actions = {
 
     },
 
-    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
-        const checkLogin = isLogged();
-        const session = await getSession();
+    updatePasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
             const formData = Object.fromEntries(await request.formData());
 
             try {
