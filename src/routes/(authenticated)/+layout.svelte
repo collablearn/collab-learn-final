@@ -3,6 +3,7 @@
 	import { getAuthState, getUserState, setAuthState, setUserState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 	import type { LayoutServerData } from './$types';
+	import { number } from 'zod';
 
 	export let data: LayoutServerData;
 
@@ -20,13 +21,17 @@
 			createdGuilds: data.createdGuilds.data,
 			joinedGuild: false,
 			guildObj: {
-				imageUrl: '',
-				hostName: '',
-				maxUsers: 0,
-				guildName: '',
-				guildDescription: '',
-				isPrivate: false,
-				joinedCount: 0
+				id: 0,
+				created_at: '',
+				user_id: '',
+				host_name: '',
+				is_private: false,
+				guild_name: '',
+				max_users: 0,
+				joined_count: 0,
+				description: '',
+				passcode: '',
+				image_url: ''
 			}
 		}
 	});

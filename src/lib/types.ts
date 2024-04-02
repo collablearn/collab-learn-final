@@ -42,4 +42,5 @@ export type CreatedGuildReference = {
     joined_count: number
     description: string
     passcode: string
+    image_url: string
 }
