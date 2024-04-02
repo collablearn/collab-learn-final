@@ -221,10 +221,12 @@ export const actions: Actions = {
                         user_id: checkLogin.id,
                         guild_name: result.guildName,
                         max_users: Number(result.maxUsers),
-                        description: result.description
+                        description: result.description,
+                        passcode: ""
                     }]);
 
                     if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                    else return fail(200, { msg: "Guild Created" })
 
                 } catch (error) {
                     const zodError = error as ZodError;

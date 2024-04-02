@@ -3,6 +3,7 @@
 	import Loader from '$lib/general-components/loader.svelte';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 
 	const visibilitySelection = ['Public', 'Private'];
@@ -35,6 +36,7 @@
 
 			switch (status) {
 				case 200:
+					toast.success('Create Guild', { description: msg });
 					formActionError = null;
 					createGuildLoader = false;
 					break;
@@ -45,6 +47,7 @@
 					break;
 
 				case 401:
+					toast.error('Create Guild', { description: msg });
 					formActionError = null;
 					createGuildLoader = false;
 					break;
