@@ -29,6 +29,7 @@
 					<GuildCard {guildObj} />
 				{/each}
 
+				<!--Sample Pagination Comming Soooooon-->
 				<div class="">
 					<button
 						class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"

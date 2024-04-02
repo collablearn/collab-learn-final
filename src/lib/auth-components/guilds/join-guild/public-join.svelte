@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { GuildTypes } from '$lib/types';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
 	import { getAuthState } from '$lib';
-	export let guildObj: GuildTypes;
+	import type { CreatedGuildReference } from '$lib/types';
+
+	export let guildObj: CreatedGuildReference;
 
 	export let showPublicJoin = false;
 
@@ -17,13 +18,13 @@
 	>
 		<div class="bg-submain py-[50px] px-[22px] w-full relative" in:scale out:fade>
 			<div class="flex flex-col gap-[10px]">
-				<h3 class="text-[24px] text-main">{guildObj.guildName}</h3>
-				<p class="text-[14px] text-main">{guildObj.guildDescription}</p>
+				<h3 class="text-[24px] text-main">{guildObj.guild_name}</h3>
+				<p class="text-[14px] text-main">{guildObj.description}</p>
 			</div>
 
 			<div class="flex items-center gap-[5px] absolute top-0 right-0 m-[20px]">
 				<img src={groupIcon} alt="group-icon" />
-				<p class="text-[14px] text-main">{guildObj.joinedCount}/{guildObj.maxUsers}</p>
+				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
