@@ -263,6 +263,18 @@ export const actions: Actions = {
 
         } else redirect(302, "/");
 
+    },
+
+    checkIfJoinedAction: async ({ locals: { supabase, isLogged }, request }) => {
+        const checkLogin = await isLogged();
+        if (checkLogin) {
+            const { count, error: existError } = await supabase.from("joined_guild_tb").select('*', { count: 'exact', head: true })
+
+            if (existError) return fail(401, { msg: existError.message });
+            else if (count) return fail(200, { msg: "exist" });
+            else return fail(400, { msg: "no match" });
+
+        } else redirect(302, "/");
     }
 
 };
