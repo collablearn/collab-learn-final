@@ -9,7 +9,8 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, isLogged } })
     if (!loginCheck) redirect(302, "/");
 
     return {
-        userData: await supabase.from("user_list_tb").select("*").eq("user_id", loginCheck.id).limit(1).single() as PostgrestMaybeSingleResponse<UserReference>
+        userData: await supabase.from("user_list_tb").select("*").eq("user_id", loginCheck.id).limit(1).single() as PostgrestMaybeSingleResponse<UserReference>,
+        createdGuilds: await supabase.from("created_guild_tb").select("*").eq("user_id", loginCheck.id)
     }
 
 };

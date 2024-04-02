@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto, invalidateAll } from '$app/navigation';
 	import Loader from '$lib/general-components/loader.svelte';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -38,7 +39,7 @@
 				case 200:
 					toast.success('Create Guild', { description: msg });
 					formActionError = null;
-					createGuildLoader = false;
+					goto('/guilds');
 					break;
 
 				case 400:
