@@ -216,6 +216,16 @@ export const actions: Actions = {
             if (formData.visibility === "Public") {
                 try {
                     const result = createGuildSchema.parse(formData);
+
+                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                        user_id: checkLogin.id,
+                        guild_name: result.guildName,
+                        max_users: Number(result.maxUsers),
+                        description: result.description
+                    }]);
+
+                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
