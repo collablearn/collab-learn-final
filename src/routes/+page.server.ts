@@ -205,8 +205,10 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async () => {
-        console.log("PING")
+    createGuildAction: async ({ locals: { supabase }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+
     }
 
 };
