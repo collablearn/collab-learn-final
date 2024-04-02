@@ -3,7 +3,7 @@ import type { LayoutServerLoad } from "./$types";
 import type { PostgrestMaybeSingleResponse } from "@supabase/supabase-js";
 import type { UserReference } from "$lib/types";
 
-export const load: LayoutServerLoad = async ({ locals: { supabase, isLogged }, }) => {
+export const load: LayoutServerLoad = async ({ locals: { supabase, isLogged } }) => {
     const loginCheck = await isLogged();
 
     if (!loginCheck) redirect(302, "/");
