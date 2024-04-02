@@ -1,4 +1,4 @@
-import { createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -263,6 +263,59 @@ export const actions: Actions = {
 
         } else redirect(302, "/");
 
+    },
+
+    checkIfJoinedAction: async ({ locals: { supabase, isLogged }, request }) => {
+        const checkLogin = await isLogged();
+        const guildId = await (await request.formData()).get("guildId") as string;
+        if (checkLogin) {
+
+            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined", { client_guild_id: Number(guildId), client_user_id: checkLogin.id });
+            if (checkIfJoinedError) return fail(401, { msg: checkIfJoinedError.message });
+            else if (data) return fail(200, { msg: "Welcome Back." });
+            else return fail(400, { msg: "Not joined" });
+
+        } else redirect(302, "/");
+    },
+
+    checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
+
+        type UserAndGuildObjTypes = {
+            client_user_id: string
+            client_user_photo_link: string
+            client_user_fullname: string
+            client_guild_id: number
+            client_guild_name: string
+        }
+
+        const formData = Object.fromEntries(await request.formData());
+        try {
+            const result = checkGuildPassSchema.parse(formData);
+
+            const userAndGuildObj = JSON.parse(result.userAndGuildObj) as UserAndGuildObjTypes
+            const checkLogin = await isLogged();
+
+            if (checkLogin) {
+                const { data, error: checkPassError } = await supabase.rpc("check_password", {
+                    client_user_id: userAndGuildObj.client_user_id,
+                    client_user_photo_link: userAndGuildObj.client_user_photo_link,
+                    client_user_fullname: userAndGuildObj.client_user_fullname,
+                    client_guild_id: userAndGuildObj.client_guild_id,
+                    client_guild_name: userAndGuildObj.client_guild_name,
+                    client_pass_code: result.passcode
+                });
+
+                if (checkPassError) return fail(401, { msg: checkPassError.message });
+                else if (data) return fail(200, { msg: "You have successfully joined this guild." });
+                else return fail(401, { msg: "Invalid Password" });
+
+            } else redirect(302, "/");
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     }
 
 };
