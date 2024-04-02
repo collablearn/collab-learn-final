@@ -3,7 +3,7 @@
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
-	import { getAuthState, mockDatas } from '$lib';
+	import { getAuthState } from '$lib';
 	import { fade } from 'svelte/transition';
 
 	let authState = getAuthState();
@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="flex flex-col gap-[20px] mt-[35px]">
-				{#each $mockDatas.guilds as guildObj}
+				{#each $authState.guilds.createdGuilds ?? [] as guildObj}
 					<GuildCard {guildObj} />
 				{/each}
 

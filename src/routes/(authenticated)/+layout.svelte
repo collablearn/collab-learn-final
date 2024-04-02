@@ -6,13 +6,18 @@
 
 	export let data: LayoutServerData;
 
-	const defaultAuthState = {
+	setUserState(data.userData.data);
+	const userState = getUserState();
+	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
+
+	setAuthState({
 		activeItem: '/dashboard',
 		projects: {
 			joinedProject: false,
 			showEditTools: false
 		},
 		guilds: {
+			createdGuilds: data.createdGuilds.data,
 			joinedGuild: false,
 			guildObj: {
 				imageUrl: '',
@@ -24,12 +29,7 @@
 				joinedCount: 0
 			}
 		}
-	};
-	setUserState(data.userData.data);
-	const userState = getUserState();
-	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
-
-	setAuthState(defaultAuthState);
+	});
 	const authState = getAuthState();
 </script>
 

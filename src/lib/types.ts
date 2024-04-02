@@ -14,16 +14,6 @@ export type ProjectTypes = {
     onlineCount: number
 };
 
-export type GuildTypes = {
-    imageUrl: string
-    hostName: string
-    maxUsers: number
-    guildName: string
-    guildDescription: string
-    isPrivate: boolean
-    joinedCount: number
-}
-
 //user_list_tb
 export type UserReference = {
     id: number
@@ -45,8 +35,11 @@ export type CreatedGuildReference = {
     id: number
     created_at: string
     user_id: string
+    host_name: string
+    is_private: boolean
     guild_name: string
     max_users: number
+    joined_count: number
     description: string
     passcode: string
 }
