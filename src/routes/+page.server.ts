@@ -152,7 +152,7 @@ export const actions: Actions = {
 
         if (checkLogin) {
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(checkLogin.id, profilePicture, {
                 cacheControl: "3600",
                 upsert: true
             });
