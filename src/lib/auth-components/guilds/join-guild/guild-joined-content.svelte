@@ -22,11 +22,11 @@
 >
 <div class="pt-[130px]">
 	<div class="flex flex-col justify-center items-center gap-[10px]">
-		<p class="text-[24px] text-main">{guildObj?.guildName}</p>
+		<p class="text-[24px] text-main">{guildObj?.guild_name}</p>
 		<div class="">
 			<img src={groupIcon} alt="group-icon" />
 			<p class="text-[14px] text-main">
-				{guildObj?.joinedCount}/{guildObj?.maxUsers}
+				{guildObj?.joined_count}/{guildObj?.max_users}
 			</p>
 		</div>
 
