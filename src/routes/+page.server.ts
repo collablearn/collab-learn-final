@@ -226,7 +226,6 @@ export const actions: Actions = {
                         max_users: Number(result.maxUsers),
                         description: result.description,
                         passcode: "",
-
                     }]);
 
                     if (insertGuildError) return fail(401, { msg: insertGuildError.message });
@@ -241,6 +240,19 @@ export const actions: Actions = {
             } else {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
+                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                        user_id: checkLogin.id,
+                        guild_name: result.guildName,
+                        host_name: "",
+                        is_private: true,
+                        image_url: "",
+                        max_users: Number(result.maxUsers),
+                        description: result.description,
+                        passcode: result.passcode,
+                    }]);
+
+                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                    else return fail(200, { msg: "Guild Created" })
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();

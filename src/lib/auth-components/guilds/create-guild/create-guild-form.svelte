@@ -4,6 +4,7 @@
 	import Loader from '$lib/general-components/loader.svelte';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 
@@ -41,6 +42,7 @@
 					toast.success('Create Guild', { description: msg });
 					formActionError = null;
 					createGuildLoader = false;
+					await tick();
 					goto('/guilds');
 					break;
 
