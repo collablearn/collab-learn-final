@@ -204,4 +204,9 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
+    //guild route actions
+    createGuildAction: async () => {
+        console.log("PING")
+    }
+
 };
