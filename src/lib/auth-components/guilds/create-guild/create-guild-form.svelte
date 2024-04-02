@@ -8,18 +8,23 @@
 
 	let visibilityValue = 'Public';
 
+	let createGuildLoader = false;
 	const createGuildActionNews: SubmitFunction = () => {
+		createGuildLoader = true;
 		return async ({ result, update }) => {
 			const { status } = result;
 
 			switch (status) {
 				case 200:
+					createGuildLoader = false;
 					break;
 
 				case 400:
+					createGuildLoader = false;
 					break;
 
 				case 401:
+					createGuildLoader = false;
 					break;
 
 				default:
@@ -41,6 +46,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Guild Name</span>
 			<input
+				name="guildName"
 				type="text"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
@@ -49,6 +55,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Users (Max. 50)</span>
 			<input
+				name="maxUsers"
 				type="text"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
@@ -57,6 +64,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Description</span>
 			<textarea
+				name="description"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
 		</label>
@@ -84,6 +92,7 @@
 				<label>
 					<span class="text-main text-[14px] transition-all">Passcode</span>
 					<input
+						name="password"
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 					/>
@@ -94,9 +103,15 @@
 
 	<div class="flex flex-col gap-[10px] mt-[40px]">
 		<button
-			class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+			disabled={createGuildLoader}
+			class="{createGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+			w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 		>
-			<Loader name="Create" txtColor="text-submain text-[14px]" />
+			{#if createGuildLoader}
+				Creating...
+			{:else}
+				Create
+			{/if}
 		</button>
 
 		<a
