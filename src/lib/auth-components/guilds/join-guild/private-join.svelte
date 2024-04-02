@@ -55,12 +55,13 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<button
-					on:click={handleJoin}
-					class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
-				>
-					Join
-				</button>
+				<form>
+					<button
+						class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					>
+						Join
+					</button>
+				</form>
 
 				<button
 					on:click={() => (showPrivateJoin = false)}
