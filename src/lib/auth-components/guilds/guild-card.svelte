@@ -34,7 +34,7 @@
 			<img src={sampleIcon} alt="sample-icon" />
 		</div>
 
-		<div class="text-[16px] text-main flex flex-col text-left">
+		<div class="text-[16px] text-main flex flex-col gap-[20px] text-left">
 			<p class="font-semibold">Host: {guildObj.host_name}</p>
 			<p title={guildObj.description} class="line-clamp-2">
 				{guildObj.description}
