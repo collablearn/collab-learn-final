@@ -1,4 +1,4 @@
-import { createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -276,8 +276,28 @@ export const actions: Actions = {
             else return fail(400, { msg: "no match" });
 
         } else redirect(302, "/");
+    },
+
+    checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
+
+        const formData = Object.fromEntries(await request.formData());
 
 
+        try {
+            const result = checkGuildPassSchema.parse(formData);
+
+            const checkLogin = await isLogged();
+            if (checkLogin) {
+                const { data, error: checkPassError } = await supabase.rpc("check_password", { client_pass_code: result.passcode, client_id: 2 })
+
+
+            } else redirect(302, "/");
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     }
 
 };
