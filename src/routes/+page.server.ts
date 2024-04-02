@@ -9,7 +9,6 @@ export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) =
 
     if (!loginCheck) redirect(302, "/dashboard");
 
-
 };
 
 export const actions: Actions = {
@@ -114,13 +113,12 @@ export const actions: Actions = {
         }
     },
 
-    updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, isLogged }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        const checkLogin = isLogged();
-        const session = await getSession();
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
             try {
                 const result = updateInformationSchema.parse(formData);
 
@@ -132,7 +130,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }]).eq("user_id", session.user.id)
+                }]).eq("user_id", checkLogin.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
