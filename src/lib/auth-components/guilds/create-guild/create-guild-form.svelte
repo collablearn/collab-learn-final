@@ -37,9 +37,10 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Create Guild', { description: msg });
 					formActionError = null;
-					goto('/guilds');
+					createGuildLoader = false;
 					break;
 
 				case 400:

@@ -42,7 +42,7 @@ export const actions: Actions = {
 
             const { data: { user }, error: registerError } = await supabase.auth.signUp({
                 email: result.email,
-                password: result.password,
+                password: result.password
             });
 
             if (registerError) return fail(401, { msg: registerError.message });
@@ -220,9 +220,13 @@ export const actions: Actions = {
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
                         user_id: checkLogin.id,
                         guild_name: result.guildName,
+                        host_name: "",
+                        is_private: false,
+                        image_url: "",
                         max_users: Number(result.maxUsers),
                         description: result.description,
-                        passcode: ""
+                        passcode: "",
+
                     }]);
 
                     if (insertGuildError) return fail(401, { msg: insertGuildError.message });

@@ -7,11 +7,7 @@
 
 	export let data: LayoutServerData;
 
-	setUserState(data.userData.data);
-	const userState = getUserState();
-	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
-
-	setAuthState({
+	const defaulState = {
 		activeItem: '/dashboard',
 		projects: {
 			joinedProject: false,
@@ -34,8 +30,19 @@
 				image_url: ''
 			}
 		}
-	});
+	};
+
+	setUserState(data.userData.data);
+	const userState = getUserState();
+	$: data.userData.data ? ($userState = data.userData.data) : ($userState = null);
+
+	setAuthState(defaulState);
 	const authState = getAuthState();
+
+	// making created guild reactive
+	$: data.createdGuilds.data
+		? ($authState.guilds.createdGuilds = data.createdGuilds.data)
+		: ($authState.guilds.createdGuilds = null);
 </script>
 
 <div class=" bg-submain">
