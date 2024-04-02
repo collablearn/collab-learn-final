@@ -42,8 +42,8 @@
 		</div>
 	</div>
 
-	<div class="flex {guildObj.isPrivate ? 'justify-between' : 'justify-end'} items-center w-full">
-		{#if guildObj.isPrivate}
+	<div class="flex {guildObj.is_private ? 'justify-between' : 'justify-end'} items-center w-full">
+		{#if guildObj.is_private}
 			<div class="">
 				<img src={lockIcon} alt="lock-icon" />
 			</div>
@@ -51,7 +51,7 @@
 
 		<div class="flex items-center gap-[5px]">
 			<img src={groupIcon} alt="group-icon" />
-			<p class="text-[14px] text-main">{guildObj.joinedCount}/{guildObj.maxUsers}</p>
+			<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 		</div>
 	</div>
 </button>

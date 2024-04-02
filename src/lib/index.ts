@@ -34,7 +34,7 @@ interface AuthStateStoreTypes {
     guilds: {
         createdGuilds: CreatedGuildReference[] | null
         joinedGuild: boolean
-        guildObj: GuildTypes | null
+        guildObj: CreatedGuildReference | null
 
     }
 }
