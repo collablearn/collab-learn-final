@@ -205,16 +205,23 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async ({ locals: { supabase }, request }) => {
-        const formData = Object.fromEntries(await request.formData());
+    createGuildAction: async ({ locals: { supabase, isLogged }, request }) => {
 
-        try {
-            const result = createGuildSchema.parse(formData);
-        } catch (error) {
-            const zodError = error as ZodError;
-            const { fieldErrors } = zodError.flatten();
-            return fail(400, { errors: fieldErrors });
-        }
+        const checkLogin = await isLogged();
+
+        if (checkLogin) {
+
+            const formData = Object.fromEntries(await request.formData());
+
+            try {
+                const result = createGuildSchema.parse(formData);
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
+
+        } else redirect(302, "/");
 
     }
 
