@@ -16,6 +16,14 @@
 
 	let password = '';
 
+	const guildObjToServer = {
+		client_user_id: guildObj.user_id,
+		client_user_photo_link: guildObj.image_url,
+		client_user_fullname: guildObj.host_name,
+		client_guild_id: guildObj.id,
+		client_guild_name: guildObj.guild_name
+	};
+
 	//this is insecure way of joining will rethink soon for database calls
 	const handleJoin = () => {
 		if (password === guildObj.passcode) {
@@ -55,7 +63,15 @@
 	<div
 		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
-		<div class="bg-submain py-[50px] px-[22px] w-full relative" in:scale out:fade>
+		<form
+			method="post"
+			action="/?/checkPasswordAction"
+			enctype="multipart/form-data"
+			use:enhance={checkPasswordActionNews}
+			class="bg-submain py-[50px] px-[22px] w-full relative"
+			in:scale
+			out:fade
+		>
 			<div class="flex flex-col gap-[10px]">
 				<h3 class="text-[24px] text-main">{guildObj.guild_name}</h3>
 				<p class="text-[14px] text-main">{guildObj.description}</p>
@@ -66,11 +82,13 @@
 				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 			</div>
 
+			<input name="guildObj" type="hidden" class="hidden" value={guildObjToServer} />
+
 			<div class="mt-[20px]">
 				<label>
 					<span class="text-main text-[14px] transition-all">Passcode</span>
 					<input
-						bind:value={password}
+						name="passcode"
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 					/>
@@ -78,26 +96,21 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<form
-					method="post"
-					action="/?/checkPasswordAction"
-					enctype="multipart/form-data"
-					use:enhance={checkPasswordActionNews}
+				<button
+					type="submit"
+					class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					<button
-						class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
-					>
-						Join
-					</button>
-				</form>
+					Join
+				</button>
 
 				<button
+					type="button"
 					on:click={() => (showPrivateJoin = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[8px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>
 					Back
 				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 {/if}

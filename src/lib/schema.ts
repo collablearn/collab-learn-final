@@ -79,5 +79,6 @@ export const createGuildSchemaWithPassCode = z.object({
 });
 
 export const checkGuildPassSchema = z.object({
-    passcode: z.string().min(1, { message: "Passcode must not be empty," })
+    guildObj: z.string(),
+    passcode: z.string().min(1, { message: "Passcode must not be empty." })
 })
