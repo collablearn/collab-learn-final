@@ -280,23 +280,33 @@ export const actions: Actions = {
 
     checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
 
+        type GuildObjServerTypes = {
+            client_user_id: string
+            client_user_photo_link: string
+            client_user_fullname: string
+            client_guild_id: number
+            client_guild_name: string
+        }
+
         const formData = Object.fromEntries(await request.formData());
-        /* client_user_id uuid,
-        client_user_photo_link text,
-        client_user_fullname text,
-        client_guild_id int8,
-        client_guild_name text,
-        client_pass_code text */
 
         try {
             const result = checkGuildPassSchema.parse(formData);
-
+            const guildObj = JSON.parse(result.guildObj) as GuildObjServerTypes
             const checkLogin = await isLogged();
             if (checkLogin) {
-                /* const { data, error: checkPassError } = await supabase.rpc("check_password", {
+                const { data, error: checkPassError } = await supabase.rpc("check_password", {
+                    client_user_id: guildObj.client_user_id,
+                    client_user_photo_link: guildObj.client_user_photo_link,
+                    client_user_fullname: guildObj.client_user_fullname,
+                    client_guild_id: guildObj.client_guild_id,
+                    client_guild_name: guildObj.client_guild_name,
+                    client_pass_code: result.passcode
+                });
 
-                }) */
-
+                if (checkPassError) return fail(401, { msg: checkPassError.message });
+                else if (data) return fail(200, { msg: "You have successfully joined this guild." });
+                else return fail(401, { msg: "Invalida Password" });
 
             } else redirect(302, "/");
 
