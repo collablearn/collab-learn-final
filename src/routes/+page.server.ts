@@ -7,7 +7,7 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
     const loginCheck = await isLogged();
 
-    if (!loginCheck) redirect(302, "/dashboard");
+    if (loginCheck) redirect(302, "/dashboard");
 
 };
 
@@ -203,6 +203,5 @@ export const actions: Actions = {
 
         } else redirect(302, "/");
     },
-
 
 };
