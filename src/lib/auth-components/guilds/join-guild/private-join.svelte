@@ -2,7 +2,7 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/general-components/loader.svelte';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import type { CreatedGuildReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 	import { enhance } from '$app/forms';
@@ -13,11 +13,12 @@
 	export let showPrivateJoin = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
-	const guildObjToServer = {
-		client_user_id: guildObj.user_id,
-		client_user_photo_link: guildObj.image_url,
-		client_user_fullname: guildObj.host_name,
+	const userAndGuildObj = {
+		client_user_id: $userState?.user_id,
+		client_user_photo_link: $userState?.user_photo_link,
+		client_user_fullname: $userState?.user_fullname,
 		client_guild_id: guildObj.id,
 		client_guild_name: guildObj.guild_name
 	};
@@ -87,12 +88,7 @@
 				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 			</div>
 
-			<input
-				name="guildObj"
-				type="hidden"
-				class="hidden"
-				value={JSON.stringify(guildObjToServer)}
-			/>
+			<input name="guildObj" type="hidden" class="hidden" value={JSON.stringify(userAndGuildObj)} />
 
 			<div class="mt-[20px]">
 				<label>

@@ -269,18 +269,14 @@ export const actions: Actions = {
         const checkLogin = await isLogged();
         if (checkLogin) {
 
-            const { count, error: existError } = await supabase.from("joined_guild_tb").select('*', { count: 'exact', head: true })
-
-            if (existError) return fail(401, { msg: existError.message });
-            else if (count) return fail(200, { msg: "exist" });
-            else return fail(400, { msg: "no match" });
+            const { data, error } = await supabase.rpc("check_if_joined", { client_guild_id: 0, client_user_id: checkLogin.id })
 
         } else redirect(302, "/");
     },
 
     checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
 
-        type GuildObjServerTypes = {
+        type UserAndGuildObjTypes = {
             client_user_id: string
             client_user_photo_link: string
             client_user_fullname: string
@@ -292,15 +288,15 @@ export const actions: Actions = {
 
         try {
             const result = checkGuildPassSchema.parse(formData);
-            const guildObj = JSON.parse(result.guildObj) as GuildObjServerTypes
+            const userAndGuildObj = JSON.parse(result.userAndGuildObj) as UserAndGuildObjTypes
             const checkLogin = await isLogged();
             if (checkLogin) {
                 const { data, error: checkPassError } = await supabase.rpc("check_password", {
-                    client_user_id: guildObj.client_user_id,
-                    client_user_photo_link: guildObj.client_user_photo_link,
-                    client_user_fullname: guildObj.client_user_fullname,
-                    client_guild_id: guildObj.client_guild_id,
-                    client_guild_name: guildObj.client_guild_name,
+                    client_user_id: userAndGuildObj.client_user_id,
+                    client_user_photo_link: userAndGuildObj.client_user_photo_link,
+                    client_user_fullname: userAndGuildObj.client_user_fullname,
+                    client_guild_id: userAndGuildObj.client_guild_id,
+                    client_guild_name: userAndGuildObj.client_guild_name,
                     client_pass_code: result.passcode
                 });
 

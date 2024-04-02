@@ -28,6 +28,9 @@
 
 			switch (status) {
 				case 200:
+					$authState.guilds.joinedGuild = true;
+					$authState.guilds.guildObj = guildObj;
+					toast.success('Joined', { description: 'Welcome Back!' });
 					break;
 
 				case 400:
