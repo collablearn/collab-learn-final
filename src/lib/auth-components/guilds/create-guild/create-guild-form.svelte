@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto, invalidateAll } from '$app/navigation';
+	import { getUserState } from '$lib';
 	import Loader from '$lib/general-components/loader.svelte';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+
+	const userState = getUserState();
 
 	const visibilitySelection = ['Public', 'Private'];
 
@@ -72,6 +75,7 @@
 	use:enhance={createGuildActionNews}
 	class=""
 >
+	<input name="hostName" type="hidden" class="hidden" value={$userState?.user_fullname} />
 	<div class="flex flex-col gap-[10px]">
 		<label>
 			<span class="text-main text-[14px] transition-all">Guild Name</span>

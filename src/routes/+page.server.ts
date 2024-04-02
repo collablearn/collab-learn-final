@@ -220,7 +220,7 @@ export const actions: Actions = {
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
                         user_id: checkLogin.id,
                         guild_name: result.guildName,
-                        host_name: "",
+                        host_name: result.hostName,
                         is_private: false,
                         image_url: "",
                         max_users: Number(result.maxUsers),
@@ -243,7 +243,7 @@ export const actions: Actions = {
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
                         user_id: checkLogin.id,
                         guild_name: result.guildName,
-                        host_name: "",
+                        host_name: result.hostName,
                         is_private: true,
                         image_url: "",
                         max_users: Number(result.maxUsers),
