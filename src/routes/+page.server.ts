@@ -5,9 +5,9 @@ import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
-    const loginCheck = isLogged();
+    const loginCheck = await isLogged();
 
-    if (loginCheck === "has auth") redirect(302, "/dashboard");
+    if (!loginCheck) redirect(302, "/dashboard");
 
 
 };
