@@ -212,12 +212,13 @@ export const actions: Actions = {
         if (checkLogin) {
 
             const formData = Object.fromEntries(await request.formData());
-
+            console.log(formData)
             try {
                 const result = createGuildSchema.parse(formData);
             } catch (error) {
                 const zodError = error as ZodError;
                 const { fieldErrors } = zodError.flatten();
+                console.log(fieldErrors)
                 return fail(400, { errors: fieldErrors });
             }
 
