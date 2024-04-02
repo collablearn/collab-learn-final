@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 
 import type { Session } from "@supabase/supabase-js";
 
@@ -8,7 +8,7 @@ declare global {
 			supabase: SupabaseClient
 			supabaseAdmin: SupabaseClient
 			getSession: () => Promise<Session | null>
-			isLogged: () => "has auth" | "no auth" | "no proper cookies" | "no cookies detected"
+			isLogged: () => Promise<User | null>
 		}
 
 
