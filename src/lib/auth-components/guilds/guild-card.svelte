@@ -63,6 +63,7 @@
 	enctype="multipart/form-data"
 	use:enhance={checkIfJoinedActionNews}
 >
+	<input name="guildId" type="hidden" class="hidden" value={guildObj.id} />
 	<button
 		disabled={checkIfJoinLoader}
 		class="bg-subwhite px-[13px] h-[308px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px] relative"

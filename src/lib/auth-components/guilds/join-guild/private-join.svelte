@@ -88,7 +88,12 @@
 				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 			</div>
 
-			<input name="guildObj" type="hidden" class="hidden" value={JSON.stringify(userAndGuildObj)} />
+			<input
+				name="userAndGuildObj"
+				type="hidden"
+				class="hidden"
+				value={JSON.stringify(userAndGuildObj)}
+			/>
 
 			<div class="mt-[20px]">
 				<label>
