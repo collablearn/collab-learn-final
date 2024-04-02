@@ -41,6 +41,7 @@
 					toast.success('Create Guild', { description: msg });
 					formActionError = null;
 					createGuildLoader = false;
+					goto('/guilds');
 					break;
 
 				case 400:
