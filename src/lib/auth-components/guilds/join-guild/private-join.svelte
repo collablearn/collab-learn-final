@@ -22,19 +22,6 @@
 		client_guild_name: guildObj.guild_name
 	};
 
-	//this is insecure way of joining will rethink soon for database calls
-	/* const handleJoin = () => {
-		if (password === guildObj.passcode) {
-			toast.success('Joining Guild', { description: 'Joined Successfully' });
-			$authState.guilds.guildObj = guildObj;
-			$authState.guilds.joinedGuild = true;
-		} else {
-			toast.error('Joining Guild', {
-				description: `The Passcode is incorrect unable to join ${guildObj.guild_name}`
-			});
-		}
-	}; */
-
 	interface CheckPasscodeVal {
 		passcode: string[];
 	}
@@ -53,7 +40,9 @@
 				case 200:
 					toast.success('Join Guild', { description: msg });
 					formActionError = null;
+					$authState.guilds.guildObj = guildObj;
 					checkPasscodeLoader = false;
+					$authState.guilds.joinedGuild = true;
 					break;
 
 				case 400:
@@ -121,10 +110,16 @@
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
 				<button
+					disabled={checkPasscodeLoader}
 					type="submit"
-					class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					class="{checkPasscodeLoader ? 'bg-main/50 cursor-not-allowed' : 'bg-main'}
+					active:bg-main/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					Join
+					{#if checkPasscodeLoader}
+						Joining...
+					{:else}
+						Join
+					{/if}
 				</button>
 
 				<button
