@@ -1,14 +1,13 @@
-import { loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
-    const loginCheck = isLogged();
+    const loginCheck = await isLogged();
 
-    if (loginCheck === "has auth") redirect(302, "/dashboard");
-
+    if (loginCheck) redirect(302, "/dashboard");
 
 };
 
@@ -43,7 +42,7 @@ export const actions: Actions = {
 
             const { data: { user }, error: registerError } = await supabase.auth.signUp({
                 email: result.email,
-                password: result.password,
+                password: result.password
             });
 
             if (registerError) return fail(401, { msg: registerError.message });
@@ -114,13 +113,12 @@ export const actions: Actions = {
         }
     },
 
-    updatePersonalInformationAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, isLogged }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        const checkLogin = isLogged();
-        const session = await getSession();
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
             try {
                 const result = updateInformationSchema.parse(formData);
 
@@ -132,7 +130,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }]).eq("user_id", session.user.id)
+                }]).eq("user_id", checkLogin.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
@@ -146,16 +144,15 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, isLogged }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
-        const checkLogin = isLogged();
-        const session = await getSession();
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(checkLogin.id, profilePicture, {
                 cacheControl: "3600",
                 upsert: true
             });
@@ -167,11 +164,11 @@ export const actions: Actions = {
 
                 const { error: updateUserError } = await supabase.from("user_list_tb").update([{
                     user_photo_link: `${publicUrl}?${Math.random()}`
-                }]).eq("user_id", session.user.id);
+                }]).eq("user_id", checkLogin.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
-                    await supabase.storage.from("collab-bucket").remove([session.user.id])
+                    await supabase.storage.from("collab-bucket").remove([checkLogin.id])
                     return fail(401, { msg: updateUserError.message });
                 } else return fail(200, { msg: "Upload successfully" });
             }
@@ -180,11 +177,10 @@ export const actions: Actions = {
 
     },
 
-    updatePasswordAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
-        const checkLogin = isLogged();
-        const session = await getSession();
+    updatePasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
             const formData = Object.fromEntries(await request.formData());
 
             try {
@@ -208,5 +204,65 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
+    //guild route actions
+    createGuildAction: async ({ locals: { supabase, isLogged }, request }) => {
+
+        const checkLogin = await isLogged();
+
+        if (checkLogin) {
+
+            const formData = Object.fromEntries(await request.formData());
+
+            if (formData.visibility === "Public") {
+                try {
+                    const result = createGuildSchema.parse(formData);
+
+                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                        user_id: checkLogin.id,
+                        guild_name: result.guildName,
+                        host_name: result.hostName,
+                        is_private: false,
+                        image_url: "",
+                        max_users: Number(result.maxUsers),
+                        description: result.description,
+                        passcode: "",
+                    }]);
+
+                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                    else return fail(200, { msg: "Guild Created" })
+
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    console.log(fieldErrors)
+                    return fail(400, { errors: fieldErrors });
+                }
+            } else {
+                try {
+                    const result = createGuildSchemaWithPassCode.parse(formData);
+                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                        user_id: checkLogin.id,
+                        guild_name: result.guildName,
+                        host_name: result.hostName,
+                        is_private: true,
+                        image_url: "",
+                        max_users: Number(result.maxUsers),
+                        description: result.description,
+                        passcode: result.passcode,
+                    }]);
+
+                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                    else return fail(200, { msg: "Guild Created" })
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    console.log(fieldErrors)
+                    return fail(400, { errors: fieldErrors });
+                }
+            }
+
+        } else redirect(302, "/");
+
+    }
 
 };

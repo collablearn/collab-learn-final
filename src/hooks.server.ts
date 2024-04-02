@@ -11,20 +11,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     const { cookies } = event;
 
-    event.locals.isLogged = () => {
-        if (cookies) {
-            try {
-                const session: Session = JSON.parse(cookies.get("sb-climcdnnyuyrfcyxhewr-auth-token") as string);
-
-                if (session) {
-                    return "has auth"
-                } else {
-                    return "no auth"
-                }
-            } catch (error) {
-                return "no proper cookies"
-            }
-        } else return "no cookies detected"
+    event.locals.isLogged = async () => {
+        const { data: { user }, error: getUserError } = await event.locals.supabase.auth.getUser();
+        if (user) return user;
+        else if (getUserError) return null;
+        else return null;
     }
 
     event.locals.supabase = createServerClient(supabaseURL, supabaseKEY, {
