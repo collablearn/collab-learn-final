@@ -144,14 +144,13 @@ export const actions: Actions = {
         } else redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, isLogged, getSession }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, isLogged }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
-        const checkLogin = isLogged();
-        const session = await getSession();
+        const checkLogin = await isLogged();
 
-        if (checkLogin === "has auth" && session) {
+        if (checkLogin) {
 
             const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
                 cacheControl: "3600",
@@ -165,11 +164,11 @@ export const actions: Actions = {
 
                 const { error: updateUserError } = await supabase.from("user_list_tb").update([{
                     user_photo_link: `${publicUrl}?${Math.random()}`
-                }]).eq("user_id", session.user.id);
+                }]).eq("user_id", checkLogin.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
-                    await supabase.storage.from("collab-bucket").remove([session.user.id])
+                    await supabase.storage.from("collab-bucket").remove([checkLogin.id])
                     return fail(401, { msg: updateUserError.message });
                 } else return fail(200, { msg: "Upload successfully" });
             }
