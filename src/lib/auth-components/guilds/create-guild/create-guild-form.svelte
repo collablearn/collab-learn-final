@@ -1,29 +1,49 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Loader from '$lib/general-components/loader.svelte';
+	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
 
 	const visibilitySelection = ['Public', 'Private'];
 
-	let visibilityValue = 'Public';
+	interface CreateGuild {
+		guildName: string[];
+		maxUsers: string[];
+		description: string[];
+		passcode: string[];
+	}
 
+	interface CreateGuildAction {
+		msg: string;
+		errors: CreateGuild;
+	}
+
+	let visibilityValue = 'Public';
+	let formActionError: CreateGuild | null = null;
 	let createGuildLoader = false;
+
 	const createGuildActionNews: SubmitFunction = () => {
 		createGuildLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<CreateGuildAction>;
 
 			switch (status) {
 				case 200:
+					formActionError = null;
 					createGuildLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
 					createGuildLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
 					createGuildLoader = false;
 					break;
 

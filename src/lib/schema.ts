@@ -73,5 +73,5 @@ export const createGuildSchemaWithPassCode = z.object({
     maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
     description: z.string().min(5, { message: "Must enter a valid description." }),
     visibility: z.string(),
-    passcode: z.string()
+    passcode: z.string().min(6, { message: "Must choose a strong passcode." })
 });

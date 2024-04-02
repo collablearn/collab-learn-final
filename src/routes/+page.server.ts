@@ -1,4 +1,4 @@
-import { createGuildSchema, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -212,14 +212,25 @@ export const actions: Actions = {
         if (checkLogin) {
 
             const formData = Object.fromEntries(await request.formData());
-            console.log(formData)
-            try {
-                const result = createGuildSchema.parse(formData);
-            } catch (error) {
-                const zodError = error as ZodError;
-                const { fieldErrors } = zodError.flatten();
-                console.log(fieldErrors)
-                return fail(400, { errors: fieldErrors });
+
+            if (formData.visibility === "Public") {
+                try {
+                    const result = createGuildSchema.parse(formData);
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    console.log(fieldErrors)
+                    return fail(400, { errors: fieldErrors });
+                }
+            } else {
+                try {
+                    const result = createGuildSchemaWithPassCode.parse(formData);
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    console.log(fieldErrors)
+                    return fail(400, { errors: fieldErrors });
+                }
             }
 
         } else redirect(302, "/");
