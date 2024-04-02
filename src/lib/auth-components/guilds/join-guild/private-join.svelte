@@ -5,6 +5,8 @@
 	import { getAuthState } from '$lib';
 	import type { CreatedGuildReference } from '$lib/types';
 	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let guildObj: CreatedGuildReference;
 
@@ -25,6 +27,27 @@
 				description: `The Passcode is incorrect unable to join ${guildObj.guild_name}`
 			});
 		}
+	};
+
+	const checkPasswordActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
 	};
 </script>
 
@@ -55,7 +78,12 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<form>
+				<form
+					method="post"
+					action="/?/checkPasswordAction"
+					enctype="multipart/form-data"
+					use:enhance={checkPasswordActionNews}
+				>
 					<button
 						class="active:bg-main/50 bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 					>
