@@ -3,7 +3,6 @@
 	import { getAuthState, getUserState, setAuthState, setUserState } from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 	import type { LayoutServerData } from './$types';
-	import { number } from 'zod';
 
 	export let data: LayoutServerData;
 

@@ -111,6 +111,7 @@
 					in:fly={{ x: 50, duration: 450 }}
 					disabled={updatePasswordLoader}
 					on:keyup={checkPasswordEngine}
+					autocomplete="off"
 					name="newPassword"
 					type="password"
 					placeholder="New Password"
@@ -128,6 +129,7 @@
 				<input
 					in:fly={{ x: -50, duration: 450 }}
 					disabled={updatePasswordLoader}
+					autocomplete="off"
 					name="confirmNewPassword"
 					type="password"
 					placeholder="Confirm New Password"

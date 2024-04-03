@@ -20,7 +20,7 @@
 			switch (status) {
 				case 200:
 					toast.success('Log out', {
-						description: `Thank you for using our system come back again! ${$userState?.user_fullname.split(', ')}.`
+						description: `Thank you for using our system come back again! ${$userState?.user_fullname.split(',')}.`
 					});
 					logoutLoader = false;
 					invalidateAll();
