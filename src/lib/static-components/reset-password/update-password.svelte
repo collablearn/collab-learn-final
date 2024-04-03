@@ -6,7 +6,7 @@
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 
 	let password = '';
@@ -108,6 +108,7 @@
 			/>
 			<div class="flex flex-col gap-[20px] justify-center">
 				<input
+					in:fly={{ x: 50, duration: 450 }}
 					disabled={updatePasswordLoader}
 					on:keyup={checkPasswordEngine}
 					name="newPassword"
@@ -125,6 +126,7 @@
 				{/if}
 
 				<input
+					in:fly={{ x: -50, duration: 450 }}
 					disabled={updatePasswordLoader}
 					name="confirmNewPassword"
 					type="password"
@@ -142,6 +144,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				in:fly={{ y: 50, duration: 750 }}
 				disabled={updatePasswordLoader}
 				class="{updatePasswordLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
 				active:bg-submain/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"
