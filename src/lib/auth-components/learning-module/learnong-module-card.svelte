@@ -1,6 +1,5 @@
 <script lang="ts">
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
 
 	let showLearningContent = false;
 </script>
@@ -40,7 +39,7 @@
 				<button
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					<Loader name="Create" txtColor="text-submain text-[14px]" />
+					Create
 				</button>
 
 				<button

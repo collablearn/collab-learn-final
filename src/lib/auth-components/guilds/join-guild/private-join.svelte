@@ -1,7 +1,6 @@
 <script lang="ts">
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
-	import Loader from '$lib/general-components/loader.svelte';
 	import { getAuthState, getUserState } from '$lib';
 	import type { CreatedGuildReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
@@ -71,7 +70,7 @@
 	>
 		<form
 			method="post"
-			action="/?/checkPasswordAction"
+			action="/APIS?/checkPasswordAction"
 			enctype="multipart/form-data"
 			use:enhance={checkPasswordActionNews}
 			class="bg-submain py-[50px] px-[22px] w-full relative"

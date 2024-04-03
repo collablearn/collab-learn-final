@@ -1,12 +1,11 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 
 	const staticState = getStaticState();
 
@@ -109,7 +108,7 @@
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
 				<p class="text-[14px] text-white">Already have your account?</p>
-				<button class="text-[14px] underline text-submain" on:click={cleanUpHandler}
+				<button type="button" class="text-[14px] underline text-submain" on:click={cleanUpHandler}
 					>Log in here</button
 				>
 			</div>
