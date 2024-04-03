@@ -196,8 +196,6 @@ export const actions: Actions = {
             else if (data) return fail(200, { msg: "You have successfully joined this guild." });
             else return fail(401, { msg: "Invalid Password" });
 
-
-
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
