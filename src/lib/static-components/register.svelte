@@ -5,7 +5,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { passwordStrength } from 'check-password-strength';
-	import { fade, scale } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
 
@@ -76,7 +76,7 @@
 	action="?/registerAction"
 	enctype="multipart/form-data"
 	use:enhance={registerActionNews}
-	class="bg-main min-h-screen px-[35px] py-[35px] flex flex-col justify-center items-center"
+	class="bg-main min-h-screen px-[35px] py-[35px] flex flex-col justify-center items-center overflow-hidden"
 >
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
@@ -86,6 +86,7 @@
 		<div class="mt-[20px] flex flex-col gap-[20px]">
 			<input autocomplete="off" name="passwordStrength" type="hidden" value={passwordCheck} />
 			<input
+				in:fly={{ x: 50, duration: 450 }}
 				autocomplete="off"
 				name="firstName"
 				type="text"
@@ -97,6 +98,7 @@
 			{/each}
 
 			<input
+				in:fly={{ x: -50, duration: 450 }}
 				autocomplete="off"
 				name="lastName"
 				type="text"
@@ -108,6 +110,7 @@
 			{/each}
 
 			<input
+				in:fly={{ x: 50, duration: 450 }}
 				autocomplete="off"
 				name="email"
 				type="email"
@@ -139,6 +142,7 @@
 			{/if}
 
 			<input
+				in:fly={{ x: -50, duration: 450 }}
 				autocomplete="off"
 				on:keyup={checkPasswordEngine}
 				bind:value={password}
@@ -156,6 +160,7 @@
 			{/if}
 
 			<input
+				in:fly={{ x: 50, duration: 450 }}
 				autocomplete="off"
 				name="confirmPassword"
 				type="password"
@@ -169,6 +174,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				in:fly={{ y: 50, duration: 450 }}
 				disabled={registerLoader}
 				type="submit"
 				class="{registerLoader

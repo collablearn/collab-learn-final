@@ -1,13 +1,12 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
-	import { getStaticState, samplePasswords } from '$lib';
+	import { samplePasswords } from '$lib';
 	import { enhance } from '$app/forms';
 	import { passwordStrength } from 'check-password-strength';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 
 	let password = '';
@@ -109,8 +108,10 @@
 			/>
 			<div class="flex flex-col gap-[20px] justify-center">
 				<input
+					in:fly={{ x: 50, duration: 450 }}
 					disabled={updatePasswordLoader}
 					on:keyup={checkPasswordEngine}
+					autocomplete="off"
 					name="newPassword"
 					type="password"
 					placeholder="New Password"
@@ -126,7 +127,9 @@
 				{/if}
 
 				<input
+					in:fly={{ x: -50, duration: 450 }}
 					disabled={updatePasswordLoader}
+					autocomplete="off"
 					name="confirmNewPassword"
 					type="password"
 					placeholder="Confirm New Password"
@@ -143,6 +146,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				in:fly={{ y: 50, duration: 750 }}
 				disabled={updatePasswordLoader}
 				class="{updatePasswordLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
 				active:bg-submain/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-main"

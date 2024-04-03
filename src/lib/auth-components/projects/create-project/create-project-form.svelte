@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Loader from '$lib/general-components/loader.svelte';
 	import { fade } from 'svelte/transition';
 
 	const visibilitySelection = ['Public', 'Private'];
@@ -66,7 +65,7 @@
 	<button
 		class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 	>
-		<Loader name="Create" txtColor="text-submain text-[14px]" />
+		Create
 	</button>
 
 	<a

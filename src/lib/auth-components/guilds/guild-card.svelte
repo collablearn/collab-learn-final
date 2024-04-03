@@ -59,7 +59,7 @@
 
 <form
 	method="post"
-	action="/?/checkIfJoinedAction"
+	action="/APIS?/checkIfJoinedAction"
 	enctype="multipart/form-data"
 	use:enhance={checkIfJoinedActionNews}
 >

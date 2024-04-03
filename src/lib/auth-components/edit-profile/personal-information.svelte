@@ -123,7 +123,7 @@
 <!--For upload profile-->
 <form
 	method="post"
-	action="/?/uploadProfileAction"
+	action="/APIS?/uploadProfileAction"
 	enctype="multipart/form-data"
 	use:enhance={uploadProfileActionNews}
 	class="flex items-end justify-between"
@@ -191,7 +191,7 @@
 <!--For Update Information-->
 <form
 	method="post"
-	action="/?/updatePersonalInformationAction"
+	action="/APIS?/updatePersonalInformationAction"
 	enctype="multipart/form-data"
 	use:enhance={updatePersonalInformationActionNews}
 	class="flex flex-col gap-[10px] mt-[20px]"

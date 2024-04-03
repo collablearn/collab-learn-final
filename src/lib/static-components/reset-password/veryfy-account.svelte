@@ -1,13 +1,11 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
 	import { getStaticState } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
-	import type { Result } from 'postcss';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 
 	const staticState = getStaticState();
 
@@ -81,6 +79,7 @@
 			<div class="flex gap-[23px] justify-center">
 				<input name="email" type="hidden" class="hidden" value={$staticState.email} />
 				<input
+					in:fly={{ y: -50, duration: 450 }}
 					disabled={verifyCodeLoader}
 					autocomplete="off"
 					name="verifyCode"
@@ -96,6 +95,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				in:fly={{ y: 50, duration: 750 }}
 				type="submit"
 				disabled={verifyCodeLoader}
 				class="{verifyCodeLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
@@ -110,7 +110,7 @@
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
 				<p class="text-[14px] text-white">Already have your account?</p>
-				<button class="text-[14px] underline text-submain" on:click={cleanUpHandler}
+				<button type="button" class="text-[14px] underline text-submain" on:click={cleanUpHandler}
 					>Log in here</button
 				>
 			</div>
