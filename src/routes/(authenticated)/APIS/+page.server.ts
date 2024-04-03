@@ -92,11 +92,11 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async ({ locals: { supabase, isLogged }, request }) => {
+    createGuildAction: async ({ locals: { supabase, getSession }, request }) => {
 
-        const checkLogin = await isLogged();
+        const session = await getSession();
 
-        if (checkLogin) {
+        if (session) {
 
             const formData = Object.fromEntries(await request.formData());
 
@@ -105,7 +105,7 @@ export const actions: Actions = {
                     const result = createGuildSchema.parse(formData);
 
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: checkLogin.id,
+                        user_id: session.user.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: false,
@@ -128,7 +128,7 @@ export const actions: Actions = {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: checkLogin.id,
+                        user_id: session.user.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: true,
@@ -148,7 +148,7 @@ export const actions: Actions = {
                 }
             }
 
-        } else redirect(302, "/");
+        } else return redirect(302, "/");
 
     },
 
