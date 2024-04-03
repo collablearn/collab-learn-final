@@ -6,12 +6,12 @@ import type { ZodError } from "zod";
 
 export const actions: Actions = {
     //edit profile actions
-    updatePersonalInformationAction: async ({ locals: { supabase, isLogged }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, getSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        const checkLogin = await isLogged();
+        const session = await getSession();
 
-        if (checkLogin) {
+        if (session) {
             try {
                 const result = updateInformationSchema.parse(formData);
 
@@ -23,7 +23,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }]).eq("user_id", checkLogin.id)
+                }]).eq("user_id", session.user.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
@@ -34,7 +34,7 @@ export const actions: Actions = {
                 const { fieldErrors } = zodError.flatten();
                 return fail(400, { errors: fieldErrors });
             }
-        } else redirect(302, "/");
+        } else return redirect(302, "/");
     },
 
     uploadProfileAction: async ({ locals: { supabase, isLogged }, request }) => {

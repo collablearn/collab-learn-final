@@ -6,7 +6,7 @@ import type { CreatedGuildReference, UserReference } from "$lib/types";
 export const load: LayoutServerLoad = async ({ locals: { supabase, isLogged } }) => {
     const loginCheck = await isLogged();
 
-    if (!loginCheck) redirect(302, "/");
+    if (!loginCheck) return redirect(302, "/");
 
     return {
         userData: await supabase.from("user_list_tb").select("*").eq("user_id", loginCheck.id).limit(1).single() as PostgrestSingleResponse<UserReference>,
