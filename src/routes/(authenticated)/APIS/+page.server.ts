@@ -28,7 +28,6 @@ export const actions: Actions = {
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
 
-
             } catch (error) {
                 const zodError = error as ZodError;
                 const { fieldErrors } = zodError.flatten();
@@ -37,15 +36,15 @@ export const actions: Actions = {
         } else return redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, isLogged }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, getSession }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
-        const checkLogin = await isLogged();
+        const session = await getSession();
 
-        if (checkLogin) {
+        if (session) {
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(checkLogin.id, profilePicture, {
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
                 cacheControl: "3600",
                 upsert: true
             });
@@ -57,16 +56,16 @@ export const actions: Actions = {
 
                 const { error: updateUserError } = await supabase.from("user_list_tb").update([{
                     user_photo_link: `${publicUrl}?${Math.random()}`
-                }]).eq("user_id", checkLogin.id);
+                }]).eq("user_id", session.user.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
-                    await supabase.storage.from("collab-bucket").remove([checkLogin.id])
+                    await supabase.storage.from("collab-bucket").remove([session.user.id])
                     return fail(401, { msg: updateUserError.message });
                 } else return fail(200, { msg: "Upload successfully" });
             }
 
-        } else redirect(302, "/");
+        } else return redirect(302, "/");
 
     },
 
