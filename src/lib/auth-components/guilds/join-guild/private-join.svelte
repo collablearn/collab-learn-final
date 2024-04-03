@@ -70,7 +70,7 @@
 	>
 		<form
 			method="post"
-			action="/?/checkPasswordAction"
+			action="/APIS?/checkPasswordAction"
 			enctype="multipart/form-data"
 			use:enhance={checkPasswordActionNews}
 			class="bg-submain py-[50px] px-[22px] w-full relative"

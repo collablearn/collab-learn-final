@@ -69,16 +69,23 @@
 
 <form
 	method="post"
-	action="/?/createGuildAction"
+	action="/APIS?/createGuildAction"
 	enctype="multipart/form-data"
 	use:enhance={createGuildActionNews}
 	class=""
 >
-	<input name="hostName" type="hidden" class="hidden" value={$userState?.user_fullname} />
+	<input
+		autocomplete="off"
+		name="hostName"
+		type="hidden"
+		class="hidden"
+		value={$userState?.user_fullname}
+	/>
 	<div class="flex flex-col gap-[10px]">
 		<label>
 			<span class="text-main text-[14px] transition-all">Guild Name</span>
 			<input
+				autocomplete="off"
 				name="guildName"
 				type="text"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
@@ -91,6 +98,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Users (Max. 50)</span>
 			<input
+				autocomplete="off"
 				name="maxUsers"
 				type="number"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
@@ -118,6 +126,7 @@
 			{#each visibilitySelection as selection}
 				<div class="flex items-center gap-[5px]">
 					<input
+						autocomplete="off"
 						name="visibility"
 						type="radio"
 						class=""
@@ -134,6 +143,7 @@
 				<label>
 					<span class="text-main text-[14px] transition-all">Passcode</span>
 					<input
+						autocomplete="off"
 						name="passcode"
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Loader from '$lib/general-components/loader.svelte';
 	import type { ProjectTypes } from '$lib/types';
 	import { fade, scale } from 'svelte/transition';
 	import { getAuthState } from '$lib';
@@ -34,7 +33,7 @@
 					on:click={() => ($authState.projects.joinedProject = true)}
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					<Loader name="Join" txtColor="text-submain text-[14px]" />
+					Join
 				</button>
 
 				<button
