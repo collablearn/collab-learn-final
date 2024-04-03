@@ -5,7 +5,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { goto, invalidateAll } from '$app/navigation';
 
 	const childStaticState = getStaticState();
@@ -64,7 +64,7 @@
 	action="?/loginAction"
 	enctype="multipart/form-data"
 	use:enhance={loginActionNews}
-	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"
+	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center overflow-hidden"
 >
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
@@ -73,6 +73,7 @@
 
 		<div class="mt-[73px] flex flex-col gap-[20px]">
 			<input
+				in:fly={{ x: 50, duration: 450 }}
 				autocomplete="off"
 				name="email"
 				type="email"
@@ -84,6 +85,7 @@
 			{/each}
 
 			<input
+				in:fly={{ x: -50, duration: 450 }}
 				autocomplete="off"
 				name="password"
 				type="password"
@@ -97,6 +99,7 @@
 
 		<div class="mt-[40px]">
 			<button
+				in:fly={{ y: 50, duration: 450 }}
 				disabled={loginLoader}
 				type="submit"
 				class="{loginLoader
@@ -113,7 +116,7 @@
 			<div class="mt-[40px] flex justify-center">
 				<button
 					type="button"
-					class="text-[14px] text-submain underline"
+					class="text-[14px] text-submain underline transition-all active:scale-105"
 					on:click={() => ($childStaticState.isResetting = true)}>Forgot Password?</button
 				>
 			</div>

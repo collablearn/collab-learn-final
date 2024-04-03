@@ -109,7 +109,7 @@
 
 			<div class="mt-[40px] flex flex-wrap justify-center gap-[5px]">
 				<p class="text-[14px] text-white">Already have your account?</p>
-				<button class="text-[14px] underline text-submain" on:click={cleanUpHandler}
+				<button type="button" class="text-[14px] underline text-submain" on:click={cleanUpHandler}
 					>Log in here</button
 				>
 			</div>
