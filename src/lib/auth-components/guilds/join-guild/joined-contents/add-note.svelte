@@ -41,7 +41,7 @@
 				<button
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					<Loader name="Post" txtColor="text-submain text-[14px]" />
+					Post
 				</button>
 
 				<button
