@@ -1,7 +1,6 @@
 <script lang="ts">
 	import icon_320 from '$lib/assets/icon_320.svg';
-	import Loader from '$lib/general-components/loader.svelte';
-	import { getStaticState, samplePasswords } from '$lib';
+	import { samplePasswords } from '$lib';
 	import { enhance } from '$app/forms';
 	import { passwordStrength } from 'check-password-strength';
 	import type { ResultModel } from '$lib/types';
