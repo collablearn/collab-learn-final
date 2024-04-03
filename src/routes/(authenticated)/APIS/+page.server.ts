@@ -69,31 +69,26 @@ export const actions: Actions = {
 
     },
 
-    updatePasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
-        const checkLogin = await isLogged();
+    updatePasswordAction: async ({ locals: { supabase }, request }) => {
 
-        if (checkLogin) {
-            const formData = Object.fromEntries(await request.formData());
+        const formData = Object.fromEntries(await request.formData());
 
-            try {
-                const result = updatePasswordSchema.parse(formData);
-                if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
+        try {
+            const result = updatePasswordSchema.parse(formData);
+            if (result.passwordStrength != "Strong") return fail(401, { msg: "You must choose a strong password." });
 
-                const { data: { user }, error: updatePasswordError } = await supabase.auth.updateUser({
-                    password: result.newPassword
-                });
+            const { data: { user }, error: updatePasswordError } = await supabase.auth.updateUser({
+                password: result.newPassword
+            });
 
-                if (updatePasswordError) return fail(401, { msg: updatePasswordError.message });
-                else if (user) return fail(200, { msg: "Password Successfully Changed." });
+            if (updatePasswordError) return fail(401, { msg: updatePasswordError.message });
+            else if (user) return fail(200, { msg: "Password Successfully Changed." });
 
-            } catch (error) {
-                const zodError = error as ZodError;
-                const { fieldErrors } = zodError.flatten();
-                return fail(400, { errors: fieldErrors });
-            }
-
-
-        } else redirect(302, "/");
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     },
 
     //guild route actions
