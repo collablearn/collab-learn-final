@@ -152,17 +152,18 @@ export const actions: Actions = {
 
     },
 
-    checkIfJoinedAction: async ({ locals: { supabase, isLogged }, request }) => {
-        const checkLogin = await isLogged();
-        const guildId = await (await request.formData()).get("guildId") as string;
-        if (checkLogin) {
+    checkIfJoinedAction: async ({ locals: { supabase, getSession }, request }) => {
 
-            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined", { client_guild_id: Number(guildId), client_user_id: checkLogin.id });
+        const session = await getSession();
+        const guildId = (await request.formData()).get("guildId") as string;
+        if (session) {
+
+            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined", { client_guild_id: Number(guildId), client_user_id: session.user.id });
             if (checkIfJoinedError) return fail(401, { msg: checkIfJoinedError.message });
             else if (data) return fail(200, { msg: "Welcome Back." });
             else return fail(400, { msg: "Not joined" });
 
-        } else redirect(302, "/");
+        } else return redirect(302, "/");
     },
 
     checkPasswordAction: async ({ locals: { supabase, isLogged }, request }) => {
