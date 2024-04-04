@@ -4,9 +4,18 @@
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
 	import { getAuthState } from '$lib';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
+	import type { PageServerData } from './$types';
 
-	let authState = getAuthState();
+	export let data: PageServerData;
+
+	const authState = getAuthState();
+
+	$: if (data.guild_notes.data) {
+		$authState.guilds.guildNotes = data.guild_notes.data;
+	} else {
+		$authState.guilds.guildNotes = null;
+	}
 
 	$authState.activeItem = '/guilds';
 </script>
@@ -26,7 +35,9 @@
 
 			<div class="flex flex-col gap-[20px] mt-[35px]">
 				{#each $authState.guilds.createdGuilds ?? [] as guildObj}
-					<GuildCard {guildObj} />
+					<div class="">
+						<GuildCard {guildObj} />
+					</div>
 				{/each}
 
 				<!--Sample Pagination Comming Soooooon-->

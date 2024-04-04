@@ -3,15 +3,62 @@
 	import { fade, scale } from 'svelte/transition';
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
+	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
 
 	let showAddNote = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
 	const {
 		guilds: { guildObj }
 	} = $authState;
+
+	interface AddNoteVal {
+		guildNote: string[];
+	}
+
+	let addNoteLoader = false;
+	let formActionError: AddNoteVal | null = null;
+	const addNoteActionNews: SubmitFunction = () => {
+		addNoteLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: AddNoteVal }>;
+
+			switch (status) {
+				case 200:
+					invalidateAll();
+					toast.success('Add Note', { description: msg });
+					formActionError = null;
+					addNoteLoader = false;
+					showAddNote = false;
+					break;
+
+				case 400:
+					formActionError = errors;
+					addNoteLoader = false;
+					break;
+
+				case 401:
+					toast.error('Add Note', { description: msg });
+					formActionError = null;
+					addNoteLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <div class="fixed bottom-0 right-0 mr-[33px] mb-[33px]">
@@ -24,34 +71,62 @@
 	<div
 		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
-		<div class="bg-submain py-[50px] px-[22px] w-full relative" in:scale out:fade>
+		<form
+			method="post"
+			action="/guilds?/addNoteAction"
+			enctype="multipart/form-data"
+			use:enhance={addNoteActionNews}
+			class="bg-submain py-[50px] px-[22px] w-full relative"
+			in:scale
+			out:fade
+		>
 			<div class="flex flex-col gap-[10px]">
 				<h3 class="text-[24px] text-main">Add Note</h3>
 				<p class="text-[14px] text-main">What’s your thought right now?</p>
 			</div>
 
+			<input name="guildId" type="hidden" class="hidden" value={$authState.guilds.guildObj?.id} />
+			<input name="userFullname" type="hidden" class="hidden" value={$userState?.user_fullname} />
+			<input
+				name="userPhotoLink"
+				type="hidden"
+				class="hidden"
+				value={$userState?.user_photo_link}
+			/>
 			<div class="mt-[20px]">
 				<textarea
+					name="guildNote"
 					placeholder="Say something..."
 					class="w-full outline-none border-[1px] border-main bg-submain text-[14px] text-main p-[10px]"
 				/>
+				{#each formActionError?.guildNote ?? [] as errMsg}
+					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+				{/each}
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
 				<button
-					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					disabled={addNoteLoader}
+					type="submit"
+					class="{addNoteLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+					 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					Post
+					{#if addNoteLoader}
+						Posting...
+					{:else}
+						Post
+					{/if}
 				</button>
 
 				<button
+					type="button"
 					on:click={() => (showAddNote = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[8px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>
 					Back
 				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 {/if}
 
