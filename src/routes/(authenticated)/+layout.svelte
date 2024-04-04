@@ -9,7 +9,6 @@
 	} from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 	import type { LayoutServerData } from './$types';
-	import { enhance } from '$app/forms';
 
 	export let data: LayoutServerData;
 

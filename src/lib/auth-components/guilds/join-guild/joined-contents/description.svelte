@@ -4,6 +4,7 @@
 	import ChatCard from './chat-card.svelte';
 	import AddNote from './add-note.svelte';
 	import { getAuthState } from '$lib';
+	import { flip } from 'svelte/animate';
 
 	const authState = getAuthState();
 
@@ -30,8 +31,10 @@
 
 	{#if activeItem === "Guild's Wall"}
 		<div class="mt-[20px] flex flex-col gap-[15px]">
-			{#each $authState.guilds.guildNotes ?? [] as guildNoteObj}
-				<DescriptionCard {guildNoteObj} />
+			{#each $authState.guilds.guildNotes ?? [] as guildNoteObj (guildNoteObj.id)}
+				<div class="" animate:flip={{ duration: 500 }}>
+					<DescriptionCard {guildNoteObj} />
+				</div>
 			{/each}
 		</div>
 	{:else}
