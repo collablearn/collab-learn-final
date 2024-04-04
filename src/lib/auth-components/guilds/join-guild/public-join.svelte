@@ -1,7 +1,7 @@
 <script lang="ts">
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import type { CreatedGuildReference } from '$lib/types';
 
 	export let guildObj: CreatedGuildReference;
@@ -9,6 +9,15 @@
 	export let showPublicJoin = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
+
+	const userAndGuildObj = {
+		client_user_id: $userState?.user_id,
+		client_user_photo_link: $userState?.user_photo_link,
+		client_user_fullname: $userState?.user_fullname,
+		client_guild_id: guildObj.id,
+		client_guild_name: guildObj.guild_name
+	};
 </script>
 
 {#if showPublicJoin}
