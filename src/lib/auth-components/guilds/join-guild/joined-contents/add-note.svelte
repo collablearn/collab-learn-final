@@ -8,9 +8,6 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { GuildWallReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
-
-	export let supabase: SupabaseClient<any, 'public', any>;
 
 	let showAddNote = false;
 
