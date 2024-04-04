@@ -7,6 +7,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
+	import { toast } from 'svelte-sonner';
 
 	let showAddNote = false;
 
@@ -33,6 +34,7 @@
 
 			switch (status) {
 				case 200:
+					toast.success('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
 					break;
@@ -43,6 +45,7 @@
 					break;
 
 				case 401:
+					toast.error('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
 					break;
