@@ -1,5 +1,8 @@
 <script lang="ts">
 	import sampleIcon from '$lib/assets/description_icon_320_sample.svg';
+	import type { GuildWallReference } from '$lib/types';
+
+	export let guildNoteObj: GuildWallReference;
 </script>
 
 <div class="bg-subwhite flex p-[10px] gap-[10px]">

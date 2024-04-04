@@ -12,6 +12,9 @@
 	const authState = getAuthState();
 
 	$: if (data.guild_notes.data) {
+		$authState.guilds.guildNotes = data.guild_notes.data;
+	} else {
+		$authState.guilds.guildNotes = null;
 	}
 
 	$authState.activeItem = '/guilds';
