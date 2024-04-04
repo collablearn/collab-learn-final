@@ -8,6 +8,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
 
 	let showAddNote = false;
 
@@ -19,7 +20,7 @@
 	} = $authState;
 
 	interface AddNoteVal {
-		note: string[];
+		guildNote: string[];
 	}
 
 	let addNoteLoader = false;
@@ -34,7 +35,7 @@
 
 			switch (status) {
 				case 200:
-					await fetch('/guilds');
+					invalidateAll();
 					toast.success('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
@@ -98,7 +99,7 @@
 					placeholder="Say something..."
 					class="w-full outline-none border-[1px] border-main bg-submain text-[14px] text-main p-[10px]"
 				/>
-				{#each formActionError?.note ?? [] as errMsg}
+				{#each formActionError?.guildNote ?? [] as errMsg}
 					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 				{/each}
 			</div>

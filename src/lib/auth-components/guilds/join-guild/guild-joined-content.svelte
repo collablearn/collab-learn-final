@@ -7,7 +7,7 @@
 	import Members from './joined-contents/members.svelte';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	const authState = getAuthState();
 	const userState = getUserState();
@@ -54,7 +54,11 @@
 <div class="flex justify-between">
 	<button
 		class="underline text-main text-[14px] font-semibold"
-		on:click={() => (($authState.guilds.joinedGuild = false), ($authState.guilds.guildObj = null))}
+		on:click={() => {
+			goto('/guilds');
+			$authState.guilds.joinedGuild = false;
+			$authState.guilds.guildObj = null;
+		}}
 		>Back
 	</button>
 

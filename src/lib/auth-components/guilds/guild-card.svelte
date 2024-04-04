@@ -10,6 +10,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
 
 	export let guildObj: CreatedGuildReference;
 	const authState = getAuthState();
@@ -31,6 +32,7 @@
 					$authState.guilds.joinedGuild = true;
 					$authState.guilds.guildObj = guildObj;
 					toast.success('Joined', { description: 'Welcome Back!' });
+					goto(`/guilds?${guildObj.id}`);
 					break;
 
 				case 400:
