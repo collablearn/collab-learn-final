@@ -34,6 +34,7 @@
 
 			switch (status) {
 				case 200:
+					await fetch('/guilds');
 					toast.success('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
