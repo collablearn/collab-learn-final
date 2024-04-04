@@ -75,7 +75,12 @@
 				disabled={deleteGuildLoader}
 				class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
 				underline transition-all active:bg-main/50 text-submain px-[10px] text-[14px] font-semibold"
-				>Delete
+			>
+				{#if deleteGuildLoader}
+					Deleting...
+				{:else}
+					Delete
+				{/if}
 			</button>
 		</form>
 	</div>
