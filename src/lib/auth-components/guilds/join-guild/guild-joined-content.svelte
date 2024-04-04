@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { getAuthState } from '$lib';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import Description from './joined-contents/description.svelte';
 	import Members from './joined-contents/members.svelte';
 
 	const authState = getAuthState();
-
+	console.log($authState.guilds.guildObj);
 	const {
 		guilds: { guildObj }
 	} = $authState;
@@ -15,11 +16,28 @@
 	let activeItem = 'Description';
 </script>
 
-<button
-	class="underline text-main text-[14px] font-semibold"
-	on:click={() => (($authState.guilds.joinedGuild = false), ($authState.guilds.guildObj = null))}
-	>Back</button
->
+<div class="flex justify-between">
+	<button
+		class="underline text-main text-[14px] font-semibold"
+		on:click={() => (($authState.guilds.joinedGuild = false), ($authState.guilds.guildObj = null))}
+		>Back
+	</button>
+
+	<div class="flex gap-[10px]">
+		<button
+			class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+			on:click={() => alert('Comming soon.')}
+			>Edit
+		</button>
+
+		<form method="post" action="/APIS?/deleteGuildAction" enctype="multipart/form-data" use:enhance>
+			<button class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+				>Delete
+			</button>
+		</form>
+	</div>
+</div>
+
 <div class="pt-[130px]">
 	<div class="flex flex-col justify-center items-center gap-[10px]">
 		<p class="text-[24px] text-main">{guildObj?.guild_name}</p>

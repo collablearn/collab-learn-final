@@ -220,6 +220,12 @@ export const actions: Actions = {
         if (checkPassError) return fail(401, { msg: checkPassError.message });
         else if (data) return fail(200, { msg: "You have successfully joined this guild." });
         else return fail(401, { msg: "Invalid Password" });
+    },
+
+    deleteGuildAction: async ({ locals: { supabase }, request }) => {
+        const guildId = (await request.formData()).get("guildId");
+
+
     }
 
 
