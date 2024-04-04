@@ -5,6 +5,9 @@
 	import AddNote from './add-note.svelte';
 	import { getAuthState } from '$lib';
 	import { flip } from 'svelte/animate';
+	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+
+	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
 
