@@ -4,8 +4,12 @@ import { fail } from "@sveltejs/kit";
 import { addNoteSchema } from "$lib/schema";
 
 
-export const load: PageServerLoad = async ({ locals: { supabase, isLogged }, request }) => {
+export const load: PageServerLoad = async ({ locals: { supabase, getSession }, request }) => {
+    const session = await getSession();
 
+    return {
+        guild_notes: await supabase.from("guild_wall_tb").select("*").eq("user_id", session?.user.id)
+    }
 
 };
 

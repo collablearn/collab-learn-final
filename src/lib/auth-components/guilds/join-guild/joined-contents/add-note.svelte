@@ -38,6 +38,7 @@
 					toast.success('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
+					showAddNote = false;
 					break;
 
 				case 400:
