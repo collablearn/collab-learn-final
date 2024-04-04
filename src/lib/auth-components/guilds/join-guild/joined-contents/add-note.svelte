@@ -21,7 +21,7 @@
 	}
 
 	let addNoteLoader = false;
-
+	let formActionError: AddNoteVal | null = null;
 	const addNoteActionNews: SubmitFunction = () => {
 		return async ({ result, update }) => {
 			const { status } = result as ResultModel<{ msg: string }>;
@@ -74,6 +74,9 @@
 					placeholder="Say something..."
 					class="w-full outline-none border-[1px] border-main bg-submain text-[14px] text-main p-[10px]"
 				/>
+				{#each formActionError?.note ?? [] as errMsg}
+					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+				{/each}
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
