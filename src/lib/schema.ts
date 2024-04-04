@@ -61,6 +61,7 @@ export const updatePasswordSchema = z.object({
     }
 });
 
+//guild route schemas
 export const createGuildSchema = z.object({
     hostName: z.string(),
     guildName: z.string().min(1, { message: "Must enter a valid guild name." }),
@@ -81,4 +82,8 @@ export const createGuildSchemaWithPassCode = z.object({
 export const checkGuildPassSchema = z.object({
     userAndGuildObj: z.string(),
     passcode: z.string().min(1, { message: "Passcode must not be empty." })
+})
+
+export const addNoteSchema = z.object({
+    note: z.string().min(5, { message: "Must enter a valid note." })
 })
