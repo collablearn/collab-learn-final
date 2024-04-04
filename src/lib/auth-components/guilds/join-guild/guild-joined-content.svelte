@@ -56,6 +56,7 @@
 		class="underline text-main text-[14px] font-semibold"
 		on:click={() => {
 			goto('/guilds');
+			$authState.guilds.guildNotes = null;
 			$authState.guilds.joinedGuild = false;
 			$authState.guilds.guildObj = null;
 		}}

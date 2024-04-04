@@ -23,7 +23,7 @@ export const getStaticState = () => getContext<Writable<StaticStateTypes>>("stat
 
 
 // for auth store
-interface AuthStateStoreTypes {
+export interface AuthStateStoreTypes {
     activeItem: string
 
     projects: {
@@ -37,6 +37,7 @@ interface AuthStateStoreTypes {
         guildObj: CreatedGuildReference | null
         guildNotes: GuildWallReference[] | null
         guildNoteObj: GuildWallReference | null
+        guildNotesLoader: boolean
 
     }
 }

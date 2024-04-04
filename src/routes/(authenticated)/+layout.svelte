@@ -1,34 +1,31 @@
 <script lang="ts">
 	import Nav from '$lib/auth-components/nav.svelte';
-	import { getAuthState, getUserState, setAuthState, setUserState } from '$lib';
+	import {
+		getAuthState,
+		getUserState,
+		setAuthState,
+		setUserState,
+		type AuthStateStoreTypes
+	} from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 	import type { LayoutServerData } from './$types';
 	import { enhance } from '$app/forms';
 
 	export let data: LayoutServerData;
 
-	const defaulState = {
+	const defaulState: AuthStateStoreTypes = {
 		activeItem: '/dashboard',
 		projects: {
 			joinedProject: false,
 			showEditTools: false
 		},
 		guilds: {
-			createdGuilds: data.createdGuilds.data,
+			createdGuilds: null,
 			joinedGuild: false,
-			guildObj: {
-				id: 0,
-				created_at: '',
-				user_id: '',
-				host_name: '',
-				is_private: false,
-				guild_name: '',
-				max_users: 0,
-				joined_count: 0,
-				description: '',
-				passcode: '',
-				image_url: ''
-			}
+			guildObj: null,
+			guildNotes: null,
+			guildNoteObj: null,
+			guildNotesLoader: false
 		}
 	};
 
