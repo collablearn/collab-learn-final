@@ -1,14 +1,55 @@
 <script lang="ts">
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
-	import { getAuthState } from '$lib';
-	import type { CreatedGuildReference } from '$lib/types';
+	import { getAuthState, getUserState } from '$lib';
+	import type { CreatedGuildReference, ResultModel } from '$lib/types';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	export let guildObj: CreatedGuildReference;
 
 	export let showPublicJoin = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
+
+	const userAndGuildObj = {
+		client_user_id: $userState?.user_id,
+		client_user_photo_link: $userState?.user_photo_link,
+		client_user_fullname: $userState?.user_fullname,
+		client_guild_id: guildObj.id,
+		client_guild_name: guildObj.guild_name
+	};
+
+	let publicJoinLoader = false;
+	const publicJoinActionNews: SubmitFunction = () => {
+		publicJoinLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Join Guild', { description: msg });
+					$authState.guilds.guildObj = guildObj;
+					publicJoinLoader = false;
+					$authState.guilds.joinedGuild = true;
+					break;
+
+				case 401:
+					toast.error('Join Guild', { description: msg });
+					publicJoinLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 {#if showPublicJoin}
@@ -27,17 +68,29 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<button
-					on:click={() => {
-						$authState.guilds.guildObj = guildObj;
-						$authState.guilds.joinedGuild = true;
-					}}
-					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+				<form
+					method="post"
+					action="/APIS?/publicJoinAction"
+					enctype="multipart/form-data"
+					use:enhance={publicJoinActionNews}
 				>
-					Join
-				</button>
+					<input
+						autocomplete="off"
+						name="userAndGuildObj"
+						type="hidden"
+						class="hidden"
+						value={JSON.stringify(userAndGuildObj)}
+					/>
+					<button
+						type="submit"
+						class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					>
+						Join
+					</button>
+				</form>
 
 				<button
+					type="button"
 					on:click={() => (showPublicJoin = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[8px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>

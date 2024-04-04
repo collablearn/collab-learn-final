@@ -2,6 +2,13 @@ import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode,
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
+type UserAndGuildObjTypes = {
+    client_user_id: string
+    client_user_photo_link: string
+    client_user_fullname: string
+    client_guild_id: number
+    client_guild_name: string
+}
 
 
 export const actions: Actions = {
@@ -168,13 +175,6 @@ export const actions: Actions = {
 
     checkPasswordAction: async ({ locals: { supabase }, request }) => {
 
-        type UserAndGuildObjTypes = {
-            client_user_id: string
-            client_user_photo_link: string
-            client_user_fullname: string
-            client_guild_id: number
-            client_guild_name: string
-        }
 
         const formData = Object.fromEntries(await request.formData());
         try {
@@ -201,5 +201,26 @@ export const actions: Actions = {
             const { fieldErrors } = zodError.flatten();
             return fail(400, { errors: fieldErrors });
         }
+    },
+
+    publicJoinAction: async ({ locals: { supabase }, request }) => {
+        const userAndGuildObj = (await request.formData()).get("userAndGuildObj") as string;
+
+        const parsedUserAndGuildObj = await JSON.parse(userAndGuildObj) as UserAndGuildObjTypes;
+
+        const { data, error: checkPassError } = await supabase.rpc("check_password", {
+            client_user_id: parsedUserAndGuildObj.client_user_id,
+            client_user_photo_link: parsedUserAndGuildObj.client_user_photo_link,
+            client_user_fullname: parsedUserAndGuildObj.client_user_fullname,
+            client_guild_id: parsedUserAndGuildObj.client_guild_id,
+            client_guild_name: parsedUserAndGuildObj.client_guild_name,
+            client_pass_code: ""
+        });
+
+        if (checkPassError) return fail(401, { msg: checkPassError.message });
+        else if (data) return fail(200, { msg: "You have successfully joined this guild." });
+        else return fail(401, { msg: "Invalid Password" });
     }
+
+
 };
