@@ -13,6 +13,7 @@
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
+	//websocket connection
 	const channels = supabase
 		.channel('custom-all-channel')
 		.on(
@@ -35,7 +36,7 @@
 	let sendChatError: { sendChatValue: string[] } | null = null;
 
 	const sendChatHandler = async () => {
-		console.log($authState.guilds.guildNoteObj?.id);
+		sendChatLoader = true;
 		try {
 			const result = sendGuildChatSchema.parse({ sendChatValue: chatValue });
 
@@ -51,11 +52,16 @@
 
 			if (insertChatError)
 				return toast.error('Sending Chat', { description: insertChatError.message });
-			else return toast.success('Sending Chat', { description: 'Chat Sended.' });
+			else {
+				sendChatLoader = false;
+				chatValue = '';
+				return toast.success('Sending Chat', { description: 'Chat Sended.' });
+			}
 		} catch (error) {
 			const zodError = error as ZodError;
 			const { fieldErrors } = zodError.flatten();
 			sendChatError = fieldErrors as { sendChatValue: string[] };
+			sendChatLoader = false;
 		}
 	};
 </script>
@@ -94,15 +100,25 @@
 
 		<div class="flex items-center gap-[10px] mt-[10px]">
 			<textarea
+				disabled={sendChatLoader}
 				bind:value={chatValue}
 				placeholder="Say something..."
-				class="outline-none border-[1px] border-main bg-submain rounded-[10px] text-main text-[14px] p-[10px] w-full"
+				class="{sendChatLoader ? 'cursor-not-allowed' : ''}
+				outline-none border-[1px] border-main bg-submain rounded-[10px] text-main text-[14px] p-[10px] w-full"
 			/>
 
 			<button
-				class="bg-main text-submain h-[40px] rounded-[10px] w-[100px]"
-				on:click={sendChatHandler}>Send</button
+				disabled={sendChatLoader}
+				class="{sendChatLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+				 text-submain h-[40px] rounded-[10px] w-[100px] px-[10px] transition-all"
+				on:click={sendChatHandler}
 			>
+				{#if sendChatLoader}
+					Sending...
+				{:else}
+					Send
+				{/if}
+			</button>
 		</div>
 		{#each sendChatError?.sendChatValue ?? [] as errMsg}
 			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
