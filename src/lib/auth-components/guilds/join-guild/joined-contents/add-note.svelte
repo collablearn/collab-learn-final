@@ -3,7 +3,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
@@ -77,6 +77,8 @@
 				<h3 class="text-[24px] text-main">Add Note</h3>
 				<p class="text-[14px] text-main">What’s your thought right now?</p>
 			</div>
+
+			<input name="guildId" type="hidden" class="hidden" value={$authState.guilds.guildObj?.id} />
 
 			<div class="mt-[20px]">
 				<textarea
