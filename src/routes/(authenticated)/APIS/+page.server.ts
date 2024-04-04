@@ -13,12 +13,12 @@ type UserAndGuildObjTypes = {
 
 export const actions: Actions = {
     //edit profile actions
-    updatePersonalInformationAction: async ({ locals: { supabase, getSession }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        const session = await getSession();
+        const { user } = await safeGetSession();
 
-        if (session) {
+        if (user) {
             try {
                 const result = updateInformationSchema.parse(formData);
 
@@ -30,7 +30,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }]).eq("user_id", session.user.id)
+                }]).eq("user_id", user.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });
@@ -43,15 +43,15 @@ export const actions: Actions = {
         } else return redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, getSession }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
-        const session = await getSession();
+        const { user } = await safeGetSession();
 
-        if (session) {
+        if (user) {
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(session.user.id, profilePicture, {
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(user.id, profilePicture, {
                 cacheControl: "3600",
                 upsert: true
             });
@@ -63,11 +63,11 @@ export const actions: Actions = {
 
                 const { error: updateUserError } = await supabase.from("user_list_tb").update([{
                     user_photo_link: `${publicUrl}?${Math.random()}`
-                }]).eq("user_id", session.user.id);
+                }]).eq("user_id", user.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
-                    await supabase.storage.from("collab-bucket").remove([session.user.id])
+                    await supabase.storage.from("collab-bucket").remove([user.id])
                     return fail(401, { msg: updateUserError.message });
                 } else return fail(200, { msg: "Upload successfully" });
             }
@@ -99,11 +99,11 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async ({ locals: { supabase, getSession }, request }) => {
+    createGuildAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
-        const session = await getSession();
+        const { user } = await safeGetSession();
 
-        if (session) {
+        if (user) {
 
             const formData = Object.fromEntries(await request.formData());
 
@@ -112,7 +112,7 @@ export const actions: Actions = {
                     const result = createGuildSchema.parse(formData);
 
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: session.user.id,
+                        user_id: user.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: false,
@@ -135,7 +135,7 @@ export const actions: Actions = {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: session.user.id,
+                        user_id: user.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: true,
@@ -159,13 +159,13 @@ export const actions: Actions = {
 
     },
 
-    checkIfJoinedAction: async ({ locals: { supabase, getSession }, request }) => {
+    checkIfJoinedAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
-        const session = await getSession();
+        const { user } = await safeGetSession();
         const guildId = (await request.formData()).get("guildId") as string;
-        if (session) {
+        if (user) {
 
-            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined", { client_guild_id: Number(guildId), client_user_id: session.user.id });
+            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined", { client_guild_id: Number(guildId), client_user_id: user.id });
             if (checkIfJoinedError) return fail(401, { msg: checkIfJoinedError.message });
             else if (data) return fail(200, { msg: "Welcome Back." });
             else return fail(400, { msg: "Not joined" });

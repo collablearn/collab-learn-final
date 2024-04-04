@@ -55,3 +55,13 @@ export type GuildWallReference = {
     user_photo_link: string
     guild_note: string
 }
+
+//guid_chats_tb
+export type GuildChatReference = {
+    id: number
+    created_at: string
+    user_id: string
+    user_fullname: string
+    user_photo_link: string
+    guild_chat: string
+}

@@ -5,24 +5,18 @@
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
 	import { getAuthState } from '$lib';
 	import { fade, scale } from 'svelte/transition';
-	import type { PageServerData } from './$types';
+	import type { LayoutData } from '../$types';
 
-	export let data: PageServerData;
+	export let data: LayoutData;
 
 	const authState = getAuthState();
-
-	$: if (data.guild_notes.data) {
-		$authState.guilds.guildNotes = data.guild_notes.data;
-	} else {
-		$authState.guilds.guildNotes = null;
-	}
 
 	$authState.activeItem = '/guilds';
 </script>
 
 <div class="" in:fade>
 	{#if $authState.guilds.joinedGuild}
-		<GuildJoinedContent />
+		<GuildJoinedContent supabase={data.supabase} />
 	{:else}
 		<div class="fixed bottom-0 right-0 m-[20px] z-10">
 			<CreateGuildBtn />

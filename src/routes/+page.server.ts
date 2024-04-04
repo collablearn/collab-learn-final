@@ -4,10 +4,10 @@ import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals: { isLogged, supabase } }) => {
-    const loginCheck = await isLogged();
+export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase } }) => {
+    const { user } = await safeGetSession();
 
-    if (loginCheck) redirect(302, "/dashboard");
+    if (user) redirect(302, "/dashboard");
 
 };
 
