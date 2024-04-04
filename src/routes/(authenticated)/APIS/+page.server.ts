@@ -99,9 +99,9 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async ({ locals: { supabase, getSession }, request }) => {
+    createGuildAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
-        const session = await getSession();
+        const session = await safeGetSession();
 
         if (session) {
 
@@ -112,7 +112,7 @@ export const actions: Actions = {
                     const result = createGuildSchema.parse(formData);
 
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: session.user.id,
+                        user_id: session.user?.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: false,
@@ -135,7 +135,7 @@ export const actions: Actions = {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
                     const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: session.user.id,
+                        user_id: session.user?.id,
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: true,
