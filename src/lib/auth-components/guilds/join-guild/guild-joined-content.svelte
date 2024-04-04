@@ -9,9 +9,6 @@
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
 	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
-	import { page } from '$app/stores';
-	import { onMount, tick } from 'svelte';
-	import { number } from 'zod';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -136,7 +133,7 @@
 
 	<div class="">
 		{#if activeItem === 'Description'}
-			<Description />
+			<Description {supabase} />
 		{:else}
 			<Members />
 		{/if}

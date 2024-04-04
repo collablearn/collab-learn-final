@@ -8,8 +8,21 @@
 	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 	import { sendGuildChatSchema } from '$lib/schema';
 	import type { ZodError } from 'zod';
+	import { fade } from 'svelte/transition';
+	import { toast } from 'svelte-sonner';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
+
+	const channels = supabase
+		.channel('custom-all-channel')
+		.on(
+			'postgres_changes',
+			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
+			(payload) => {
+				console.log('Change received!', payload);
+			}
+		)
+		.subscribe();
 
 	const authState = getAuthState();
 	const userState = getUserState();
@@ -18,25 +31,32 @@
 	let activeItem = "Guild's Wall";
 
 	let chatValue = '';
+	let sendChatLoader = false;
+	let sendChatError: { sendChatValue: string[] } | null = null;
 
 	const sendChatHandler = async () => {
+		console.log($authState.guilds.guildNoteObj?.id);
 		try {
 			const result = sendGuildChatSchema.parse({ sendChatValue: chatValue });
+
+			const { error: insertChatError } = await supabase.from('guild_chats_tb').insert([
+				{
+					user_id: $userState?.user_id,
+					guild_id: $authState.guilds.guildObj?.id,
+					user_fullname: $userState?.user_fullname,
+					user_photo_link: $userState?.user_photo_link,
+					guild_chat: result.sendChatValue
+				}
+			]);
+
+			if (insertChatError)
+				return toast.error('Sending Chat', { description: insertChatError.message });
+			else return toast.success('Sending Chat', { description: 'Chat Sended.' });
 		} catch (error) {
 			const zodError = error as ZodError;
 			const { fieldErrors } = zodError.flatten();
-			console.log(fieldErrors);
+			sendChatError = fieldErrors as { sendChatValue: string[] };
 		}
-
-		/* const { error } = await supabase.from('guild_chats_tb').insert([
-			{
-				user_id: $userState?.user_id,
-				guild_id: $authState.guilds.guildNoteObj?.id,
-				user_fullname: $userState?.user_fullname,
-				user_photo_link: $userState?.user_photo_link,
-				guild_chat: ''
-			}
-		]); */
 	};
 </script>
 
@@ -84,6 +104,9 @@
 				on:click={sendChatHandler}>Send</button
 			>
 		</div>
+		{#each sendChatError?.sendChatValue ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 	{/if}
 </div>
 
