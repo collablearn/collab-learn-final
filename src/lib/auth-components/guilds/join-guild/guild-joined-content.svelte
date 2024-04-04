@@ -5,9 +5,12 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import Description from './joined-contents/description.svelte';
 	import Members from './joined-contents/members.svelte';
-	import type { ResultModel } from '$lib/types';
+	import type { GuildWallReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
+	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+
+	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
 	const userState = getUserState();
@@ -49,6 +52,18 @@
 			await update();
 		};
 	};
+
+	const getWallChats = async () => {
+		const { data, error } = await supabase.from('guild_wall_tb').select('*').match({
+			guild_id: $authState.guilds.guildObj?.id
+		});
+
+		if (error) return toast.error('Getting Wall Chats', { description: error.message });
+
+		$authState.guilds.guildNotes = data;
+	};
+
+	getWallChats();
 </script>
 
 <div class="flex justify-between">
@@ -56,6 +71,7 @@
 		class="underline text-main text-[14px] font-semibold"
 		on:click={() => {
 			goto('/guilds');
+			$authState.guilds.guildNotes = null;
 			$authState.guilds.joinedGuild = false;
 			$authState.guilds.guildObj = null;
 		}}
@@ -116,7 +132,7 @@
 
 	<div class="">
 		{#if activeItem === 'Description'}
-			<Description />
+			<Description {supabase} />
 		{:else}
 			<Members />
 		{/if}

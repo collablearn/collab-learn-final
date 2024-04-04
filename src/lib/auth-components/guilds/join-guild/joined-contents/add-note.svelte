@@ -6,9 +6,8 @@
 	import { getAuthState, getUserState } from '$lib';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { ResultModel } from '$lib/types';
+	import type { GuildWallReference, ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { invalidateAll } from '$app/navigation';
 
 	let showAddNote = false;
 
@@ -30,15 +29,19 @@
 		return async ({ result, update }) => {
 			const {
 				status,
-				data: { msg, errors }
-			} = result as ResultModel<{ msg: string; errors: AddNoteVal }>;
+				data: { msg, errors, guildNotes }
+			} = result as ResultModel<{
+				msg: string;
+				errors: AddNoteVal;
+				guildNotes: GuildWallReference[];
+			}>;
 
 			switch (status) {
 				case 200:
-					invalidateAll();
 					toast.success('Add Note', { description: msg });
 					formActionError = null;
 					addNoteLoader = false;
+					$authState.guilds.guildNotes = guildNotes;
 					showAddNote = false;
 					break;
 

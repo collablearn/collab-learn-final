@@ -1,25 +1,28 @@
 <script lang="ts">
 	import sampleIcon from '$lib/assets/description_icon_320_sample.svg';
+	import type { GuildChatReference } from '$lib/types';
+
+	export let chatObj: GuildChatReference;
 </script>
 
 <div class=" ">
 	<div class="flex items-center gap-[10px]">
 		<div class="">
-			<img src={sampleIcon} alt="sample-icon" class="" />
+			<img
+				src={chatObj.user_photo_link ?? sampleIcon}
+				alt="sample-icon"
+				class="w-[25px] h-[25px] rounded-full"
+			/>
 		</div>
 
 		<div class="flex flex-col">
-			<p class="text-main text-[14px] font-semibold">ZAYN</p>
+			<p class="text-main text-[14px] font-semibold">{chatObj.user_fullname}</p>
 		</div>
 	</div>
 
 	<div class="p-[10px]">
 		<p class="text-main text-[14px]">
-			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident hic minus nulla rem
-			dolorum quam distinctio culpa laudantium, eum ad in inventore incidunt reprehenderit
-			voluptates cumque nam perferendis perspiciatis corrupti. Nulla soluta animi placeat, alias
-			eveniet, perspiciatis quis aperiam ex nobis nihil consectetur unde, quae totam nisi facilis
-			amet laborum tenetur. Est quos saepe numquam earum ad at sapiente ipsum.
+			{chatObj.guild_chat}
 		</p>
 	</div>
 </div>
