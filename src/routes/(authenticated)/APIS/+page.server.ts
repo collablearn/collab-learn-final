@@ -13,10 +13,10 @@ type UserAndGuildObjTypes = {
 
 export const actions: Actions = {
     //edit profile actions
-    updatePersonalInformationAction: async ({ locals: { supabase, getSession }, request }) => {
+    updatePersonalInformationAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
-        const session = await getSession();
+        const session = await safeGetSession();
 
         if (session) {
             try {
@@ -30,7 +30,7 @@ export const actions: Actions = {
                     user_city: result.city,
                     user_religion: result.religion,
                     user_contact: result.contactNumber
-                }]).eq("user_id", session.user.id)
+                }]).eq("user_id", session.user?.id)
 
                 if (updateUserError) return fail(401, { msg: updateUserError.message });
                 else return fail(200, { msg: 'Information Updated Successfully.' });

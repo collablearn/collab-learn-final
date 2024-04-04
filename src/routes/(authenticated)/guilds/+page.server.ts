@@ -6,27 +6,27 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { GuildWallReference } from "$lib/types";
 
 
-export const load: PageServerLoad = async ({ locals: { supabase, getSession }, url }) => {
-    const session = await getSession();
+export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession }, url }) => {
+    const session = await safeGetSession()
 
     return {
-        guild_notes: await supabase.from("guild_wall_tb").select("*").match({ guild_id: url.search.slice(2), user_id: session?.user.id }) as PostgrestSingleResponse<GuildWallReference[]>
+        guild_notes: await supabase.from("guild_wall_tb").select("*").match({ guild_id: url.search.slice(2), user_id: session.user?.id }) as PostgrestSingleResponse<GuildWallReference[]>
     }
 
 };
 
 export const actions: Actions = {
-    addNoteAction: async ({ locals: { supabase, getSession }, request }) => {
+    addNoteAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
         try {
             const result = addNoteSchema.parse(formData);
-            const session = await getSession();
+            const session = await safeGetSession();
 
             if (session) {
                 const { error: addNoteError } = await supabase.from("guild_wall_tb").insert([{
                     guild_id: result.guildId,
-                    user_id: session.user.id,
+                    user_id: session.user?.id,
                     user_fullname: result.userFullname,
                     user_photo_link: result.userPhotoLink,
                     guild_note: result.guildNote
