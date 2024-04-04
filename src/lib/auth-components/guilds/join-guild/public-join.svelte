@@ -36,15 +36,23 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<button
-					on:click={() => {
-						$authState.guilds.guildObj = guildObj;
-						$authState.guilds.joinedGuild = true;
-					}}
-					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
-				>
-					Join
-				</button>
+				<form>
+					<input
+						name="userAndGuildObj"
+						type="hidden"
+						class="hidden"
+						value={JSON.stringify(userAndGuildObj)}
+					/>
+					<button
+						on:click={() => {
+							$authState.guilds.guildObj = guildObj;
+							$authState.guilds.joinedGuild = true;
+						}}
+						class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					>
+						Join
+					</button>
+				</form>
 
 				<button
 					on:click={() => (showPublicJoin = false)}
