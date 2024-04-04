@@ -81,10 +81,7 @@
 						value={JSON.stringify(userAndGuildObj)}
 					/>
 					<button
-						on:click={() => {
-							$authState.guilds.guildObj = guildObj;
-							$authState.guilds.joinedGuild = true;
-						}}
+						type="submit"
 						class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 					>
 						Join
@@ -92,6 +89,7 @@
 				</form>
 
 				<button
+					type="button"
 					on:click={() => (showPublicJoin = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[8px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>
