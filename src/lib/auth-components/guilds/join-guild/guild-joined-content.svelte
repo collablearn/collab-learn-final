@@ -16,8 +16,6 @@
 		guilds: { guildObj }
 	} = $authState;
 
-	console.log(guildObj?.user_id, $userState?.user_id);
-
 	const selections = ['Description', 'Members'];
 
 	let activeItem = 'Description';
@@ -61,12 +59,12 @@
 	</button>
 
 	{#if guildObj?.user_id === $userState?.user_id}
-		<div class="flex gap-[10px]">
-			<button
-				class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
-				on:click={() => alert('Comming soon.')}
-				>Edit
-			</button>
+		<div class="flex items-center gap-[10px]">
+			<form>
+				<button class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+					>Edit
+				</button>
+			</form>
 
 			<form
 				method="post"
