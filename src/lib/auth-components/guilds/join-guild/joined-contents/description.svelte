@@ -13,6 +13,17 @@
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
+	const authState = getAuthState();
+	const userState = getUserState();
+
+	//get all guild chats
+	const getChats = async () => {
+		const { data, error } = await supabase
+			.from('guild_chats_tb')
+			.select('*')
+			.match({ user_id: $userState?.user_id, guild_id: $authState.guilds.guildObj?.id });
+	};
+
 	//websocket connection
 	const channels = supabase
 		.channel('custom-all-channel')
@@ -24,9 +35,6 @@
 			}
 		)
 		.subscribe();
-
-	const authState = getAuthState();
-	const userState = getUserState();
 
 	const selections = ["Guild's Wall", 'Chat Feed'];
 	let activeItem = "Guild's Wall";
@@ -64,6 +72,8 @@
 			sendChatLoader = false;
 		}
 	};
+
+	getChats();
 </script>
 
 {#if activeItem === "Guild's Wall"}
