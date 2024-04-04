@@ -37,8 +37,6 @@ export interface AuthStateStoreTypes {
         guildObj: CreatedGuildReference | null
         guildNotes: GuildWallReference[] | null
         guildNoteObj: GuildWallReference | null
-        guildNotesLoader: boolean
-
     }
 }
 

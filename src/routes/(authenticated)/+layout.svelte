@@ -24,8 +24,7 @@
 			joinedGuild: false,
 			guildObj: null,
 			guildNotes: null,
-			guildNoteObj: null,
-			guildNotesLoader: false
+			guildNoteObj: null
 		}
 	};
 
