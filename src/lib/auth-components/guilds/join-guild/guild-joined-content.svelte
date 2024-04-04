@@ -55,8 +55,7 @@
 
 	const getWallChats = async () => {
 		const { data, error } = await supabase.from('guild_wall_tb').select('*').match({
-			guild_id: $authState.guilds.guildObj?.id,
-			user_id: $userState?.user_id
+			guild_id: $authState.guilds.guildObj?.id
 		});
 
 		if (error) return toast.error('Getting Wall Chats', { description: error.message });

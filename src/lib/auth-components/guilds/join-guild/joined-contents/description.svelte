@@ -21,7 +21,11 @@
 		const { data, error } = await supabase
 			.from('guild_chats_tb')
 			.select('*')
-			.match({ user_id: $userState?.user_id, guild_id: $authState.guilds.guildObj?.id });
+			.match({ guild_id: $authState.guilds.guildObj?.id });
+
+		if (error) return toast.error('Getting Chats', { description: error.message });
+
+		$authState.guilds.guildChats = data;
 	};
 
 	//websocket connection
@@ -30,8 +34,8 @@
 		.on(
 			'postgres_changes',
 			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
-			(payload) => {
-				console.log('Change received!', payload);
+			async (payload) => {
+				await getChats();
 			}
 		)
 		.subscribe();
@@ -103,8 +107,8 @@
 		</div>
 	{:else}
 		<div class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto">
-			{#each Array(15) as sample}
-				<ChatCard />
+			{#each $authState.guilds.guildChats ?? [] as chatObj}
+				<ChatCard {chatObj} />
 			{/each}
 		</div>
 

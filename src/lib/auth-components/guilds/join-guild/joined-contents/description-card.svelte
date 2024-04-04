@@ -8,7 +8,7 @@
 <div class="bg-subwhite flex p-[10px] gap-[10px]">
 	<div class="">
 		<img
-			src={guildNoteObj.user_photo_link ?? sampleIcon}
+			src={guildNoteObj.user_photo_link ? guildNoteObj.user_photo_link : sampleIcon}
 			alt="sample-icon"
 			class="w-[25px] h-[25px] rounded-full"
 		/>
