@@ -88,6 +88,7 @@
 			</div>
 
 			<input
+				autocomplete="off"
 				name="userAndGuildObj"
 				type="hidden"
 				class="hidden"
@@ -98,6 +99,7 @@
 				<label>
 					<span class="text-main text-[14px] transition-all">Passcode</span>
 					<input
+						autocomplete="off"
 						name="passcode"
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
