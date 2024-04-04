@@ -10,11 +10,23 @@ export const load: PageServerLoad = async ({ locals: { supabase, isLogged }, req
 };
 
 export const actions: Actions = {
-    addNoteAction: async ({ locals: { supabase, isLogged }, request }) => {
+    addNoteAction: async ({ locals: { supabase, getSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
         try {
             const result = addNoteSchema.parse(formData);
+            const session = await getSession();
+
+            if (session) {
+                /* const { error: addNoteError } = await supabase.from("guild_wall_tb").insert([{
+                    guild_id: result.guildId,
+                    user_id: session.user.id,
+                    
+
+                }]) */
+            }
+
+
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();

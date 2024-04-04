@@ -11,6 +11,7 @@
 	let showAddNote = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
 	const {
 		guilds: { guildObj }
@@ -79,10 +80,16 @@
 			</div>
 
 			<input name="guildId" type="hidden" class="hidden" value={$authState.guilds.guildObj?.id} />
-
+			<input name="userFullname" type="hidden" class="hidden" value={$userState?.user_fullname} />
+			<input
+				name="userPhotoLink"
+				type="hidden"
+				class="hidden"
+				value={$userState?.user_photo_link}
+			/>
 			<div class="mt-[20px]">
 				<textarea
-					name="note"
+					name="guildNote"
 					placeholder="Say something..."
 					class="w-full outline-none border-[1px] border-main bg-submain text-[14px] text-main p-[10px]"
 				/>

@@ -86,5 +86,8 @@ export const checkGuildPassSchema = z.object({
 
 export const addNoteSchema = z.object({
     guildId: z.string(),
-    note: z.string().min(5, { message: "Must enter a valid note." })
+    userFullname: z.string(),
+    userPhotoLink: z.string(),
+    guildNote: z.string().min(5, { message: "Must enter a valid note." }),
+
 })
