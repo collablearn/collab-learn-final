@@ -203,7 +203,9 @@ export const actions: Actions = {
         }
     },
 
+    publicJoinAction: async ({ locals: { supabase }, request }) => {
 
+    }
 
 
 };

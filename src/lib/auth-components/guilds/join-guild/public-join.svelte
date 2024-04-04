@@ -22,9 +22,9 @@
 		client_guild_name: guildObj.guild_name
 	};
 
-	let checkPasscodeLoader = false;
-	const checkPasswordActionNews: SubmitFunction = () => {
-		checkPasscodeLoader = true;
+	let publicJoinLoader = false;
+	const publicJoinActionNews: SubmitFunction = () => {
+		publicJoinLoader = true;
 		return async ({ result, update }) => {
 			const {
 				status,
@@ -35,13 +35,13 @@
 				case 200:
 					toast.success('Join Guild', { description: msg });
 					$authState.guilds.guildObj = guildObj;
-					checkPasscodeLoader = false;
+					publicJoinLoader = false;
 					$authState.guilds.joinedGuild = true;
 					break;
 
 				case 401:
 					toast.error('Join Guild', { description: msg });
-					checkPasscodeLoader = false;
+					publicJoinLoader = false;
 					break;
 
 				default:
@@ -70,9 +70,9 @@
 			<div class="mt-[30px] flex flex-col gap-[10px]">
 				<form
 					method="post"
-					action="/APIS?/checkPasswordAction"
+					action="/APIS?/publicJoinAction"
 					enctype="multipart/form-data"
-					use:enhance={checkPasswordActionNews}
+					use:enhance={publicJoinActionNews}
 				>
 					<input
 						name="userAndGuildObj"
