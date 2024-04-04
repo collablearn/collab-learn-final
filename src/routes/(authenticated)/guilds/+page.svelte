@@ -4,7 +4,8 @@
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
 	import { getAuthState } from '$lib';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 
 	let authState = getAuthState();
 
@@ -26,7 +27,9 @@
 
 			<div class="flex flex-col gap-[20px] mt-[35px]">
 				{#each $authState.guilds.createdGuilds ?? [] as guildObj}
-					<GuildCard {guildObj} />
+					<div class="">
+						<GuildCard {guildObj} />
+					</div>
 				{/each}
 
 				<!--Sample Pagination Comming Soooooon-->
