@@ -7,6 +7,7 @@
 	import Members from './joined-contents/members.svelte';
 	import type { ResultModel } from '$lib/types';
 	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
 
 	const authState = getAuthState();
 
@@ -18,6 +19,7 @@
 
 	let activeItem = 'Description';
 	let deleteGuildLoader = false;
+
 	const deleteGuildActionNews: SubmitFunction = () => {
 		deleteGuildLoader = true;
 		return async ({ result, update }) => {
@@ -28,8 +30,11 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Guild', { description: msg });
 					deleteGuildLoader = false;
+					$authState.guilds.joinedGuild = false;
+					$authState.guilds.guildObj = null;
 					break;
 
 				case 401:
