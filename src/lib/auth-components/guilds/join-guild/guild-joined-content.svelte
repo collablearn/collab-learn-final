@@ -2,8 +2,11 @@
 	import { enhance } from '$app/forms';
 	import { getAuthState } from '$lib';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import Description from './joined-contents/description.svelte';
 	import Members from './joined-contents/members.svelte';
+	import type { ResultModel } from '$lib/types';
+	import { toast } from 'svelte-sonner';
 
 	const authState = getAuthState();
 	console.log($authState.guilds.guildObj);
@@ -14,6 +17,32 @@
 	const selections = ['Description', 'Members'];
 
 	let activeItem = 'Description';
+	let deleteGuildLoader = false;
+	const deleteGuildActionNews: SubmitFunction = () => {
+		deleteGuildLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Guild', { description: msg });
+					deleteGuildLoader = false;
+					break;
+
+				case 401:
+					toast.error('Guild', { description: msg });
+					deleteGuildLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <div class="flex justify-between">
@@ -30,8 +59,16 @@
 			>Edit
 		</button>
 
-		<form method="post" action="/APIS?/deleteGuildAction" enctype="multipart/form-data" use:enhance>
-			<button class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+		<form
+			method="post"
+			action="/APIS?/deleteGuildAction"
+			enctype="multipart/form-data"
+			use:enhance={deleteGuildActionNews}
+		>
+			<button
+				disabled={deleteGuildLoader}
+				class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+				underline transition-all active:bg-main/50 text-submain px-[10px] text-[14px] font-semibold"
 				>Delete
 			</button>
 		</form>
