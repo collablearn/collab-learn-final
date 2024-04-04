@@ -91,3 +91,7 @@ export const addNoteSchema = z.object({
     guildNote: z.string().min(5, { message: "Must enter a valid note." }),
 
 })
+
+export const sendGuildChatSchema = z.object({
+    sendChatValue: z.string().min(1, { message: "Must enter a valid chat." })
+})
