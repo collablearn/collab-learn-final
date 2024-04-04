@@ -11,13 +11,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     const { cookies } = event;
 
-    event.locals.isLogged = async () => {
-        const { data: { user }, error: getUserError } = await event.locals.supabase.auth.getUser();
-        if (user) return user;
-        else if (getUserError) return null;
-        else return null;
-    }
-
     event.locals.supabase = createServerClient(supabaseURL, supabaseKEY, {
         cookies: {
             get: (key) => event.cookies.get(key),
