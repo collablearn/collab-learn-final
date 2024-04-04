@@ -43,11 +43,11 @@ export const actions: Actions = {
         } else return redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, getSession }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
-        const session = await getSession();
+        const session = await safeGetSession();
 
         if (session) {
 
@@ -63,11 +63,11 @@ export const actions: Actions = {
 
                 const { error: updateUserError } = await supabase.from("user_list_tb").update([{
                     user_photo_link: `${publicUrl}?${Math.random()}`
-                }]).eq("user_id", session.user.id);
+                }]).eq("user_id", session.user?.id);
 
                 if (updateUserError) {
                     //this is alternative atm transaction comming soon
-                    await supabase.storage.from("collab-bucket").remove([session.user.id])
+                    await supabase.storage.from("collab-bucket").remove([session.user?.id ?? ""])
                     return fail(401, { msg: updateUserError.message });
                 } else return fail(200, { msg: "Upload successfully" });
             }
