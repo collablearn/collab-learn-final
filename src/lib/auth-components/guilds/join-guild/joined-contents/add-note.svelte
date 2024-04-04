@@ -23,17 +23,27 @@
 	let addNoteLoader = false;
 	let formActionError: AddNoteVal | null = null;
 	const addNoteActionNews: SubmitFunction = () => {
+		addNoteLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result as ResultModel<{ msg: string }>;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: AddNoteVal }>;
 
 			switch (status) {
 				case 200:
+					formActionError = null;
+					addNoteLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
+					addNoteLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
+					addNoteLoader = false;
 					break;
 
 				default:
