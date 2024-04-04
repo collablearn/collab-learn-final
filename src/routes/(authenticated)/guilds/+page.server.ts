@@ -8,9 +8,9 @@ import type { GuildWallReference } from "$lib/types";
 
 export const load: PageServerLoad = async ({ locals: { supabase, getSession }, url }) => {
     const session = await getSession();
-    console.log(url.search)
+
     return {
-        guild_notes: await supabase.from("guild_wall_tb").select("*").eq("user_id", session?.user.id) as PostgrestSingleResponse<GuildWallReference[]>
+        guild_notes: await supabase.from("guild_wall_tb").select("*").match({ guild_id: url.search.slice(2), user_id: session?.user.id }) as PostgrestSingleResponse<GuildWallReference[]>
     }
 
 };

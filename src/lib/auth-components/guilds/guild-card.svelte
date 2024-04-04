@@ -32,7 +32,7 @@
 					$authState.guilds.joinedGuild = true;
 					$authState.guilds.guildObj = guildObj;
 					toast.success('Joined', { description: 'Welcome Back!' });
-					goto(`/guilds?${guildObj.id}`);
+					goto(`/guilds?=${guildObj.id}`);
 					break;
 
 				case 400:
