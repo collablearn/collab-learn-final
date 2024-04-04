@@ -44,3 +44,14 @@ export type CreatedGuildReference = {
     passcode: string
     image_url: string
 }
+
+// guild_wall_tb
+export type GuildWallReference = {
+    id: number
+    created_at: string
+    user_id: string
+    guild_id: number
+    user_fullname: string
+    user_photo_link: string
+    guild_note: string
+}

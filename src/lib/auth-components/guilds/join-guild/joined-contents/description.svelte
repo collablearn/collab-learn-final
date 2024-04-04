@@ -3,6 +3,9 @@
 	import createIcon from '$lib/assets/create_guild_icon_320.svg';
 	import ChatCard from './chat-card.svelte';
 	import AddNote from './add-note.svelte';
+	import { getAuthState } from '$lib';
+
+	const authState = getAuthState();
 
 	const selections = ["Guild's Wall", 'Chat Feed'];
 	let activeItem = "Guild's Wall";
@@ -27,8 +30,8 @@
 
 	{#if activeItem === "Guild's Wall"}
 		<div class="mt-[20px] flex flex-col gap-[15px]">
-			{#each Array(15) as sample}
-				<DescriptionCard />
+			{#each $authState.guilds.guildNotes ?? [] as guildNoteObj}
+				<DescriptionCard {guildNoteObj} />
 			{/each}
 		</div>
 	{:else}
