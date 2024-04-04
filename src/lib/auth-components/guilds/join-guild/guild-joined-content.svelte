@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import Description from './joined-contents/description.svelte';
@@ -10,10 +10,13 @@
 	import { invalidateAll } from '$app/navigation';
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
 	const {
 		guilds: { guildObj }
 	} = $authState;
+
+	console.log(guildObj?.user_id, $userState?.user_id);
 
 	const selections = ['Description', 'Members'];
 
@@ -57,33 +60,35 @@
 		>Back
 	</button>
 
-	<div class="flex gap-[10px]">
-		<button
-			class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
-			on:click={() => alert('Comming soon.')}
-			>Edit
-		</button>
-
-		<form
-			method="post"
-			action="/APIS?/deleteGuildAction"
-			enctype="multipart/form-data"
-			use:enhance={deleteGuildActionNews}
-		>
-			<input name="guildId" type="hidden" class="hidden" value={guildObj?.id} />
+	{#if guildObj?.user_id === $userState?.user_id}
+		<div class="flex gap-[10px]">
 			<button
-				disabled={deleteGuildLoader}
-				class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
-				underline transition-all active:bg-main/50 text-submain px-[10px] text-[14px] font-semibold"
-			>
-				{#if deleteGuildLoader}
-					Deleting...
-				{:else}
-					Delete
-				{/if}
+				class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+				on:click={() => alert('Comming soon.')}
+				>Edit
 			</button>
-		</form>
-	</div>
+
+			<form
+				method="post"
+				action="/APIS?/deleteGuildAction"
+				enctype="multipart/form-data"
+				use:enhance={deleteGuildActionNews}
+			>
+				<input name="guildId" type="hidden" class="hidden" value={guildObj?.id} />
+				<button
+					disabled={deleteGuildLoader}
+					class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+				underline transition-all active:bg-main/50 text-submain px-[10px] text-[14px] font-semibold"
+				>
+					{#if deleteGuildLoader}
+						Deleting...
+					{:else}
+						Delete
+					{/if}
+				</button>
+			</form>
+		</div>
+	{/if}
 </div>
 
 <div class="pt-[130px]">
