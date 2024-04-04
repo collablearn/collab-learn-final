@@ -9,7 +9,7 @@
 	import { toast } from 'svelte-sonner';
 
 	const authState = getAuthState();
-	console.log($authState.guilds.guildObj);
+
 	const {
 		guilds: { guildObj }
 	} = $authState;
@@ -65,6 +65,7 @@
 			enctype="multipart/form-data"
 			use:enhance={deleteGuildActionNews}
 		>
+			<input name="guildId" type="hidden" class="hidden" value={guildObj?.id} />
 			<button
 				disabled={deleteGuildLoader}
 				class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
