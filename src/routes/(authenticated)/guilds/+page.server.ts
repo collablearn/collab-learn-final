@@ -2,13 +2,15 @@ import type { ZodError } from "zod";
 import type { Actions, PageServerLoad } from "./$types";
 import { fail } from "@sveltejs/kit";
 import { addNoteSchema } from "$lib/schema";
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
+import type { GuildWallReference } from "$lib/types";
 
 
 export const load: PageServerLoad = async ({ locals: { supabase, getSession }, request }) => {
     const session = await getSession();
 
     return {
-        guild_notes: await supabase.from("guild_wall_tb").select("*").eq("user_id", session?.user.id)
+        guild_notes: await supabase.from("guild_wall_tb").select("*").eq("user_id", session?.user.id) as PostgrestSingleResponse<GuildWallReference[]>
     }
 
 };
