@@ -75,6 +75,7 @@
 					use:enhance={publicJoinActionNews}
 				>
 					<input
+						autocomplete="off"
 						name="userAndGuildObj"
 						type="hidden"
 						class="hidden"
