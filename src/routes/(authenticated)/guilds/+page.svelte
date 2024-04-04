@@ -5,7 +5,6 @@
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
 	import { getAuthState } from '$lib';
 	import { fade, scale } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
 
 	let authState = getAuthState();
 
