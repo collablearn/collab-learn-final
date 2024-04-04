@@ -23,7 +23,8 @@
 			joinedGuild: false,
 			guildObj: null,
 			guildNotes: null,
-			guildNoteObj: null
+			guildNoteObj: null,
+			guildChats: null
 		}
 	};
 

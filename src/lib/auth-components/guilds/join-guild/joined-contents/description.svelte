@@ -5,7 +5,7 @@
 	import AddNote from './add-note.svelte';
 	import { getAuthState, getUserState } from '$lib';
 	import { flip } from 'svelte/animate';
-	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { sendGuildChatSchema } from '$lib/schema';
 	import type { ZodError } from 'zod';
 	import { fade } from 'svelte/transition';
