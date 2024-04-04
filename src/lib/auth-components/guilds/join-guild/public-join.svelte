@@ -2,7 +2,10 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import { getAuthState, getUserState } from '$lib';
-	import type { CreatedGuildReference } from '$lib/types';
+	import type { CreatedGuildReference, ResultModel } from '$lib/types';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	export let guildObj: CreatedGuildReference;
 
@@ -17,6 +20,35 @@
 		client_user_fullname: $userState?.user_fullname,
 		client_guild_id: guildObj.id,
 		client_guild_name: guildObj.guild_name
+	};
+
+	let checkPasscodeLoader = false;
+	const checkPasswordActionNews: SubmitFunction = () => {
+		checkPasscodeLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Join Guild', { description: msg });
+					$authState.guilds.guildObj = guildObj;
+					checkPasscodeLoader = false;
+					$authState.guilds.joinedGuild = true;
+					break;
+
+				case 401:
+					toast.error('Join Guild', { description: msg });
+					checkPasscodeLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
 	};
 </script>
 
@@ -36,7 +68,12 @@
 			</div>
 
 			<div class="mt-[30px] flex flex-col gap-[10px]">
-				<form>
+				<form
+					method="post"
+					action="/APIS?/checkPasswordAction"
+					enctype="multipart/form-data"
+					use:enhance={checkPasswordActionNews}
+				>
 					<input
 						name="userAndGuildObj"
 						type="hidden"
