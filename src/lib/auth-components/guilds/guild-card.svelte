@@ -66,14 +66,15 @@
 	use:enhance={checkIfJoinedActionNews}
 >
 	<input name="guildId" type="hidden" class="hidden" value={guildObj.id} />
+
 	<button
 		type="submit"
 		disabled={checkIfJoinLoader}
-		class="bg-subwhite px-[13px] h-[308px] w-full py-[16px] rounded-[10px] shadow-sm shadow-black flex flex-col gap-[10px] relative"
+		class="bg-subwhite w-full px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px]"
 	>
 		{#if checkIfJoinLoader}
 			<div
-				class="absolute left-0 right-0 top-0 bottom-0 bg-[#0000009a] flex flex-col items-center justify-center rounded-[10px]"
+				class="absolute left-0 right-0 top-0 bottom-0 bg-[#0000009a] flex flex-col items-center justify-center rounded-[10px] z-10"
 			>
 				<div class="flex flex-col items-center gap-[20px] text-submain">
 					<div
@@ -84,36 +85,43 @@
 			</div>
 		{/if}
 
-		<p class="text-[16px] text-main text-left font-semibold">
-			{guildObj.guild_name}
-		</p>
-
-		<div class="flex flex-col gap-[10px] w-full">
-			<div class="mx-auto">
+		<h3 class="text-[16px] text-main font-semibold truncate">{guildObj.guild_name}</h3>
+		<div class="flex gap-[10px] w-full items-start">
+			<!--For project image-->
+			<div class="w-[200px] relative">
 				<img src={sampleIcon} alt="sample-icon" />
+				{#if guildObj.is_private}
+					<img src={lockIcon} alt="lock-icon" class="absolute bottom-0 right-0" />
+				{/if}
 			</div>
 
-			<div class="h-[100px]">
-				<div class="text-[16px] text-main flex flex-col gap-[20px] text-left">
-					<p class="font-semibold">Host: {guildObj.host_name}</p>
-					<p title={guildObj.description} class="line-clamp-2">
-						{guildObj.description}
+			<!--For project details-->
+			<div class="w-[100%] flex flex-col gap-[10px]" title={guildObj.description}>
+				<div class="flex items-center flex-wrap gap-[5px]">
+					<p class="text-[14px] font-semibold text-main">Host:</p>
+					<p class="text-[14px] text-main">{guildObj.host_name}</p>
+				</div>
+
+				<div class="flex items-center flex-wrap gap-[5px]">
+					<p class="text-[14px] font-semibold text-main">Description:</p>
+					<p class="text-[14px] text-main line-clamp-3 sm:line-clamp-none text-wrap">
+						{guildObj.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
+						minus ratione perferendis et deserunt libero vero veritatis explicabo unde aperiam! Iusto
+						ipsam impedit perspiciatis eos repellat accusamus fuga natus molestiae nulla dignissimos
+						vitae amet eum, repudiandae doloribus aspernatur quis ullam sed asperiores. Fugiat soluta
+						eveniet fugit vero totam aspernatur dolores at modi quisquam numquam ratione, cupiditate
+						earum eligendi reprehenderit perferendis rem expedita est dolore? Ad pariatur nesciunt fugiat
+						minus doloribus, unde deserunt optio veniam sequi tempora. Reprehenderit maxime harum, sint
+						autem voluptate veniam nihil recusandae natus ipsum omnis, obcaecati adipisci sed dolor pariatur
+						unde consequuntur suscipit amet aperiam repudiandae debitis?
 					</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="flex {guildObj.is_private ? 'justify-between' : 'justify-end'} items-center w-full">
-			{#if guildObj.is_private}
-				<div class="">
-					<img src={lockIcon} alt="lock-icon" />
-				</div>
-			{/if}
-
-			<div class="flex items-center gap-[5px]">
-				<img src={groupIcon} alt="group-icon" />
-				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
-			</div>
+		<div class="flex items-center justify-end w-full gap-[5px]">
+			<img src={groupIcon} alt="group-icon" />
+			<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
 		</div>
 	</button>
 </form>

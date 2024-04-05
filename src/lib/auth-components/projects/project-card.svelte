@@ -5,6 +5,7 @@
 	import type { ProjectTypes } from '$lib/types';
 	import PublicJoin from './join-project/public-join.svelte';
 	import PrivateJoin from './join-project/private-join.svelte';
+	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 
 	export let projectObj: ProjectTypes;
 
@@ -46,13 +47,8 @@
 
 			<div class="absolute right-0 bottom-0 mb-[5px] mr-[10px]">
 				<div class="flex items-center gap-[5px]">
-					{#if projectObj.onlineCount}
-						<img src={onlineIcon} alt="online-icon" />
-						<p class="text-[14px] text-main">Online {projectObj.onlineCount}</p>
-					{:else}
-						<img src={offlineIcon} alt="online-icon" />
-						<p class="text-[14px] text-main">Offline</p>
-					{/if}
+					<img src={groupIcon} alt="group-icon" />
+					<p class="text-[14px] text-main">10/20</p>
 				</div>
 			</div>
 		</div>
