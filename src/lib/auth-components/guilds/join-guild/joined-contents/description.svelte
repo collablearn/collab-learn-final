@@ -10,11 +10,25 @@
 	import type { ZodError } from 'zod';
 	import { fade } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
+	import { onMount, tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
 	const userState = getUserState();
+
+	//notif window if there is new chat whil scroll to top
+
+	let msgCount = 0;
+	let showArrowDown = false;
+	let scrollBinding: HTMLDivElement;
+
+	const handleScroll = () => {
+		showArrowDown =
+			scrollBinding.scrollTop < scrollBinding.scrollHeight - scrollBinding.clientHeight - 10;
+
+		showArrowDown ? '' : (msgCount = 0);
+	};
 
 	//get all guild chats
 	const getChats = async () => {
@@ -37,6 +51,7 @@
 			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
 			async (payload) => {
 				await getChats();
+				handleScroll();
 			}
 		)
 		.subscribe();
@@ -68,7 +83,6 @@
 			else {
 				sendChatLoader = false;
 				chatValue = '';
-				return toast.success('Sending Chat', { description: 'Chat Sended.' });
 			}
 		} catch (error) {
 			const zodError = error as ZodError;
@@ -107,7 +121,12 @@
 			{/each}
 		</div>
 	{:else}
-		<div class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto">
+		<div
+			class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto scroll-smooth"
+			on:scroll={handleScroll}
+			bind:this={scrollBinding}
+		>
+			<button on:click={() => (scrollBinding.scrollTop = scrollBinding.scrollHeight)}>Click</button>
 			{#each $authState.guilds.guildChats ?? [] as chatObj}
 				<ChatCard {chatObj} />
 			{/each}
