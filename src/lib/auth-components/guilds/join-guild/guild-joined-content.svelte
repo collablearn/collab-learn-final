@@ -34,6 +34,7 @@
 
 			switch (status) {
 				case 200:
+					supabase.removeAllChannels();
 					invalidateAll();
 					toast.success('Guild', { description: msg });
 					deleteGuildLoader = false;
