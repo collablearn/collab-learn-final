@@ -6,6 +6,7 @@
 	import { toast } from 'svelte-sonner';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { invalidateAll } from '$app/navigation';
 
 	export let guildObj: CreatedGuildReference;
 
@@ -40,6 +41,7 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Join Guild', { description: msg });
 					formActionError = null;
 					$authState.guilds.guildObj = guildObj;
