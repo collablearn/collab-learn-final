@@ -146,6 +146,7 @@ export const actions: Actions = {
                         max_users: Number(result.maxUsers),
                         description: result.description,
                         passcode: result.passcode,
+                        host_photo: result.hostPhoto
                     }]);
 
                     if (insertGuildError) return fail(401, { msg: insertGuildError.message });

@@ -72,6 +72,7 @@ export const createGuildSchema = z.object({
 });
 
 export const createGuildSchemaWithPassCode = z.object({
+    hostPhoto: z.string(),
     hostName: z.string(),
     guildName: z.string().min(1, { message: "Must enter a valid guild name." }),
     maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
