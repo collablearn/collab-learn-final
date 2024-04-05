@@ -43,6 +43,7 @@ export type CreatedGuildReference = {
     description: string
     passcode: string
     image_url: string
+    host_photo: string
 }
 
 // guild_wall_tb

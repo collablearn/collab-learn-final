@@ -76,6 +76,14 @@
 >
 	<input
 		autocomplete="off"
+		name="hostPhoto"
+		type="hidden"
+		class="hidden"
+		value={$userState?.user_photo_link}
+	/>
+
+	<input
+		autocomplete="off"
 		name="hostName"
 		type="hidden"
 		class="hidden"
