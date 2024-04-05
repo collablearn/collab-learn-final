@@ -8,9 +8,10 @@
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { sendGuildChatSchema } from '$lib/schema';
 	import type { ZodError } from 'zod';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
 	import arrowDown from '$lib/assets/arrow_down_icon.svg';
+	import { tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -50,8 +51,17 @@
 			'postgres_changes',
 			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
 			async (payload) => {
-				await getChats();
-				handleScroll();
+				const whosthat = payload.new as { user_id: string };
+
+				if (whosthat.user_id === $userState?.user_id) {
+					await getChats();
+					await tick();
+					scrollBinding.scrollTop = scrollBinding.scrollHeight;
+				} else {
+					await getChats();
+					await tick();
+					msgCount++;
+				}
 			}
 		)
 		.subscribe();
@@ -95,6 +105,7 @@
 	getChats();
 
 	$: if (activeItem === 'Chat Feed') {
+		showArrowDown = false;
 		if (scrollBinding) scrollBinding.scrollTop = scrollBinding.scrollHeight;
 	}
 </script>
@@ -135,14 +146,17 @@
 			{/each}
 
 			{#if showArrowDown}
-				<button
-					on:click={() => {
-						scrollBinding.scrollTop = scrollBinding.scrollHeight;
-					}}
-					class="p-[10px] sticky bottom-0 bg-main rounded-[10px] max-w-fit flex items-center text-[14px] gap-[10px] text-submain"
-				>
-					<img src={arrowDown} alt="arrow-icon" />
-				</button>
+				<div class="sticky bottom-0" transition:fade>
+					<button
+						on:click={() => {
+							scrollBinding.scrollTop = scrollBinding.scrollHeight;
+						}}
+						class="p-[10px] bg-main rounded-[10px] max-w-fit flex items-center text-[14px] gap-[10px] text-submain"
+					>
+						{msgCount ? `${msgCount} New Message` : ''}
+						<img src={arrowDown} alt="arrow-icon" />
+					</button>
+				</div>
 			{/if}
 		</div>
 

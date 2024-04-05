@@ -25,7 +25,11 @@
 		<div>
 			<div class="flex flex-col w-full">
 				<div class="flex items-center gap-[10px]">
-					<div class="flex justify-end w-full">
+					<div
+						class="flex w-full {$userState?.user_id === chatObj.user_id
+							? 'justify-end'
+							: 'justify-start'}"
+					>
 						<p class="text-main text-[14px] font-semibold">
 							{$userState?.user_id === chatObj.user_id ? 'You' : chatObj.user_fullname}
 						</p>
