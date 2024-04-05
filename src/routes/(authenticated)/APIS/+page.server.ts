@@ -3,11 +3,13 @@ import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
 type UserAndGuildObjTypes = {
-    client_user_id: string
-    client_user_photo_link: string
-    client_user_fullname: string
-    client_guild_id: number
-    client_guild_name: string
+    user_id: string
+    user_photo_link: string
+    user_fullname: string
+    guild_id: number
+    guild_name: string
+    guild_host_name: string
+    guild_image_url: string
 }
 
 
@@ -184,12 +186,14 @@ export const actions: Actions = {
 
 
             const { data, error: checkPassError } = await supabase.rpc("check_password", {
-                client_user_id: userAndGuildObj.client_user_id,
-                client_user_photo_link: userAndGuildObj.client_user_photo_link,
-                client_user_fullname: userAndGuildObj.client_user_fullname,
-                client_guild_id: userAndGuildObj.client_guild_id,
-                client_guild_name: userAndGuildObj.client_guild_name,
-                client_pass_code: result.passcode
+                client_user_id: userAndGuildObj.user_id,
+                client_user_photo_link: userAndGuildObj.user_photo_link,
+                client_user_fullname: userAndGuildObj.user_fullname,
+                client_guild_id: userAndGuildObj.guild_id,
+                client_guild_name: userAndGuildObj.guild_name,
+                client_pass_code: result.passcode,
+                client_guild_host_name: userAndGuildObj.guild_host_name,
+                client_guild_image_url: userAndGuildObj.user_photo_link
             });
 
             if (checkPassError) return fail(401, { msg: checkPassError.message });
