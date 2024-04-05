@@ -26,21 +26,21 @@
 <PublicJoin bind:showPublicJoin {projectObj} />
 
 <button
-	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left"
+	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px]"
 	on:click={handleJoin}
 >
-	<div class="grid grid-cols-3 gap-[10px]">
+	<h3 class="text-[16px] text-main font-semibold truncate">{projectObj.projectName}</h3>
+	<div class="flex gap-[10px] w-full">
 		<!--For project image-->
-		<div class="w-[100%] h-[100px] bg-white relative">
+		<div class="w-[200px] h-[100px] bg-white relative">
 			{#if projectObj.isPrivate}
 				<img src={lockIcon} alt="lock-icon" class="absolute bottom-0 right-0" />
 			{/if}
 		</div>
 
 		<!--For project details-->
-		<div class="  w-[100%] col-span-2">
-			<h3 class="text-[16px] text-main font-semibold truncate">{projectObj.projectName}</h3>
-			<p class="text-[14px] text-main line-clamp-3">
+		<div class="w-[100%]" title={projectObj.projectDescription}>
+			<p class="text-[14px] text-main line-clamp-3 sm:line-clamp-none text-wrap">
 				{projectObj.projectDescription}
 			</p>
 
