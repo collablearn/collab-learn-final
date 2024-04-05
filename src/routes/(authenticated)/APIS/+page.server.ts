@@ -182,18 +182,18 @@ export const actions: Actions = {
         try {
             const result = checkGuildPassSchema.parse(formData);
 
-            const userAndGuildObj = JSON.parse(result.userAndGuildObj) as UserAndGuildObjTypes
+            const parsedUserAndGuildObj = JSON.parse(result.userAndGuildObj) as UserAndGuildObjTypes
 
 
             const { data, error: checkPassError } = await supabase.rpc("check_password", {
-                client_user_id: userAndGuildObj.user_id,
-                client_user_photo_link: userAndGuildObj.user_photo_link,
-                client_user_fullname: userAndGuildObj.user_fullname,
-                client_guild_id: userAndGuildObj.guild_id,
-                client_guild_name: userAndGuildObj.guild_name,
+                client_user_id: parsedUserAndGuildObj.user_id,
+                client_user_photo_link: parsedUserAndGuildObj.user_photo_link,
+                client_user_fullname: parsedUserAndGuildObj.user_fullname,
+                client_guild_id: parsedUserAndGuildObj.guild_id,
+                client_guild_name: parsedUserAndGuildObj.guild_name,
                 client_pass_code: result.passcode,
-                client_guild_host_name: userAndGuildObj.guild_host_name,
-                client_guild_image_url: userAndGuildObj.user_photo_link
+                client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
+                client_guild_image_url: parsedUserAndGuildObj.guild_image_url
             });
 
             if (checkPassError) return fail(401, { msg: checkPassError.message });
@@ -213,12 +213,14 @@ export const actions: Actions = {
         const parsedUserAndGuildObj = await JSON.parse(userAndGuildObj) as UserAndGuildObjTypes;
 
         const { data, error: checkPassError } = await supabase.rpc("check_password", {
-            client_user_id: parsedUserAndGuildObj.client_user_id,
-            client_user_photo_link: parsedUserAndGuildObj.client_user_photo_link,
-            client_user_fullname: parsedUserAndGuildObj.client_user_fullname,
-            client_guild_id: parsedUserAndGuildObj.client_guild_id,
-            client_guild_name: parsedUserAndGuildObj.client_guild_name,
-            client_pass_code: ""
+            client_user_id: parsedUserAndGuildObj.user_id,
+            client_user_photo_link: parsedUserAndGuildObj.user_photo_link,
+            client_user_fullname: parsedUserAndGuildObj.user_fullname,
+            client_guild_id: parsedUserAndGuildObj.guild_id,
+            client_guild_name: parsedUserAndGuildObj.guild_name,
+            client_pass_code: "",
+            client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
+            client_guild_image_url: parsedUserAndGuildObj.user_photo_link
         });
 
         if (checkPassError) return fail(401, { msg: checkPassError.message });

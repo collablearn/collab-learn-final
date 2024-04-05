@@ -15,11 +15,13 @@
 	const userState = getUserState();
 
 	const userAndGuildObj = {
-		client_user_id: $userState?.user_id,
-		client_user_photo_link: $userState?.user_photo_link,
-		client_user_fullname: $userState?.user_fullname,
-		client_guild_id: guildObj.id,
-		client_guild_name: guildObj.guild_name
+		user_id: $userState?.user_id,
+		user_photo_link: $userState?.user_photo_link,
+		user_fullname: $userState?.user_fullname,
+		guild_id: guildObj.id,
+		guild_name: guildObj.guild_name,
+		guild_host_name: guildObj.host_name,
+		guild_image_url: guildObj.image_url
 	};
 
 	let publicJoinLoader = false;
