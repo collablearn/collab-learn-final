@@ -2,6 +2,10 @@
 	import sampleIcon from '$lib/assets/description_icon_320_sample.svg';
 	import onlineIcon from '$lib/assets/project_online_icon_320.svg';
 	import offlineIcon from '$lib/assets/project_offline_icon_320.svg';
+
+	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+
+	export let supabase: SupabaseClient<any, 'public', any>;
 </script>
 
 <div class="flex flex-col gap-[10px] mt-[45px]">
