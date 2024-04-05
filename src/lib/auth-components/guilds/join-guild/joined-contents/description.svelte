@@ -21,7 +21,8 @@
 		const { data, error } = await supabase
 			.from('guild_chats_tb')
 			.select('*')
-			.match({ guild_id: $authState.guilds.guildObj?.id });
+			.match({ guild_id: $authState.guilds.guildObj?.id })
+			.order('id', { ascending: true });
 
 		if (error) return toast.error('Getting Chats', { description: error.message });
 
