@@ -137,7 +137,7 @@
 		{#if activeItem === 'Description'}
 			<Description {supabase} />
 		{:else}
-			<Members />
+			<Members {supabase} />
 		{/if}
 	</div>
 </div>
