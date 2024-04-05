@@ -3,17 +3,6 @@ import type { Actions, PageServerLoad } from "./$types";
 import { fail } from "@sveltejs/kit";
 import { addNoteSchema } from "$lib/schema";
 
-
-/* export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession }, url }) => {
-
-    const { user } = await safeGetSession();
-
-    return {
-        guild_notes: await supabase.from("guild_wall_tb").select("*").match({ guild_id: url.search.slice(2), user_id: user?.id }) as PostgrestSingleResponse<GuildWallReference[]>
-    }
-};
- */
-
 export const actions: Actions = {
     addNoteAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
@@ -34,7 +23,6 @@ export const actions: Actions = {
                 else {
                     const { data: guildNotes, error: guildNotesError } = await supabase.from('guild_wall_tb').select('*').match({
                         guild_id: result.guildId,
-                        user_id: user.id
                     });
 
                     if (guildNotesError) return fail(401, { msg: guildNotesError.message });
