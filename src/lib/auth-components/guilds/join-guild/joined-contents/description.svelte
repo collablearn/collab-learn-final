@@ -153,7 +153,7 @@
 						}}
 						class="p-[10px] bg-main rounded-[10px] max-w-fit flex items-center text-[14px] gap-[10px] text-submain"
 					>
-						{msgCount ? `${msgCount} New Message` : ''}
+						{msgCount ? `${msgCount} New Message` : 'Go down?'}
 						<img src={arrowDown} alt="arrow-icon" />
 					</button>
 				</div>
