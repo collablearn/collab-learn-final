@@ -90,9 +90,6 @@
 			<!--For project image-->
 			<div class="w-[200px] relative">
 				<img src={sampleIcon} alt="sample-icon" />
-				{#if guildObj.is_private}
-					<img src={lockIcon} alt="lock-icon" class="absolute bottom-0 right-0" />
-				{/if}
 			</div>
 
 			<!--For project details-->
@@ -105,23 +102,21 @@
 				<div class="flex items-center flex-wrap gap-[5px]">
 					<p class="text-[14px] font-semibold text-main">Description:</p>
 					<p class="text-[14px] text-main line-clamp-3 sm:line-clamp-none text-wrap">
-						{guildObj.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-						minus ratione perferendis et deserunt libero vero veritatis explicabo unde aperiam! Iusto
-						ipsam impedit perspiciatis eos repellat accusamus fuga natus molestiae nulla dignissimos
-						vitae amet eum, repudiandae doloribus aspernatur quis ullam sed asperiores. Fugiat soluta
-						eveniet fugit vero totam aspernatur dolores at modi quisquam numquam ratione, cupiditate
-						earum eligendi reprehenderit perferendis rem expedita est dolore? Ad pariatur nesciunt fugiat
-						minus doloribus, unde deserunt optio veniam sequi tempora. Reprehenderit maxime harum, sint
-						autem voluptate veniam nihil recusandae natus ipsum omnis, obcaecati adipisci sed dolor pariatur
-						unde consequuntur suscipit amet aperiam repudiandae debitis?
+						{guildObj.description}
 					</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="flex items-center justify-end w-full gap-[5px]">
-			<img src={groupIcon} alt="group-icon" />
-			<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
+		<div class="flex items-center justify-between w-full">
+			{#if guildObj.is_private}
+				<img src={lockIcon} alt="lock-icon" class="" />
+			{/if}
+
+			<div class="flex items-center justify-end w-full gap-[5px]">
+				<img src={groupIcon} alt="group-icon" />
+				<p class="text-[14px] text-main">{guildObj.joined_count}/{guildObj.max_users}</p>
+			</div>
 		</div>
 	</button>
 </form>
