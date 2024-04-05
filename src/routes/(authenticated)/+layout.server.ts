@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import type { LayoutServerLoad } from "./$types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
-import type { CreatedGuildReference, UserReference } from "$lib/types";
+import type { CreatedGuildReference, JoinedGuildReference, UserReference } from "$lib/types";
 
 export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession } }) => {
     const { user } = await safeGetSession();
@@ -10,7 +10,8 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
 
     return {
         userData: await supabase.from("user_list_tb").select("*").eq("user_id", user.id).limit(1).single() as PostgrestSingleResponse<UserReference>,
-        createdGuilds: await supabase.from("created_guild_tb").select("*") as PostgrestSingleResponse<CreatedGuildReference[]>
+        createdGuilds: await supabase.from("created_guild_tb").select("*") as PostgrestSingleResponse<CreatedGuildReference[]>,
+        joinedGuilds: await supabase.from("joined_guild_tb").select("*").eq("user_id", user.id) as PostgrestSingleResponse<JoinedGuildReference[]>
     }
 
 };
