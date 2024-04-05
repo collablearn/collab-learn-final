@@ -24,7 +24,8 @@
 			guildObj: null,
 			guildNotes: null,
 			guildNoteObj: null,
-			guildChats: null
+			guildChats: null,
+			joinedGuildArray: null
 		}
 	};
 
@@ -36,9 +37,18 @@
 	const authState = getAuthState();
 
 	// making created guild reactive
-	$: data.createdGuilds.data
-		? ($authState.guilds.createdGuilds = data.createdGuilds.data)
-		: ($authState.guilds.createdGuilds = null);
+	$: if (data.createdGuilds.data) {
+		$authState.guilds.createdGuilds = data.createdGuilds.data;
+	} else {
+		$authState.guilds.createdGuilds = null;
+	}
+
+	// making joined guild array reactive
+	$: if (data.joinedGuilds.data) {
+		$authState.guilds.joinedGuildArray = data.joinedGuilds.data;
+	} else {
+		$authState.guilds.joinedGuildArray = null;
+	}
 </script>
 
 <div class=" bg-submain">
