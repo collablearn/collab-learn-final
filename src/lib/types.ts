@@ -76,4 +76,6 @@ export type JoinedGuildReference = {
     guild_id: string
     guild_name: string
     passcode: string
+    host_name: string
+    guild_image_url: string
 }
