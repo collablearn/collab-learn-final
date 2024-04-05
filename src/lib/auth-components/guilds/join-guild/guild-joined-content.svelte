@@ -84,7 +84,10 @@
 	{#if guildObj?.user_id === $userState?.user_id}
 		<div class="flex items-center gap-[10px]">
 			<form>
-				<button class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+				<button
+					class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
+					on:click={() =>
+						alert('This is coming soon, this is not a wordpress application take it easy.')}
 					>Edit
 				</button>
 			</form>
@@ -137,7 +140,7 @@
 		{#if activeItem === 'Description'}
 			<Description {supabase} />
 		{:else}
-			<Members />
+			<Members {supabase} />
 		{/if}
 	</div>
 </div>
