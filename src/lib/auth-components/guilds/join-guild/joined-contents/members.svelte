@@ -17,14 +17,15 @@
 	let localArray: JoinedGuildReference[] = [];
 
 	const getJoinedUsers = async () => {
-		const { data, error } = await supabase
-			.from('joined_guild_tb')
-			.select('*')
-			.eq('guild_id', guildObj?.id);
+		if (guildObj) {
+			const { data, error } = await supabase.rpc('get_joined_members', {
+				client_guild_id: guildObj.id,
+				client_host_id: guildObj.user_id
+			});
+			if (error) return toast.error('Getting Joined Users', { description: error.message });
 
-		if (error) return toast.error('Getting Joined Users', { description: error.message });
-
-		localArray = data;
+			localArray = data;
+		}
 	};
 
 	getJoinedUsers();
@@ -33,7 +34,11 @@
 <div class="flex flex-col gap-[10px] mt-[45px]">
 	<div class="flex justify-between items-center">
 		<div class="flex items-start gap-[10px]">
-			<img src={sampleIcon} alt="sample-icon" />
+			<img
+				src={guildObj?.host_photo ?? sampleIcon}
+				alt="sample-icon"
+				class="w-[25px] h-[25px] rounded-full"
+			/>
 			<div class="flex flex-col o">
 				<p class="text-main font-semibold text-[14px]">{guildObj?.host_name}</p>
 				<p class="text-main text-[14px]">Host</p>
