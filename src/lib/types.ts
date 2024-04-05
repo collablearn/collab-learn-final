@@ -65,3 +65,15 @@ export type GuildChatReference = {
     user_photo_link: string
     guild_chat: string
 }
+
+//joined_guild_tb
+export type JoinedGuildReference = {
+    id: number
+    created_at: string
+    user_id: string
+    user_photo_link: string
+    user_fullname: string
+    guild_id: string
+    guild_name: string
+    passcode: string
+}
