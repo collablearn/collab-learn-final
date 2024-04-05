@@ -10,7 +10,7 @@
 	import type { ZodError } from 'zod';
 	import { fade } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
-	import { onMount, tick } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -93,6 +93,10 @@
 	};
 
 	getChats();
+
+	$: if (activeItem === 'Chat Feed') {
+		if (scrollBinding) scrollBinding.scrollTop = scrollBinding.scrollHeight;
+	}
 </script>
 
 {#if activeItem === "Guild's Wall"}
@@ -126,7 +130,6 @@
 			on:scroll={handleScroll}
 			bind:this={scrollBinding}
 		>
-			<button on:click={() => (scrollBinding.scrollTop = scrollBinding.scrollHeight)}>Click</button>
 			{#each $authState.guilds.guildChats ?? [] as chatObj}
 				<ChatCard {chatObj} />
 			{/each}
