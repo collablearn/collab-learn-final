@@ -29,8 +29,6 @@
 	};
 
 	getJoinedUsers();
-
-	console.log(guildObj?.host_photo);
 </script>
 
 <div class="flex flex-col gap-[10px] mt-[45px]">

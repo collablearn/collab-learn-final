@@ -39,6 +39,8 @@
 					invalidateAll();
 					toast.success('Join Guild', { description: msg });
 					$authState.guilds.guildObj = guildObj;
+					//faker hhaha
+					$authState.guilds.guildObj.joined_count++;
 					publicJoinLoader = false;
 					$authState.guilds.joinedGuild = true;
 					break;
