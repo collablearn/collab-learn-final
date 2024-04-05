@@ -10,7 +10,7 @@
 	import type { ZodError } from 'zod';
 	import { fade } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
-	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
+	import arrowDown from '$lib/assets/arrow_down_icon.svg';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -133,6 +133,17 @@
 			{#each $authState.guilds.guildChats ?? [] as chatObj}
 				<ChatCard {chatObj} />
 			{/each}
+
+			{#if showArrowDown}
+				<button
+					on:click={() => {
+						scrollBinding.scrollTop = scrollBinding.scrollHeight;
+					}}
+					class="p-[10px] sticky bottom-0 bg-main rounded-[10px] max-w-fit flex items-center text-[14px] gap-[10px] text-submain"
+				>
+					<img src={arrowDown} alt="arrow-icon" />
+				</button>
+			{/if}
 		</div>
 
 		<div class="flex items-center gap-[10px] mt-[10px]">
