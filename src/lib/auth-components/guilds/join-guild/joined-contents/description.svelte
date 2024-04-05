@@ -8,13 +8,28 @@
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { sendGuildChatSchema } from '$lib/schema';
 	import type { ZodError } from 'zod';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
+	import arrowDown from '$lib/assets/arrow_down_icon.svg';
+	import { tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
 	const userState = getUserState();
+
+	//notif window if there is new chat whil scroll to top
+
+	let msgCount = 0;
+	let showArrowDown = false;
+	let scrollBinding: HTMLDivElement;
+
+	const handleScroll = () => {
+		showArrowDown =
+			scrollBinding.scrollTop < scrollBinding.scrollHeight - scrollBinding.clientHeight - 10;
+
+		showArrowDown ? '' : (msgCount = 0);
+	};
 
 	//get all guild chats
 	const getChats = async () => {
@@ -36,7 +51,17 @@
 			'postgres_changes',
 			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
 			async (payload) => {
-				await getChats();
+				const whosthat = payload.new as { user_id: string };
+
+				if (whosthat.user_id === $userState?.user_id) {
+					await getChats();
+					await tick();
+					scrollBinding.scrollTop = scrollBinding.scrollHeight;
+				} else {
+					await getChats();
+					await tick();
+					msgCount++;
+				}
 			}
 		)
 		.subscribe();
@@ -68,7 +93,6 @@
 			else {
 				sendChatLoader = false;
 				chatValue = '';
-				return toast.success('Sending Chat', { description: 'Chat Sended.' });
 			}
 		} catch (error) {
 			const zodError = error as ZodError;
@@ -79,6 +103,11 @@
 	};
 
 	getChats();
+
+	$: if (activeItem === 'Chat Feed') {
+		showArrowDown = false;
+		if (scrollBinding) scrollBinding.scrollTop = scrollBinding.scrollHeight;
+	}
 </script>
 
 {#if activeItem === "Guild's Wall"}
@@ -107,10 +136,28 @@
 			{/each}
 		</div>
 	{:else}
-		<div class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto">
+		<div
+			class="mt-[20px] flex flex-col gap-[15px] h-[40dvh] overflow-auto scroll-smooth"
+			on:scroll={handleScroll}
+			bind:this={scrollBinding}
+		>
 			{#each $authState.guilds.guildChats ?? [] as chatObj}
 				<ChatCard {chatObj} />
 			{/each}
+
+			{#if showArrowDown}
+				<div class="sticky bottom-0" transition:fade>
+					<button
+						on:click={() => {
+							scrollBinding.scrollTop = scrollBinding.scrollHeight;
+						}}
+						class="p-[10px] bg-main rounded-[10px] max-w-fit flex items-center text-[14px] gap-[10px] text-submain"
+					>
+						{msgCount ? `${msgCount} New Message` : 'Go down?'}
+						<img src={arrowDown} alt="arrow-icon" />
+					</button>
+				</div>
+			{/if}
 		</div>
 
 		<div class="flex items-center gap-[10px] mt-[10px]">

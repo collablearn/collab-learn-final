@@ -5,15 +5,15 @@
 	const authState = getAuthState();
 </script>
 
-<div class="">
+<div class="w-full">
 	<p class="text-[16px] text-main font-semibold w-full">Joined Guild(s)</p>
 
 	<hr class="mt-[11px] mb-[24px] w-full border-[1px] border-main" />
 
 	{#if $authState.guilds.joinedGuildArray?.length}
-		<div class="container overflow-x-scroll flex space-x-4">
+		<div class="overflow-x-scroll flex gap-[10px]">
 			{#each $authState.guilds.joinedGuildArray ?? [] as joinGuildObj, index}
-				<div class="flex-shrink-0 w-full h-40 bg-subwhite rounded-lg p-[20px]">
+				<div class="flex-shrink-0 w-full bg-subwhite rounded-lg p-[20px]">
 					<div class="w-full text-[14px] flex flex-col gap-[10px]">
 						<p class="text-[16px]">Guild Name:</p>
 						<p>{joinGuildObj.guild_name}</p>
@@ -25,7 +25,7 @@
 		</div>
 
 		{#if $authState.guilds.joinedGuildArray.length > 1}
-			<button class="flex items-center gap-[10px] text-[14px] text-main font-semibold mt-[10px]"
+			<button class="flex items-center gap-[10px] text-[14px] text-main font-semibold mt-[10px] b"
 				>Swipe for more
 				<img src={arrowRightIcon} class="" alt="arrow-right-icon" />
 			</button>
