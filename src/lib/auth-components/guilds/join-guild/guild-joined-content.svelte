@@ -39,6 +39,7 @@
 					deleteGuildLoader = false;
 					$authState.guilds.joinedGuild = false;
 					$authState.guilds.guildObj = null;
+					$authState.guilds.guildNotes = null;
 					break;
 
 				case 401:
@@ -74,6 +75,7 @@
 			$authState.guilds.guildNotes = null;
 			$authState.guilds.joinedGuild = false;
 			$authState.guilds.guildObj = null;
+			supabase.removeAllChannels();
 		}}
 		>Back
 	</button>
