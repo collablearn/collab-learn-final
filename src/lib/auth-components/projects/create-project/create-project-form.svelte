@@ -88,6 +88,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Project Name</span>
 			<input
+				disabled={createProjectLoader}
 				autocomplete="off"
 				name="projectName"
 				type="text"
@@ -101,6 +102,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Users (Max. 50)</span>
 			<input
+				disabled={createProjectLoader}
 				autocomplete="off"
 				name="maxUsers"
 				type="number"
@@ -114,6 +116,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Description</span>
 			<textarea
+				disabled={createProjectLoader}
 				autocomplete="off"
 				name="description"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
@@ -130,6 +133,7 @@
 			{#each visibilitySelection as selection}
 				<div class="flex items-center gap-[5px]">
 					<input
+						disabled={createProjectLoader}
 						autocomplete="off"
 						name="visibility"
 						type="radio"
