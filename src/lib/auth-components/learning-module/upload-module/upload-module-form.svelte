@@ -66,7 +66,7 @@
 			autocomplete="off"
 			type="file"
 			name="uploadModule"
-			class=""
+			class="text-main text-[14px] max-w-fit"
 			bind:files
 			accept=".pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx"
 		/>
@@ -129,5 +129,16 @@
 		-moz-user-select: none; /* Firefox */
 		-ms-user-select: none; /* IE/Edge */
 		user-select: none; /* Standard syntax */
+	}
+
+	input::file-selector-button {
+		font-weight: bold;
+		color: #e9ba46;
+		border-radius: 10px;
+		background-color: #800000;
+		height: 40px;
+		border: none;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 </style>
