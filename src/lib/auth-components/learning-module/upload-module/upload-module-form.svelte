@@ -6,6 +6,8 @@
 	import type { ResultModel } from '$lib/types';
 	import { fade } from 'svelte/transition';
 	import { getUserState } from '$lib';
+	import { goto, invalidateAll } from '$app/navigation';
+	import { tick } from 'svelte';
 
 	const userState = getUserState();
 
@@ -35,8 +37,11 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Upload Module', { description: msg });
 					uploadModuleLoader = false;
+					await tick();
+					goto('/learning-modules');
 					break;
 
 				case 400:
