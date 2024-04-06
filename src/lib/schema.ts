@@ -97,3 +97,23 @@ export const addNoteSchema = z.object({
 export const sendGuildChatSchema = z.object({
     sendChatValue: z.string().min(1, { message: "Must enter a valid chat." })
 })
+
+//project route schema
+export const createProjectSchema = z.object({
+    hostPhoto: z.string(),
+    hostName: z.string(),
+    projectName: z.string().min(1, { message: "Must enter a valid project name." }),
+    maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
+    description: z.string().min(5, { message: "Must enter a valid description." }),
+    visibility: z.string(),
+})
+
+export const createProjectSchemaWithPassCode = z.object({
+    hostPhoto: z.string(),
+    hostName: z.string(),
+    projectName: z.string().min(1, { message: "Must enter a valid project name." }),
+    maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
+    description: z.string().min(5, { message: "Must enter a valid description." }),
+    visibility: z.string(),
+    passcode: z.string().min(6, { message: "Must choose a strong passcode." })
+});
