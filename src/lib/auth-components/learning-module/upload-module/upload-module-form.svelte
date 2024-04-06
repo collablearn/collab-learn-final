@@ -3,21 +3,47 @@
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import type { ResultModel } from '$lib/types';
 
 	let file: FileList | undefined;
 
+	interface UploadModuleVal {
+		uploadModule: string[];
+		moduleName: string[];
+		description: string[];
+	}
+
+	interface UploadModuleAction {
+		msg: string;
+		errors: UploadModuleVal;
+	}
+
+	let formActionError: UploadModuleVal | null = null;
+	let uploadModuleLoader = false;
+
 	const uploadModuleActionNews: SubmitFunction = () => {
+		uploadModuleLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<UploadModuleAction>;
 
 			switch (status) {
 				case 200:
+					toast.success('Upload Module', { description: msg });
+					uploadModuleLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
+					uploadModuleLoader = false;
 					break;
 
 				case 401:
+					toast.error('Upload Module', { description: msg });
+					uploadModuleLoader = false;
 					break;
 
 				default:
