@@ -286,6 +286,7 @@ export const actions: Actions = {
         const formData = Object.fromEntries(await request.formData());
         try {
             const result = uploadModuleSchema.parse(formData);
+
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
