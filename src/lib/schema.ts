@@ -117,3 +117,8 @@ export const createProjectSchemaWithPassCode = z.object({
     visibility: z.string(),
     passcode: z.string().min(6, { message: "Must choose a strong passcode." })
 });
+
+//learning module route schema
+export const uploadModuleSchema = z.object({
+    file: z.instanceof(File).refine((file) => file.size <= 1024 * 1024, { message: "File size must be less than 1MB." })
+})

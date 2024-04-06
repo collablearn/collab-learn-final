@@ -279,7 +279,11 @@ export const actions: Actions = {
             }
 
         } else return redirect(302, "/");
-    }
+    },
 
+    ///learning module rout
+    uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+
+    }
 
 };
