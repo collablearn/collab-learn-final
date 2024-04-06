@@ -45,6 +45,7 @@ export interface AuthStateStoreTypes {
     modules: {
         createdModules: CreatedModuleReference[] | null
         moduleObj: CreatedModuleReference | null
+        showModule: boolean
     }
 }
 

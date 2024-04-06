@@ -30,7 +30,8 @@
 		},
 		modules: {
 			createdModules: null,
-			moduleObj: null
+			moduleObj: null,
+			showModule: false
 		}
 	};
 
@@ -70,7 +71,7 @@
 	}
 </script>
 
-<div class=" bg-submain">
+<div class=" bg-submain block">
 	{#if $authState.projects.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
