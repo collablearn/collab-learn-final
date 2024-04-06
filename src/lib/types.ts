@@ -80,3 +80,19 @@ export type JoinedGuildReference = {
     host_name: string
     guild_image_url: string
 }
+
+//created_projects_tb
+export type CreatedProjectReference = {
+    id: number
+    created_at: string
+    user_id: string
+    project_name: string
+    max_users: number
+    description: string
+    passcode: string
+    host_name: string
+    is_private: boolean
+    joined_count: number
+    image_url: string
+    host_photo: string
+}

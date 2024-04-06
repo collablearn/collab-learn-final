@@ -15,6 +15,7 @@
 	const defaulState: AuthStateStoreTypes = {
 		activeItem: '/dashboard',
 		projects: {
+			createdProjects: null,
 			joinedProject: false,
 			showEditTools: false
 		},
@@ -36,7 +37,7 @@
 	setAuthState(defaulState);
 	const authState = getAuthState();
 
-	// making created guild reactive
+	// making created guild array reactive
 	$: if (data.createdGuilds.data) {
 		$authState.guilds.createdGuilds = data.createdGuilds.data;
 	} else {
@@ -48,6 +49,13 @@
 		$authState.guilds.joinedGuildArray = data.joinedGuilds.data;
 	} else {
 		$authState.guilds.joinedGuildArray = null;
+	}
+
+	// making created projects array reactive
+	$: if (data.createdProjects.data) {
+		$authState.projects.createdProjects = data.createdProjects.data;
+	} else {
+		$authState.projects.createdProjects = null;
 	}
 </script>
 

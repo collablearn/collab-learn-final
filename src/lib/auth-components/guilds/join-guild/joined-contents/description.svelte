@@ -11,7 +11,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import { toast } from 'svelte-sonner';
 	import arrowDown from '$lib/assets/arrow_down_icon.svg';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -45,6 +45,7 @@
 	};
 
 	//websocket connection
+
 	const channels = supabase
 		.channel('custom-all-channel')
 		.on(
