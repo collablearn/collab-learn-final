@@ -1,4 +1,4 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -279,7 +279,69 @@ export const actions: Actions = {
             }
 
         } else return redirect(302, "/");
-    }
+    },
 
+    ///learning module route
+    uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const { user } = await safeGetSession();
+            const result = uploadModuleSchema.parse(formData);
+
+            if (user) {
+                const { data: uploadModulePath, error: uploadModuleError } = await supabase.storage.from("modules-bucket").upload(`${user.id}/${result.moduleName}`, result.uploadModule, {
+                    cacheControl: "3600",
+                    upsert: true
+                });
+
+                if (uploadModuleError) return fail(401, { msg: uploadModuleError.message });
+                else if (uploadModulePath) {
+                    const { data: { publicUrl } } = supabase.storage.from("modules-bucket").getPublicUrl(uploadModulePath.path)
+                    const { error: insertModuleError } = await supabase.from("created_module_tb").insert([{
+                        user_id: user.id,
+                        host_name: result.hostName,
+                        host_photo: result.hostPhoto,
+                        module_link: publicUrl,
+                        module_name: result.moduleName,
+                        description: result.description,
+                        file_name: result.uploadModule.name
+                    }]);
+
+                    if (insertModuleError) return fail(401, { msg: insertModuleError.message });
+                    else return fail(200, { msg: "Uploaded a module successfully." });
+                }
+
+            }
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
+    deleteModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+
+        const formData = await request.formData();
+        const { user } = await safeGetSession();
+
+        if (user) {
+            const moduleId = formData.get("moduleId") as string;
+            const fileName = formData.get("fileName") as string;
+
+            const { error: deleteModuleError } = await supabase.from("created_module_tb").delete().match({ user_id: user.id, id: Number(moduleId) });
+
+            if (deleteModuleError) return fail(401, { msg: deleteModuleError.message });
+            else {
+                const { data: fileDeleted, error: deleteFileError } = await supabase.storage.from("modules-bucket").remove([`${user.id}/${fileName}`]);
+                if (deleteFileError) return fail(401, { msg: deleteFileError.message });
+                else if (fileDeleted) return fail(200, { msg: "Successfully deleted the module." });
+            }
+        }
+
+        return redirect(302, "/")
+
+    }
 
 };
