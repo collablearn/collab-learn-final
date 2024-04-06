@@ -64,6 +64,9 @@
 
 	// making created modules array reactive
 	$: if (data.createdModules.data) {
+		$authState.modules.createdModules = data.createdModules.data;
+	} else {
+		$authState.modules.createdModules = null;
 	}
 </script>
 
