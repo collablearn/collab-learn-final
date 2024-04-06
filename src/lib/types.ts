@@ -96,3 +96,17 @@ export type CreatedProjectReference = {
     image_url: string
     host_photo: string
 }
+
+//created_module_tb
+export type CreatedModuleReference = {
+    id: number
+    created_at: string
+    user_id: string
+    module_name: string
+    description: string
+    host_name: string
+    host_photo: string
+    image_url: string
+    module_link: string
+    file_name: string
+}

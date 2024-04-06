@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { getUserState } from '$lib';
 	import sampleIcon from '$lib/assets/description_icon_320_sample.svg';
+	import { formatDate } from '$lib/helpers';
 	import type { GuildChatReference } from '$lib/types';
+	import { fade } from 'svelte/transition';
 
 	export let chatObj: GuildChatReference;
 
 	const userState = getUserState();
+
+	let showDate = false;
 </script>
 
-<div class={$userState?.user_id === chatObj.user_id ? 'flex flex-row-reverse' : 'block'}>
+<div class={$userState?.user_id === chatObj.user_id ? 'flex flex-row-reverse ' : 'block'}>
 	<div
 		class={$userState?.user_id === chatObj.user_id
 			? 'flex flex-row-reverse gap-[10px] items-end'
@@ -36,12 +40,17 @@
 					</div>
 				</div>
 
-				<div class="max-w-[276px] break-words">
+				<button on:click={() => (showDate = !showDate)} class="max-w-[276px] break-words text-left">
 					<p class="text-main text-[14px] rounded-lg p-[10px] bg-subwhite max-w-fit">
 						{chatObj.guild_chat}
 					</p>
-				</div>
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
+{#if showDate}
+	<div class={$userState?.user_id === chatObj.user_id ? 'flex flex-row-reverse ' : 'block'} in:fade>
+		<p class="text-[10px] text-main">{formatDate(chatObj.created_at)}</p>
+	</div>
+{/if}

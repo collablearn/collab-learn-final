@@ -27,6 +27,11 @@
 			guildNoteObj: null,
 			guildChats: null,
 			joinedGuildArray: null
+		},
+		modules: {
+			createdModules: null,
+			moduleObj: null,
+			showModule: false
 		}
 	};
 
@@ -57,9 +62,16 @@
 	} else {
 		$authState.projects.createdProjects = null;
 	}
+
+	// making created modules array reactive
+	$: if (data.createdModules.data) {
+		$authState.modules.createdModules = data.createdModules.data;
+	} else {
+		$authState.modules.createdModules = null;
+	}
 </script>
 
-<div class=" bg-submain">
+<div class=" bg-submain block">
 	{#if $authState.projects.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
