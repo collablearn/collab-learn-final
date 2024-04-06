@@ -48,12 +48,19 @@
 				use:enhance={deleteModuleActionNews}
 				class="flex justify-end"
 			>
-				<input name="moduleId" type="hidden" value={moduleObj.id} />
-				<input name="fileName" type="hidden" value={moduleObj.module_name} />
+				<input autocomplete="off" name="moduleId" type="hidden" value={moduleObj.id} />
+				<input autocomplete="off" name="fileName" type="hidden" value={moduleObj.module_name} />
 				<button
+					disabled={deleteModuleLoader}
 					type="submit"
-					class="transition-all active:bg-main/50 bg-main text-submain text-[14px] px-[10px] rounded-[10px]"
-					>Delete
+					class="{deleteModuleLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+					transition-all active:bg-main/50 text-submain text-[14px] px-[10px] rounded-[10px]"
+				>
+					{#if deleteModuleLoader}
+						Deleting...
+					{:else}
+						Delete
+					{/if}
 				</button>
 			</form>
 			<div class="flex items-center gap-[10px]">
@@ -88,12 +95,14 @@
 
 			<div class="flex flex-col gap-[10px] mt-[10px]">
 				<button
+					disabled={deleteModuleLoader}
 					class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					Create
+					Add Comment
 				</button>
 
 				<button
+					disabled={deleteModuleLoader}
 					on:click={() => (showLearningContent = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>
