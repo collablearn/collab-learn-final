@@ -93,7 +93,7 @@
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
 			{#each formActionError?.projectName ?? [] as errMsg}
-				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 			{/each}
 		</label>
 
@@ -106,7 +106,7 @@
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
 			{#each formActionError?.maxUsers ?? [] as errMsg}
-				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 			{/each}
 		</label>
 
@@ -118,7 +118,7 @@
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
 			{#each formActionError?.description ?? [] as errMsg}
-				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 			{/each}
 		</label>
 	</div>
@@ -151,7 +151,7 @@
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 					/>
 					{#each formActionError?.passcode ?? [] as errMsg}
-						<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+						<p class="text-main text-[14px]" in:fade>{errMsg}</p>
 					{/each}
 				</label>
 			</div>
@@ -160,10 +160,16 @@
 
 	<div class="flex flex-col gap-[10px] mt-[40px]">
 		<button
+			disabled={createProjectLoader}
 			type="submit"
-			class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+			class="{createProjectLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+			 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 		>
-			Create
+			{#if createProjectLoader}
+				Creating...
+			{:else}
+				Create
+			{/if}
 		</button>
 
 		<a
