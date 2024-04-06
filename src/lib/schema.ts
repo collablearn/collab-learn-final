@@ -121,5 +121,6 @@ export const createProjectSchemaWithPassCode = z.object({
 //learning module route schema
 export const uploadModuleSchema = z.object({
     uploadModule: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a module" }),
-
+    moduleName: z.string().min(5, { message: "Must enter a valid module name." }),
+    description: z.string().min(5, { message: "Must enter a valid description." })
 })

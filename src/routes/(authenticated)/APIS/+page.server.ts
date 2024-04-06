@@ -284,13 +284,11 @@ export const actions: Actions = {
     ///learning module rout
     uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
-        console.log(formData)
         try {
             const result = uploadModuleSchema.parse(formData);
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            console.log(fieldErrors)
             return fail(400, { erros: fieldErrors });
         }
     }
