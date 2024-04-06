@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
-import type { CreatedGuildReference, CreatedProjectReferece, GuildChatReference, GuildWallReference, JoinedGuildReference, UserReference } from "./types";
+import type { CreatedGuildReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, UserReference } from "./types";
 
 
 // for static store
@@ -29,7 +29,7 @@ export interface AuthStateStoreTypes {
     projects: {
         joinedProject: boolean
         showEditTools: boolean
-        createdProjects: CreatedProjectReferece[] | null
+        createdProjects: CreatedProjectReference[] | null
     }
 
     guilds: {

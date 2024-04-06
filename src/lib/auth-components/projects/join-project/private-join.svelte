@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { ProjectTypes } from '$lib/types';
 	import { fade, scale } from 'svelte/transition';
 	import { getAuthState } from '$lib';
+	import type { CreatedProjectReference } from '$lib/types';
 
-	export let projectObj: ProjectTypes;
+	export let projectObj: CreatedProjectReference;
 	export let showPrivateJoin = false;
 
 	const authState = getAuthState();

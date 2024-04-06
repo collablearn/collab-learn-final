@@ -82,7 +82,7 @@ export type JoinedGuildReference = {
 }
 
 //created_projects_tb
-export type CreatedProjectReferece = {
+export type CreatedProjectReference = {
     id: number
     created_at: string
     user_id: string

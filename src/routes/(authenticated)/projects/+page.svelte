@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="flex flex-col gap-[20px] mt-[35px]">
-			{#each $mockDatas.projects as projectObj}
+			{#each $authState.projects.createdProjects ?? [] as projectObj}
 				<ProjectCard {projectObj} />
 			{/each}
 

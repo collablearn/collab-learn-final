@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { ProjectTypes } from '$lib/types';
+	import type { CreatedProjectReference } from '$lib/types';
 	import { fade, scale } from 'svelte/transition';
 	import { getAuthState } from '$lib';
 
-	export let projectObj: ProjectTypes;
+	export let projectObj: CreatedProjectReference;
 	export let showPublicJoin = false;
 
 	const authState = getAuthState();
@@ -17,12 +17,12 @@
 			<div class="flex flex-col gap-[30px]">
 				<div class="">
 					<h3 class="text-[16px] text-main font-semibold">Project Name</h3>
-					<p class="text-[14px] text-main">{projectObj.projectName}</p>
+					<p class="text-[14px] text-main">{projectObj.project_name}</p>
 				</div>
 
 				<div class="">
 					<h3 class="text-[16px] text-main font-semibold">Host Name:</h3>
-					<p class="text-[14px] text-main">{projectObj.hostName}</p>
+					<p class="text-[14px] text-main">{projectObj.host_name}</p>
 				</div>
 
 				<div class="">
