@@ -5,6 +5,7 @@
 	<label>
 		<span class="text-main text-[14px] transition-all">Add Comment</span>
 		<textarea
+			placeholder="Say something..."
 			class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 		/>
 	</label>
@@ -15,3 +16,15 @@
 >
 	Add Comment
 </button>
+
+<style>
+	::placeholder {
+		color: #800000;
+		opacity: 1; /* Firefox */
+	}
+
+	::-ms-textarea-placeholder {
+		/* Edge 12 -18 */
+		color: #800000;
+	}
+</style>

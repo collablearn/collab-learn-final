@@ -9,6 +9,7 @@
 	import { toast } from 'svelte-sonner';
 	import AddComment from './commenting/add-comment.svelte';
 	import { getAuthState } from '$lib';
+	import CommentCard from './commenting/comment-card.svelte';
 
 	const authState = getAuthState();
 
@@ -29,6 +30,7 @@
 					invalidateAll();
 					toast.success('Delete Module', { description: msg });
 					deleteModuleLoader = false;
+					$authState.modules.showModule = false;
 					break;
 
 				case 401:
@@ -89,23 +91,9 @@
 	</div>
 
 	<!--Render Comments-->
-	<div class="mt-[90px]">
-		{#each Array(10) as sample}
-			<div class=" flex gap-[10px]">
-				<div class="w-[25px]">
-					<img src={sampleIcon} class="" alt="profile-icon" />
-				</div>
-
-				<div class="w-full">
-					<p class="text-[14px] font-semibold text-main">Mike John Eviota</p>
-					<p class="text-[14px] text-main">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur culpa quidem atque
-						laudantium eius. Consequuntur id rerum tempora molestias officiis repellat nihil animi
-						voluptate. Porro laboriosam omnis vel repellat nobis iusto ut, possimus repudiandae
-						optio. Itaque necessitatibus quod id cum.
-					</p>
-				</div>
-			</div>
+	<div class="mt-[90px] flex flex-col gap-[10px]">
+		{#each Array(2) as sample}
+			<CommentCard />
 		{/each}
 	</div>
 
