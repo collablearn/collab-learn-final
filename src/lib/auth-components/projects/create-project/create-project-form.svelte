@@ -8,10 +8,6 @@
 
 	const userState = getUserState();
 
-	const visibilitySelection = ['Public', 'Private'];
-
-	let visibilityValue = 'Public';
-
 	interface CreateProjectVal {
 		projectName: string[];
 		maxUsers: string[];
@@ -24,8 +20,13 @@
 		errors: CreateProjectVal;
 	}
 
+	const visibilitySelection = ['Public', 'Private'];
+
+	let visibilityValue = 'Public';
 	let createProjectLoader = false;
 	let formActionError: CreateProjectVal | null = null;
+
+	$: visibilityValue != 'Public' ? (formActionError = null) : (formActionError = null);
 
 	const createProjectActionNews: SubmitFunction = () => {
 		createProjectLoader = true;
