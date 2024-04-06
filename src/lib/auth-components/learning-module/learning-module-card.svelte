@@ -19,10 +19,12 @@
 				use:enhance
 				class="flex justify-end"
 			>
+				<input name="moduleId" type="hidden" value={moduleObj.id} />
 				<button
+					type="submit"
 					class="transition-all active:bg-main/50 bg-main text-submain text-[14px] px-[10px] rounded-[10px]"
-					>Delete</button
-				>
+					>Delete
+				</button>
 			</form>
 			<div class="flex items-center gap-[10px]">
 				<img src={learningModIcon} alt="sample-icon" />
