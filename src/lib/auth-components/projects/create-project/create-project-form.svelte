@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { getUserState } from '$lib';
+	import type { ResultModel } from '$lib/types';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 
 	const userState = getUserState();
@@ -8,9 +11,62 @@
 	const visibilitySelection = ['Public', 'Private'];
 
 	let visibilityValue = 'Public';
+
+	interface CreateProjectVal {
+		projectName: string[];
+		maxUsers: string[];
+		description: string[];
+		passcode: string[];
+	}
+
+	interface CreateProjectAction {
+		msg: string;
+		errors: CreateProjectVal;
+	}
+
+	let createProjectLoader = false;
+	let formActionError: CreateProjectVal | null = null;
+
+	const createProjectActionNews: SubmitFunction = () => {
+		createProjectLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<CreateProjectAction>;
+
+			switch (status) {
+				case 200:
+					formActionError = null;
+					toast.success('Create Project', { description: msg });
+					createProjectLoader = false;
+					break;
+
+				case 400:
+					formActionError = errors;
+					createProjectLoader = false;
+					break;
+
+				case 401:
+					formActionError = null;
+					toast.error('Create Project', { description: msg });
+					createProjectLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<form method="post" action="/APIS?/createProjectAction" enctype="multipart/form-data" use:enhance>
+<form
+	method="post"
+	action="/APIS?/createProjectAction"
+	enctype="multipart/form-data"
+	use:enhance={createProjectActionNews}
+>
 	<input
 		autocomplete="off"
 		name="hostPhoto"
