@@ -2,11 +2,40 @@
 	import { enhance } from '$app/forms';
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
 	import { formatDate } from '$lib/helpers';
-	import type { CreatedModuleReference } from '$lib/types';
+	import type { CreatedModuleReference, ResultModel } from '$lib/types';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	export let moduleObj: CreatedModuleReference;
 
 	let showLearningContent = false;
+	let deleteModuleLoader = false;
+
+	const deleteModuleActionNews: SubmitFunction = () => {
+		deleteModuleLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Delete Module', { description: msg });
+					deleteModuleLoader = false;
+					break;
+
+				case 401:
+					toast.error('Delete Module', { description: msg });
+					deleteModuleLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <div class="w-full">
@@ -16,7 +45,7 @@
 				method="post"
 				action="/APIS?/deleteModuleAction"
 				enctype="multipart/form-data"
-				use:enhance
+				use:enhance={deleteModuleActionNews}
 				class="flex justify-end"
 			>
 				<input name="moduleId" type="hidden" value={moduleObj.id} />
