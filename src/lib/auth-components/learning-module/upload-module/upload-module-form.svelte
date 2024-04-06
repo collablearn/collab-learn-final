@@ -5,6 +5,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
+	import { fade } from 'svelte/transition';
 
 	let file: FileList | undefined;
 
@@ -80,6 +81,9 @@
 					</div>
 				</div>
 			</label>
+			{#each formActionError?.uploadModule ?? [] as errMsg}
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</div>
 
 		<label>

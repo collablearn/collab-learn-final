@@ -289,7 +289,7 @@ export const actions: Actions = {
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            return fail(400, { erros: fieldErrors });
+            return fail(400, { errors: fieldErrors });
         }
     }
 
