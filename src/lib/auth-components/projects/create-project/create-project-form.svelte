@@ -4,6 +4,7 @@
 	import { getUserState } from '$lib';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 
@@ -43,6 +44,8 @@
 					formActionError = null;
 					toast.success('Create Project', { description: msg });
 					createProjectLoader = false;
+					await tick(); //added svelte weird hack to await invalidation before redirecting the client :3
+					goto('/projects');
 					break;
 
 				case 400:
