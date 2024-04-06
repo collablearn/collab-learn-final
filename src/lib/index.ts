@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
-import type { CreatedGuildReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, UserReference } from "./types";
+import type { CreatedGuildReference, CreatedModuleReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, UserReference } from "./types";
 
 
 // for static store
@@ -40,6 +40,11 @@ export interface AuthStateStoreTypes {
         guildNoteObj: GuildWallReference | null
         guildChats: GuildChatReference[] | null
         joinedGuildArray: JoinedGuildReference[] | null
+    }
+
+    modules: {
+        createdModules: CreatedModuleReference[] | null
+        moduleObj: CreatedModuleReference | null
     }
 }
 

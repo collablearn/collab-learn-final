@@ -27,6 +27,10 @@
 			guildNoteObj: null,
 			guildChats: null,
 			joinedGuildArray: null
+		},
+		modules: {
+			createdModules: null,
+			moduleObj: null
 		}
 	};
 
@@ -56,6 +60,10 @@
 		$authState.projects.createdProjects = data.createdProjects.data;
 	} else {
 		$authState.projects.createdProjects = null;
+	}
+
+	// making created modules array reactive
+	$: if (data.createdModules.data) {
 	}
 </script>
 
