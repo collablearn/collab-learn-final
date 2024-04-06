@@ -248,7 +248,19 @@ export const actions: Actions = {
                 try {
                     const result = createProjectSchema.parse(formData);
 
-                    console.log(result)
+                    const { data, error: insertProjectError } = await supabase.from("created_projects_tb").insert([{
+                        user_id: user.id,
+                        project_name: result.projectName,
+                        max_users: Number(result.maxUsers),
+                        description: result.description,
+                        passcode: "",
+                        host_name: result.description,
+                        is_private: false,
+                        host_photo: result.hostPhoto
+                    }]);
+
+                    if (insertProjectError) return fail(401, { msg: insertProjectError.message });
+                    else return fail(200, { msg: "Project Created" });
 
                 } catch (error) {
                     const zodError = error as ZodError;

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { getUserState } from '$lib';
 	import { fade } from 'svelte/transition';
+
+	const userState = getUserState();
 
 	const visibilitySelection = ['Public', 'Private'];
 
@@ -8,6 +11,22 @@
 </script>
 
 <form method="post" action="/APIS?/createProjectAction" enctype="multipart/form-data" use:enhance>
+	<input
+		autocomplete="off"
+		name="hostPhoto"
+		type="hidden"
+		class="hidden"
+		value={$userState?.user_photo_link}
+	/>
+
+	<input
+		autocomplete="off"
+		name="hostName"
+		type="hidden"
+		class="hidden"
+		value={$userState?.user_fullname}
+	/>
+
 	<div class="flex flex-col gap-[10px]">
 		<label>
 			<span class="text-main text-[14px] transition-all">Project Name</span>
