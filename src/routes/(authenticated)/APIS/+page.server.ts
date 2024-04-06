@@ -300,10 +300,15 @@ export const actions: Actions = {
                     const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadModulePath.path)
                     const { error: insertModuleError } = await supabase.from("created_module_tb").insert([{
                         user_id: user.id,
+                        host_name: result.hostName,
+                        host_photo: result.hostPhoto,
+                        module_link: publicUrl,
                         module_name: result.moduleName,
                         description: result.description,
+                    }]);
 
-                    }])
+                    if (insertModuleError) return fail(401, { msg: insertModuleError.message });
+                    else return fail(200, { msg: "Uploaded a module successfully." });
                 }
 
 
