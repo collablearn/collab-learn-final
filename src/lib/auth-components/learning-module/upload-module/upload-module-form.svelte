@@ -72,6 +72,14 @@
 	<input autocomplete="off" name="hostPhoto" type="hidden" value={$userState?.user_photo_link} />
 
 	<div class="flex flex-col gap-[10px]">
+		<div class="bg-main text-submain text-[14px] p-[10px] rounded-[10px]">
+			<p>Note:</p>
+			<p>
+				Due to the free plan tier of hosting, we have limited the size requirement to a maximum of
+				1MB or 1024KB. You are old enough to Google things if you don't know!
+			</p>
+		</div>
+
 		<input
 			disabled={uploadModuleLoader}
 			autocomplete="off"
