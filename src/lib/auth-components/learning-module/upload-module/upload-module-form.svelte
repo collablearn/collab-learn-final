@@ -5,6 +5,9 @@
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
 	import { fade } from 'svelte/transition';
+	import { getUserState } from '$lib';
+
+	const userState = getUserState();
 
 	let files: FileList | undefined;
 
@@ -60,6 +63,9 @@
 	enctype="multipart/form-data"
 	use:enhance={uploadModuleActionNews}
 >
+	<input autocomplete="off" name="hostName" type="hidden" value={$userState?.user_fullname} />
+	<input autocomplete="off" name="hostPhoto" type="hidden" value={$userState?.user_photo_link} />
+
 	<div class="flex flex-col gap-[10px]">
 		<input
 			disabled={uploadModuleLoader}
