@@ -88,6 +88,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Module Title</span>
 			<input
+				autocomplete="off"
 				disabled={uploadModuleLoader}
 				name="moduleName"
 				type="text"
@@ -101,6 +102,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Description</span>
 			<textarea
+				autocomplete="off"
 				disabled={uploadModuleLoader}
 				name="description"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
