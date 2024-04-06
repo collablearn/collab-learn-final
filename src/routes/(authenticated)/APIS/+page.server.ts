@@ -286,7 +286,28 @@ export const actions: Actions = {
         const formData = Object.fromEntries(await request.formData());
 
         try {
+            const { user } = await safeGetSession();
             const result = uploadModuleSchema.parse(formData);
+
+            if (user) {
+                const { data: uploadModulePath, error: uploadModuleError } = await supabase.storage.from("modules-bucket").upload(user.id, result.uploadModule, {
+                    cacheControl: "3600",
+                    upsert: true
+                });
+
+                if (uploadModuleError) return fail(401, { msg: uploadModuleError.message });
+                else if (uploadModulePath) {
+                    const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadModulePath.path)
+                    const { error: insertModuleError } = await supabase.from("created_module_tb").insert([{
+                        user_id: user.id,
+                        module_name: result.moduleName,
+                        description: result.description,
+
+                    }])
+                }
+
+
+            }
 
         } catch (error) {
             const zodError = error as ZodError;
