@@ -1,4 +1,4 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -131,7 +131,6 @@ export const actions: Actions = {
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
-                    console.log(fieldErrors)
                     return fail(400, { errors: fieldErrors });
                 }
             } else {
@@ -154,7 +153,6 @@ export const actions: Actions = {
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
-                    console.log(fieldErrors)
                     return fail(400, { errors: fieldErrors });
                 }
             }
@@ -239,8 +237,36 @@ export const actions: Actions = {
     },
 
     //projects route
-    createProjectAction: async ({ locals: { supabase }, request }) => {
-        console.log("AW")
+    createProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const { user } = await safeGetSession();
+
+        if (user) {
+
+            const formData = Object.fromEntries(await request.formData());
+
+            if (formData.visibility === "Public") {
+                try {
+                    const result = createProjectSchema.parse(formData);
+
+                    console.log(result)
+
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    return fail(400, { errors: fieldErrors });
+                }
+            } else {
+                try {
+                    const result = createProjectSchemaWithPassCode.parse(formData);
+                    console.log(result)
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    return fail(400, { errors: fieldErrors });
+                }
+            }
+
+        } else return redirect(302, "/");
     }
 
 
