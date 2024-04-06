@@ -120,5 +120,6 @@ export const createProjectSchemaWithPassCode = z.object({
 
 //learning module route schema
 export const uploadModuleSchema = z.object({
-    file: z.instanceof(File).refine((file) => file.size <= 1024 * 1024, { message: "File size must be less than 1MB." })
+    uploadModule: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a module" }),
+
 })

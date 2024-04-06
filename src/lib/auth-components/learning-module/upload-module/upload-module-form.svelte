@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
+	import { enhance } from '$app/forms';
 
 	let file: FileList | undefined;
 </script>
 
-<form>
+<form method="post" action="/APIS?/uploadModuleAction" enctype="multipart/form-data" use:enhance>
 	<div class="flex flex-col gap-[10px]">
 		<div class="flex justify-end">
 			<label class="max-w-fit">
@@ -18,7 +19,7 @@
 						<input
 							autocomplete="off"
 							type="file"
-							name="uploadProfile"
+							name="uploadModule"
 							class="hidden"
 							bind:files={file}
 							accept=".png, .jpg, .jpeg"
