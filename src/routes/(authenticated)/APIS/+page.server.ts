@@ -305,6 +305,7 @@ export const actions: Actions = {
                         module_link: publicUrl,
                         module_name: result.moduleName,
                         description: result.description,
+                        file_name: result.uploadModule.name
                     }]);
 
                     if (insertModuleError) return fail(401, { msg: insertModuleError.message });
