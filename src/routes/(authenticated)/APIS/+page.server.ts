@@ -281,7 +281,7 @@ export const actions: Actions = {
         } else return redirect(302, "/");
     },
 
-    ///learning module rout
+    ///learning module route
     uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
 
@@ -319,6 +319,12 @@ export const actions: Actions = {
             const { fieldErrors } = zodError.flatten();
             return fail(400, { errors: fieldErrors });
         }
+    },
+
+    deleteModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+
+        const moduleId = (await request.formData()).get("moduleId") as string;
+
     }
 
 };

@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
+	import { formatDate } from '$lib/helpers';
 	import type { CreatedModuleReference } from '$lib/types';
 
 	export let moduleObj: CreatedModuleReference;
@@ -10,11 +12,23 @@
 <div class="w-full">
 	{#if showLearningContent}
 		<div class="fixed left-0 right-0 top-0 bottom-0 bg-submain pt-[108px] px-[22px]">
+			<form
+				method="post"
+				action="/APIS?/deleteModuleAction"
+				enctype="multipart/form-data"
+				use:enhance
+				class="flex justify-end"
+			>
+				<button
+					class="transition-all active:bg-main/50 bg-main text-submain text-[14px] px-[10px] rounded-[10px]"
+					>Delete</button
+				>
+			</form>
 			<div class="flex items-center gap-[10px]">
 				<img src={learningModIcon} alt="sample-icon" />
 				<div class="flex flex-col gap-[2px]">
 					<h3 class="text-[16px] text-main font-semibold">{moduleObj.module_name}</h3>
-					<p class="text-[14px] text-main">{moduleObj.created_at}</p>
+					<p class="text-[14px] text-main">{formatDate(moduleObj.created_at)}</p>
 				</div>
 			</div>
 
@@ -23,12 +37,12 @@
 			<div class="">
 				<p class="text-[14px] text-main">Attachments</p>
 
-				<button
-					class="py-[11px] px-[14px] text-[14px] text-submain bg-main rounded-[10px] mt-[22px]"
-					>fundamentals.pdf</button
+				<a
+					title="Click to download"
+					class="underline text-[14px] text-blue-700 italic"
+					href={moduleObj.module_link}
+					download>{moduleObj.file_name}</a
 				>
-
-				<a href={moduleObj.module_link} download>Download</a>
 			</div>
 
 			<div class="mt-[90px]">
@@ -66,9 +80,9 @@
 				</div>
 
 				<div class="flex flex-col gap-[5px] w-full">
-					<p class="text-[16px] text-main font-semibold">Richa Gupta</p>
+					<p class="text-[16px] text-main font-semibold">{moduleObj.host_name}</p>
 					<p class="text-[14px] text-main">Uploaded a module:</p>
-					<p class="text-[14px] text-main">Feb 2, 2022</p>
+					<p class="text-[14px] text-main">{formatDate(moduleObj.created_at)}</p>
 				</div>
 			</div>
 		</button>
