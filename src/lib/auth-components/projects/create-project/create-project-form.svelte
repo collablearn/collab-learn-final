@@ -92,6 +92,9 @@
 				type="text"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.projectName ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 
 		<label>
@@ -102,6 +105,9 @@
 				type="number"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.maxUsers ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 
 		<label>
@@ -111,6 +117,9 @@
 				name="description"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.description ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 	</div>
 
@@ -141,6 +150,9 @@
 						type="password"
 						class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 					/>
+					{#each formActionError?.passcode ?? [] as errMsg}
+						<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+					{/each}
 				</label>
 			</div>
 		{/if}
