@@ -44,12 +44,11 @@
 
 			switch (status) {
 				case 200:
-					invalidateAll();
 					formActionError = null;
 					passwordCheck = '';
 					toast.success('Register', { description: msg });
 					registerLoader = false;
-					goto('/dashboard');
+					window.location.reload();
 					break;
 
 				case 400:

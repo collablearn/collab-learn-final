@@ -1,4 +1,4 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -131,7 +131,6 @@ export const actions: Actions = {
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
-                    console.log(fieldErrors)
                     return fail(400, { errors: fieldErrors });
                 }
             } else {
@@ -154,7 +153,6 @@ export const actions: Actions = {
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
-                    console.log(fieldErrors)
                     return fail(400, { errors: fieldErrors });
                 }
             }
@@ -236,6 +234,51 @@ export const actions: Actions = {
         const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildId);
         if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
         else return fail(200, { msg: "Guild Deleted Successfully" });
+    },
+
+    //projects route
+    createProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const { user } = await safeGetSession();
+
+        if (user) {
+
+            const formData = Object.fromEntries(await request.formData());
+
+            if (formData.visibility === "Public") {
+                try {
+                    const result = createProjectSchema.parse(formData);
+
+                    const { data, error: insertProjectError } = await supabase.from("created_projects_tb").insert([{
+                        user_id: user.id,
+                        project_name: result.projectName,
+                        max_users: Number(result.maxUsers),
+                        description: result.description,
+                        passcode: "",
+                        host_name: result.description,
+                        is_private: false,
+                        host_photo: result.hostPhoto
+                    }]);
+
+                    if (insertProjectError) return fail(401, { msg: insertProjectError.message });
+                    else return fail(200, { msg: "Project Created" });
+
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    return fail(400, { errors: fieldErrors });
+                }
+            } else {
+                try {
+                    const result = createProjectSchemaWithPassCode.parse(formData);
+                    console.log(result)
+                } catch (error) {
+                    const zodError = error as ZodError;
+                    const { fieldErrors } = zodError.flatten();
+                    return fail(400, { errors: fieldErrors });
+                }
+            }
+
+        } else return redirect(302, "/");
     }
 
 
