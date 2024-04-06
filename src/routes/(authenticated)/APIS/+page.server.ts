@@ -323,7 +323,24 @@ export const actions: Actions = {
 
     deleteModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
-        const moduleId = (await request.formData()).get("moduleId") as string;
+        const formData = await request.formData();
+        const { user } = await safeGetSession();
+
+        if (user) {
+            const moduleId = formData.get("moduleId") as string;
+            const fileName = formData.get("fileName") as string;
+
+            const { error: deleteModuleError } = await supabase.from("created_module_tb").delete().match({ user_id: user.id, id: Number(moduleId) });
+
+            if (deleteModuleError) return fail(401, { msg: deleteModuleError.message });
+            else {
+                const { data: fileDeleted, error: deleteFileError } = await supabase.storage.from("modules-bucket").remove([`${user.id}/${fileName}`]);
+                if (deleteFileError) return fail(401, { msg: deleteFileError.message });
+                else if (fileDeleted) return fail(200, { msg: "Successfully deleted the module." });
+            }
+        }
+
+        return redirect(302, "/")
 
     }
 

@@ -20,6 +20,7 @@
 				class="flex justify-end"
 			>
 				<input name="moduleId" type="hidden" value={moduleObj.id} />
+				<input name="fileName" type="hidden" value={moduleObj.module_name} />
 				<button
 					type="submit"
 					class="transition-all active:bg-main/50 bg-main text-submain text-[14px] px-[10px] rounded-[10px]"
