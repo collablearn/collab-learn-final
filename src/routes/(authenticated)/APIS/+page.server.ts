@@ -290,7 +290,7 @@ export const actions: Actions = {
             const result = uploadModuleSchema.parse(formData);
 
             if (user) {
-                const { data: uploadModulePath, error: uploadModuleError } = await supabase.storage.from("modules-bucket").upload(user.id, result.uploadModule, {
+                const { data: uploadModulePath, error: uploadModuleError } = await supabase.storage.from("modules-bucket").upload(`${user.id}/${result.moduleName}`, result.uploadModule, {
                     cacheControl: "3600",
                     upsert: true
                 });
