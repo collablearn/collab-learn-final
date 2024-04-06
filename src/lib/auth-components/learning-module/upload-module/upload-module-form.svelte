@@ -63,27 +63,30 @@
 >
 	<div class="flex flex-col gap-[10px]">
 		<div class="flex justify-end">
-			<label class="max-w-fit">
-				<div
-					class="transition-all active:bg-main/80 cursor-pointer max-w-fit text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
-				>
-					<div class="flex items-end gap-[10px]">
-						<img src={uploadIcon} alt="upload-icon" />
-						<span>Upload Module</span>
-						<input
-							autocomplete="off"
-							type="file"
-							name="uploadModule"
-							class="hidden"
-							bind:files={file}
-							accept=".pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx"
-						/>
+			<div class="flex flex-col gap-[10px]">
+				<label class="max-w-fit">
+					<div
+						class="transition-all active:bg-main/80 cursor-pointer max-w-fit text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+					>
+						<div class="flex items-end gap-[10px]">
+							<img src={uploadIcon} alt="upload-icon" />
+							<span>Upload Module</span>
+							<input
+								autocomplete="off"
+								type="file"
+								name="uploadModule"
+								class="hidden"
+								bind:files={file}
+								accept=".pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx"
+							/>
+						</div>
 					</div>
-				</div>
-			</label>
-			{#each formActionError?.uploadModule ?? [] as errMsg}
-				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
-			{/each}
+				</label>
+
+				{#each formActionError?.uploadModule ?? [] as errMsg}
+					<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+				{/each}
+			</div>
 		</div>
 
 		<label>
@@ -93,6 +96,9 @@
 				type="text"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.moduleName ?? [] as errMsg}
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 
 		<label>
@@ -101,15 +107,24 @@
 				name="description"
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.description ?? [] as errMsg}
+				<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 	</div>
 
 	<div class="flex flex-col gap-[10px] mt-[40px]">
 		<button
+			disabled={uploadModuleLoader}
 			type="submit"
-			class="bg-main w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+			class="{uploadModuleLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+			 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 		>
-			Create
+			{#if uploadModuleLoader}
+				Uploading...
+			{:else}
+				Upload
+			{/if}
 		</button>
 
 		<a
