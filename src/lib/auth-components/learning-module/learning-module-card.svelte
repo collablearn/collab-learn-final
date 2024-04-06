@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
 	import { formatDate } from '$lib/helpers';
 	import type { CreatedModuleReference, ResultModel } from '$lib/types';
@@ -21,6 +22,7 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Delete Module', { description: msg });
 					deleteModuleLoader = false;
 					break;
