@@ -284,6 +284,7 @@ export const actions: Actions = {
     ///learning module rout
     uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
+
         try {
             const result = uploadModuleSchema.parse(formData);
 
