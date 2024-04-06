@@ -2,11 +2,38 @@
 	import { onMount } from 'svelte';
 	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let file: FileList | undefined;
+
+	const uploadModuleActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<form method="post" action="/APIS?/uploadModuleAction" enctype="multipart/form-data" use:enhance>
+<form
+	method="post"
+	action="/APIS?/uploadModuleAction"
+	enctype="multipart/form-data"
+	use:enhance={uploadModuleActionNews}
+>
 	<div class="flex flex-col gap-[10px]">
 		<div class="flex justify-end">
 			<label class="max-w-fit">
@@ -22,7 +49,7 @@
 							name="uploadModule"
 							class="hidden"
 							bind:files={file}
-							accept=".png, .jpg, .jpeg"
+							accept=".pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx"
 						/>
 					</div>
 				</div>
