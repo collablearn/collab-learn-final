@@ -297,7 +297,7 @@ export const actions: Actions = {
 
                 if (uploadModuleError) return fail(401, { msg: uploadModuleError.message });
                 else if (uploadModulePath) {
-                    const { data: { publicUrl } } = supabase.storage.from("collab-bucket").getPublicUrl(uploadModulePath.path)
+                    const { data: { publicUrl } } = supabase.storage.from("modules-bucket").getPublicUrl(uploadModulePath.path)
                     const { error: insertModuleError } = await supabase.from("created_module_tb").insert([{
                         user_id: user.id,
                         host_name: result.hostName,

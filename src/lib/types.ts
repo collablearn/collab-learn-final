@@ -108,4 +108,5 @@ export type CreatedModuleReference = {
     host_photo: string
     image_url: string
     module_link: string
+    file_name: string
 }
