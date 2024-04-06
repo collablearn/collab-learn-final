@@ -1,5 +1,8 @@
 <script lang="ts">
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
+	import type { CreatedModuleReference } from '$lib/types';
+
+	export let moduleObj: CreatedModuleReference;
 
 	let showLearningContent = false;
 </script>
@@ -10,8 +13,8 @@
 			<div class="flex items-center gap-[10px]">
 				<img src={learningModIcon} alt="sample-icon" />
 				<div class="flex flex-col gap-[2px]">
-					<h3 class="text-[16px] text-main font-semibold">Basic Elements of Design</h3>
-					<p class="text-[14px] text-main">2 February 2022</p>
+					<h3 class="text-[16px] text-main font-semibold">{moduleObj.module_name}</h3>
+					<p class="text-[14px] text-main">{moduleObj.created_at}</p>
 				</div>
 			</div>
 
@@ -24,6 +27,8 @@
 					class="py-[11px] px-[14px] text-[14px] text-submain bg-main rounded-[10px] mt-[22px]"
 					>fundamentals.pdf</button
 				>
+
+				<a href={moduleObj.module_link} download>Download</a>
 			</div>
 
 			<div class="mt-[90px]">
