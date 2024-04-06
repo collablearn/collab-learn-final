@@ -10,7 +10,10 @@
 		<div class="w-[270px]">
 			<p class="text-[14px] font-semibold text-main">Mike John Eviota</p>
 			<p class="text-[14px] text-main break-words">
-				kjasdhjkashdkjahsdasjhdaklhjdlakjhsdajklshdkajshdakljshdajksdhalkjshdakljsdhalkjsdhajklsdhalksjdhalkjsdhajklshdakljshdalkjshdakljshdakjshdakljshdakljshdajklshd
+				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam quam natus quaerat
+				blanditiis repellendus minus autem, incidunt laudantium itaque, explicabo ad voluptates
+				fugiat pariatur quibusdam veritatis saepe quis debitis perspiciatis officiis, earum tempore?
+				Soluta autem quam voluptas at eaque expedita?
 			</p>
 		</div>
 	</div>
