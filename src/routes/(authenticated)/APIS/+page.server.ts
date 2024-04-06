@@ -236,6 +236,11 @@ export const actions: Actions = {
         const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildId);
         if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
         else return fail(200, { msg: "Guild Deleted Successfully" });
+    },
+
+    //projects route
+    createProjectAction: async ({ locals: { supabase }, request }) => {
+        console.log("AW")
     }
 
 
