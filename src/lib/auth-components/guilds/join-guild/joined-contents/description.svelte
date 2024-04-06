@@ -45,30 +45,27 @@
 	};
 
 	//websocket connection
-	onMount(() => {
-		const channels = supabase
-			.channel('custom-all-channel')
-			.on(
-				'postgres_changes',
-				{ event: '*', schema: 'public', table: 'guild_chats_tb' },
-				async (payload) => {
-					const whosthat = payload.new as { user_id: string };
 
-					if (whosthat.user_id === $userState?.user_id) {
-						await getChats();
-						await tick();
-						scrollBinding.scrollTop = scrollBinding.scrollHeight;
-					} else {
-						await getChats();
-						await tick();
-						msgCount++;
-					}
+	const channels = supabase
+		.channel('custom-all-channel')
+		.on(
+			'postgres_changes',
+			{ event: '*', schema: 'public', table: 'guild_chats_tb' },
+			async (payload) => {
+				const whosthat = payload.new as { user_id: string };
+
+				if (whosthat.user_id === $userState?.user_id) {
+					await getChats();
+					await tick();
+					scrollBinding.scrollTop = scrollBinding.scrollHeight;
+				} else {
+					await getChats();
+					await tick();
+					msgCount++;
 				}
-			)
-			.subscribe();
-
-		return channels.unsubscribe();
-	});
+			}
+		)
+		.subscribe();
 
 	const selections = ["Guild's Wall", 'Chat Feed'];
 	let activeItem = "Guild's Wall";

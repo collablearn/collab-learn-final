@@ -3,7 +3,7 @@
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { fade, scale } from 'svelte/transition';
 	import type { LayoutData } from '../$types';
 

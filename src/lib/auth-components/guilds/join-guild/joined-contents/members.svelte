@@ -7,6 +7,7 @@
 	import { getAuthState } from '$lib';
 	import { toast } from 'svelte-sonner';
 	import type { JoinedGuildReference } from '$lib/types';
+	import { checkIfhavePhoto } from '$lib/helpers';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -29,13 +30,14 @@
 	};
 
 	getJoinedUsers();
+	guildObj?.host_photo ?? sampleIcon;
 </script>
 
 <div class="flex flex-col gap-[10px] mt-[45px]">
 	<div class="flex justify-between items-center">
 		<div class="flex items-start gap-[10px]">
 			<img
-				src={guildObj?.host_photo ?? sampleIcon}
+				src={checkIfhavePhoto(guildObj?.host_photo, sampleIcon)}
 				alt="sample-icon"
 				class="w-[25px] h-[25px] rounded-full"
 			/>
