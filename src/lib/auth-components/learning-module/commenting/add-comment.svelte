@@ -3,6 +3,7 @@
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
+	import { fade } from 'svelte/transition';
 
 	interface AddCommentVal {
 		commentValue: string[];
@@ -58,6 +59,9 @@
 				placeholder="Say something..."
 				class="outline-none w-full text-[14px] py-[11px] px-[20px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
 			/>
+			{#each formActionError?.commentValue ?? [] as errMsg}
+				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
+			{/each}
 		</label>
 	</div>
 
