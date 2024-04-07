@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 </script>
 
-<form>
+<form method="post" action="/APIS?/addCommentAction" enctype="multipart/form-data" use:enhance>
 	<div class="">
 		<label>
 			<span class="text-main text-[14px] transition-all">Add Comment</span>
