@@ -110,3 +110,13 @@ export type CreatedModuleReference = {
     module_link: string
     file_name: string
 }
+
+//module_comments+tb
+export type ModuleCommentsReference = {
+    id: number
+    created_at: string
+    user_id: string
+    user_fullname: string
+    user_photo_link: string | null
+    module_comment: string
+}
