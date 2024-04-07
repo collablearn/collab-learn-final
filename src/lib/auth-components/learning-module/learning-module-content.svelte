@@ -8,15 +8,27 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import AddComment from './commenting/add-comment.svelte';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import CommentCard from './commenting/comment-card.svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
 	const { moduleObj } = $authState.modules;
+
+	const getModuleComments = async () => {
+		const { data, error } = await supabase
+			.from('module_comments_tb')
+			.select('*')
+			.match({ user_id: $userState?.user_id, module_id: moduleObj?.id });
+
+		if (error) return toast.error('Get Comments', { description: error.message });
+
+		$authState.modules.moduleComments = data;
+	};
 
 	let deleteModuleLoader = false;
 
@@ -47,31 +59,35 @@
 			await update();
 		};
 	};
+
+	getModuleComments();
 </script>
 
 <div class="left-0 right-0 top-0 bottom-0 bg-submain">
-	<form
-		method="post"
-		action="/APIS?/deleteModuleAction"
-		enctype="multipart/form-data"
-		use:enhance={deleteModuleActionNews}
-		class="flex justify-end"
-	>
-		<input autocomplete="off" name="moduleId" type="hidden" value={moduleObj?.id} />
-		<input autocomplete="off" name="fileName" type="hidden" value={moduleObj?.module_name} />
-		<button
-			disabled={deleteModuleLoader}
-			type="submit"
-			class="{deleteModuleLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
-            transition-all active:bg-main/50 text-submain text-[14px] px-[10px] rounded-[10px]"
+	{#if $userState?.user_id === moduleObj?.user_id}
+		<form
+			method="post"
+			action="/APIS?/deleteModuleAction"
+			enctype="multipart/form-data"
+			use:enhance={deleteModuleActionNews}
+			class="flex justify-end"
 		>
-			{#if deleteModuleLoader}
-				Deleting...
-			{:else}
-				Delete
-			{/if}
-		</button>
-	</form>
+			<input autocomplete="off" name="moduleId" type="hidden" value={moduleObj?.id} />
+			<input autocomplete="off" name="fileName" type="hidden" value={moduleObj?.module_name} />
+			<button
+				disabled={deleteModuleLoader}
+				type="submit"
+				class="{deleteModuleLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
+            transition-all active:bg-main/50 text-submain text-[14px] px-[10px] rounded-[10px]"
+			>
+				{#if deleteModuleLoader}
+					Deleting...
+				{:else}
+					Delete
+				{/if}
+			</button>
+		</form>
+	{/if}
 	<div class="flex items-center gap-[10px]">
 		<img src={learningModIcon} alt="sample-icon" />
 		<div class="flex flex-col gap-[2px]">
@@ -94,14 +110,14 @@
 	</div>
 
 	<!--Render Comments-->
-	<div class="mt-[90px] flex flex-col gap-[10px]">
-		{#each Array(2) as sample}
-			<CommentCard />
+	<div class="mt-[90px] flex flex-col gap-[20px]">
+		{#each $authState.modules.moduleComments ?? [] as moduleObj}
+			<CommentCard {moduleObj} />
 		{/each}
 	</div>
 
 	<div class="flex flex-col gap-[10px] mt-[10px]">
-		<AddComment {supabase} />
+		<AddComment {moduleObj} {supabase} />
 
 		<button
 			disabled={deleteModuleLoader}

@@ -127,4 +127,11 @@ export const uploadModuleSchema = z.object({
     uploadModule: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a module" }),
     moduleName: z.string().min(5, { message: "Must enter a valid module name." }),
     description: z.string().min(5, { message: "Must enter a valid description." })
+});
+
+export const addCommentSchema = z.object({
+    userObj: z.string(),
+    moduleId: z.string(),
+    commentValue: z.string().min(3, { message: "Must enter a valid comment." })
+
 })

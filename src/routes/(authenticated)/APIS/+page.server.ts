@@ -1,5 +1,5 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
-import type { CreatedGuildReference } from "$lib/types";
+import { addCommentSchema, checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import type { CreatedGuildReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -376,6 +376,35 @@ export const actions: Actions = {
 
         return redirect(302, "/")
 
+    },
+
+    addCommentAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const { user } = await safeGetSession();
+            const result = addCommentSchema.parse(formData);
+            const userObj = JSON.parse(result.userObj) as UserReference
+
+            if (user) {
+                const { error: insertCommentError } = await supabase.from("module_comments_tb").insert([{
+                    user_id: user.id,
+                    module_id: result.moduleId,
+                    user_fullname: userObj.user_fullname,
+                    user_photo_link: userObj.user_photo_link,
+                    module_comment: result.commentValue
+                }]);
+
+                if (insertCommentError) return fail(401, { msg: insertCommentError.message });
+                else return fail(200, { msg: "Comment Added." });
+
+            } else return redirect(302, "/");
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     }
 
 };
