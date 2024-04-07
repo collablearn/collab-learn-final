@@ -19,6 +19,17 @@
 
 	const { moduleObj } = $authState.modules;
 
+	const getModuleComments = async () => {
+		const { data, error } = await supabase
+			.from('module_comments_tb')
+			.select('*')
+			.match({ user_id: $userState?.user_id, module_id: moduleObj?.id });
+
+		if (error) return toast.error('Get Comments', { description: error.message });
+
+		$authState.modules.moduleComments = data;
+	};
+
 	let deleteModuleLoader = false;
 
 	const deleteModuleActionNews: SubmitFunction = () => {
@@ -48,6 +59,8 @@
 			await update();
 		};
 	};
+
+	getModuleComments();
 </script>
 
 <div class="left-0 right-0 top-0 bottom-0 bg-submain">
@@ -98,8 +111,8 @@
 
 	<!--Render Comments-->
 	<div class="mt-[90px] flex flex-col gap-[10px]">
-		{#each Array(2) as sample}
-			<CommentCard />
+		{#each $authState.modules.moduleComments ?? [] as moduleObj}
+			<CommentCard {moduleObj} />
 		{/each}
 	</div>
 
