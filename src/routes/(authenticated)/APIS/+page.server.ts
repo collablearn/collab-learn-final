@@ -1,4 +1,4 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import { addCommentSchema, checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
 import type { CreatedGuildReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
@@ -382,11 +382,21 @@ export const actions: Actions = {
         const formData = Object.fromEntries(await request.formData());
 
         try {
+            const { user } = await safeGetSession();
+            const result = addCommentSchema.parse(formData);
+
+            if (user) {
+                const { error: insertCommentError } = await supabase.from("module_comments_tb").insert([{
+                    user_id: user.id,
+
+
+                }])
+            } else return redirect(302, "/");
 
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            return fail(400, { errors: fieldErrors })
+            return fail(400, { errors: fieldErrors });
         }
     }
 

@@ -130,5 +130,7 @@ export const uploadModuleSchema = z.object({
 });
 
 export const addCommentSchema = z.object({
+    moduleId: z.string(),
     commentValue: z.string().min(3, { message: "Must enter a valid comment." })
+
 })
