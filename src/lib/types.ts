@@ -109,6 +109,7 @@ export type CreatedModuleReference = {
     image_url: string
     module_link: string
     file_name: string
+    total_views: number
 }
 
 //module_comments+tb

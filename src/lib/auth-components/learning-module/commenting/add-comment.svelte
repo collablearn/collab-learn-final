@@ -19,7 +19,7 @@
 		const { data, error } = await supabase
 			.from('module_comments_tb')
 			.select('*')
-			.match({ user_id: $userState?.user_id, module_id: moduleObj?.id });
+			.match({ module_id: moduleObj?.id });
 
 		if (error) return toast.error('Get Comments', { description: error.message });
 

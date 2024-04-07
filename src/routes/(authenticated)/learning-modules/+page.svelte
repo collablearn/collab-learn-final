@@ -29,7 +29,7 @@
 
 			<div class="flex flex-col gap-[20px] mt-[35px]">
 				{#each $authState.modules.createdModules ?? [] as moduleObj}
-					<LearningModuleCard {moduleObj} />
+					<LearningModuleCard {moduleObj} supabase={data.supabase} />
 				{/each}
 
 				<div class="">
