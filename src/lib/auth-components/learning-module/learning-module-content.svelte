@@ -110,7 +110,7 @@
 	</div>
 
 	<!--Render Comments-->
-	<div class="mt-[90px] flex flex-col gap-[10px]">
+	<div class="mt-[90px] flex flex-col gap-[20px]">
 		{#each $authState.modules.moduleComments ?? [] as moduleObj}
 			<CommentCard {moduleObj} />
 		{/each}
