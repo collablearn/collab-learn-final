@@ -11,6 +11,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { checkIfhavePhoto } from '$lib/helpers';
 
 	export let guildObj: CreatedGuildReference;
 	const authState = getAuthState();
@@ -89,7 +90,7 @@
 		<div class="flex gap-[10px] w-full items-start">
 			<!--For project image-->
 			<div class="w-[200px] relative">
-				<img src={sampleIcon} alt="sample-icon" />
+				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="w-[200px] h-[150px]" />
 			</div>
 
 			<!--For project details-->

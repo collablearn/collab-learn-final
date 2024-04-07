@@ -1,4 +1,5 @@
 import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import type { CreatedGuildReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -113,20 +114,30 @@ export const actions: Actions = {
                 try {
                     const result = createGuildSchema.parse(formData);
 
-                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: user.id,
-                        guild_name: result.guildName,
-                        host_name: result.hostName,
-                        is_private: false,
-                        image_url: null,
-                        max_users: Number(result.maxUsers),
-                        description: result.description,
-                        passcode: null,
-                        host_photo: result.hostPhoto
-                    }]);
+                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, result.guildPhoto, {
+                        cacheControl: "3600",
+                        upsert: true
+                    });
 
-                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
-                    else return fail(200, { msg: "Guild Created" })
+                    if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
+                    else if (uploadGuildPhoto) {
+                        const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
+
+                        const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                            user_id: user.id,
+                            guild_name: result.guildName,
+                            host_name: result.hostName,
+                            is_private: false,
+                            image_url: publicUrl,
+                            max_users: Number(result.maxUsers),
+                            description: result.description,
+                            passcode: null,
+                            host_photo: result.hostPhoto
+                        }]);
+
+                        if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                        else return fail(200, { msg: "Guild Created" })
+                    }
 
                 } catch (error) {
                     const zodError = error as ZodError;
@@ -136,25 +147,40 @@ export const actions: Actions = {
             } else {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
-                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: user.id,
-                        guild_name: result.guildName,
-                        host_name: result.hostName,
-                        is_private: true,
-                        image_url: null,
-                        max_users: Number(result.maxUsers),
-                        description: result.description,
-                        passcode: result.passcode,
-                        host_photo: result.hostPhoto
-                    }]);
 
-                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
-                    else return fail(200, { msg: "Guild Created" })
+                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, result.guildPhoto, {
+                        cacheControl: "3600",
+                        upsert: true
+                    });
+
+                    if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
+                    else if (uploadGuildPhoto) {
+                        const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
+
+                        const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                            user_id: user.id,
+                            guild_name: result.guildName,
+                            host_name: result.hostName,
+                            is_private: true,
+                            image_url: publicUrl,
+                            max_users: Number(result.maxUsers),
+                            description: result.description,
+                            passcode: result.passcode,
+                            host_photo: result.hostPhoto
+                        }]);
+
+                        if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                        else return fail(200, { msg: "Guild Created" })
+                    }
+
+
+
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
                     return fail(400, { errors: fieldErrors });
                 }
+
             }
 
         } else return redirect(302, "/");
@@ -228,11 +254,20 @@ export const actions: Actions = {
     },
 
     deleteGuildAction: async ({ locals: { supabase }, request }) => {
-        const guildId = (await request.formData()).get("guildId");
+        const formData = await request.formData();
+        const guildObj: CreatedGuildReference = JSON.parse(formData.get("guildObj") as string);
 
-        const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildId);
-        if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
-        else return fail(200, { msg: "Guild Deleted Successfully" });
+        const { data: deletedGuildPhoto, error: deleteGuildPhotoError } = await supabase.storage.from("guild-bucket").remove([`${guildObj.user_id}/${guildObj.guild_name}`]);
+
+        if (deleteGuildPhotoError) return fail(401, { msg: deleteGuildPhotoError.message });
+        else if (deletedGuildPhoto) {
+
+            const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildObj.id);
+            if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
+            else return fail(200, { msg: "Guild Deleted Successfully" });
+        }
+
+
     },
 
     //projects route
