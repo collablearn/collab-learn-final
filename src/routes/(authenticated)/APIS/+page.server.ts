@@ -118,10 +118,10 @@ export const actions: Actions = {
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: false,
-                        image_url: "",
+                        image_url: null,
                         max_users: Number(result.maxUsers),
                         description: result.description,
-                        passcode: "",
+                        passcode: null,
                         host_photo: result.hostPhoto
                     }]);
 
@@ -141,7 +141,7 @@ export const actions: Actions = {
                         guild_name: result.guildName,
                         host_name: result.hostName,
                         is_private: true,
-                        image_url: "",
+                        image_url: null,
                         max_users: Number(result.maxUsers),
                         description: result.description,
                         passcode: result.passcode,
@@ -218,7 +218,6 @@ export const actions: Actions = {
             client_user_fullname: parsedUserAndGuildObj.user_fullname,
             client_guild_id: parsedUserAndGuildObj.guild_id,
             client_guild_name: parsedUserAndGuildObj.guild_name,
-            client_pass_code: "",
             client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
             client_guild_image_url: parsedUserAndGuildObj.user_photo_link
         });
