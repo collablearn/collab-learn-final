@@ -101,7 +101,7 @@
 	</div>
 
 	<div class="flex flex-col gap-[10px] mt-[10px]">
-		<AddComment {supabase} />
+		<AddComment />
 
 		<button
 			disabled={deleteModuleLoader}
