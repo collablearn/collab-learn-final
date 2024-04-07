@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import { getUserState } from '$lib';
 	import type { CreatedModuleReference, ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -26,6 +27,7 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					formActionError = null;
 					addCommentLoader = false;
 					break;
