@@ -1,11 +1,10 @@
 <script lang="ts">
-	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import { getAuthState } from '$lib';
 	import LearningModuleSearch from '$lib/auth-components/learning-module/learning-module-search.svelte';
 	import UploadModuleBtn from '$lib/auth-components/learning-module/upload-module-btn.svelte';
 	import LearningModuleCard from '$lib/auth-components/learning-module/learning-module-card.svelte';
 	import { fade } from 'svelte/transition';
-	import LearningModuleConent from '$lib/auth-components/learning-module/learning-module-conent.svelte';
+	import LearningModuleContent from '$lib/auth-components/learning-module/learning-module-content.svelte';
 	import type { LayoutData } from '../$types';
 
 	export let data: LayoutData;
@@ -16,7 +15,7 @@
 </script>
 
 {#if $authState.modules.showModule}
-	<LearningModuleConent supabase={data.supabase} />
+	<LearningModuleContent supabase={data.supabase} />
 {:else}
 	<div class="" in:fade>
 		<div class="fixed bottom-0 right-0 m-[20px] z-10">
