@@ -79,14 +79,15 @@
 
 	<hr class="border-[1px] border-main my-[20px]" />
 
-	<div class="">
+	<div class="break-words">
 		<p class="text-[14px] text-main">Attachments</p>
 
 		<a
 			title="Click to download"
 			class="underline text-[14px] text-blue-700 italic"
 			href={moduleObj?.module_link}
-			download>{moduleObj?.file_name}</a
+			download
+			>{moduleObj?.file_name}alskdasdklaskd;alsdkal;sdklaaskldalsdjalsdjashjfashdjklashdlakshdaskldjasdkasdajskdhasdasjdhaskdahlsdhasldahsdajshdjklahsdajklsdhajsdhalskdhjasjhasjfhasldh</a
 		>
 	</div>
 
