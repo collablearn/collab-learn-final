@@ -10,8 +10,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
-	import { checkIfhavePhoto } from '$lib/helpers';
+	import { invalidateAll } from '$app/navigation';
 
 	export let guildObj: CreatedGuildReference;
 	const authState = getAuthState();

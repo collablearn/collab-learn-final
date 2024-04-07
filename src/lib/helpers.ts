@@ -17,3 +17,5 @@ export const formatDate = (dateVal: string) => {
 
     return `${months[parsedDate.getMonth()]} ${parsedDate.getDate()} ${parsedDate.getFullYear()} @ ${formattedHours}:${formattedMinutes} ${ampm}`;
 }
+
+

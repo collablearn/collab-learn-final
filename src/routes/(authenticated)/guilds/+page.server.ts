@@ -1,5 +1,5 @@
 import type { ZodError } from "zod";
-import type { Actions, PageServerLoad } from "./$types";
+import type { Actions } from "./$types";
 import { fail } from "@sveltejs/kit";
 import { addNoteSchema } from "$lib/schema";
 

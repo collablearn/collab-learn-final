@@ -3,6 +3,7 @@ import type { CreatedGuildReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
+
 type UserAndGuildObjTypes = {
     user_id: string
     user_photo_link: string
@@ -46,15 +47,17 @@ export const actions: Actions = {
         } else return redirect(302, "/");
     },
 
-    uploadProfileAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+    uploadProfileAction: async ({ locals: { supabase, safeGetSession, compressImage }, request }) => {
 
         const profilePicture = (await request.formData()).get("uploadProfile") as File;
 
         const { user } = await safeGetSession();
 
-        if (user) {
+        const convertedBlob = await compressImage(profilePicture);
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(user.id, profilePicture, {
+        if (user && convertedBlob) {
+
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(user.id, convertedBlob, {
                 cacheControl: "3600",
                 upsert: true
             });
@@ -102,19 +105,20 @@ export const actions: Actions = {
     },
 
     //guild route actions
-    createGuildAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+    createGuildAction: async ({ locals: { supabase, safeGetSession, compressImage }, request }) => {
 
         const { user } = await safeGetSession();
 
-        if (user) {
+        const formData = Object.fromEntries(await request.formData());
 
-            const formData = Object.fromEntries(await request.formData());
+        if (formData.visibility === "Public") {
+            try {
+                const result = createGuildSchema.parse(formData);
+                const convertedBlob = await compressImage(result.guildPhoto);
 
-            if (formData.visibility === "Public") {
-                try {
-                    const result = createGuildSchema.parse(formData);
+                if (user && convertedBlob) {
 
-                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, result.guildPhoto, {
+                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, convertedBlob, {
                         cacheControl: "3600",
                         upsert: true
                     });
@@ -138,17 +142,19 @@ export const actions: Actions = {
                         if (insertGuildError) return fail(401, { msg: insertGuildError.message });
                         else return fail(200, { msg: "Guild Created" })
                     }
+                } else return redirect(301, "/");
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
+            }
+        } else {
+            try {
+                const result = createGuildSchemaWithPassCode.parse(formData);
+                const convertedBlob = await compressImage(result.guildPhoto);
 
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
-                }
-            } else {
-                try {
-                    const result = createGuildSchemaWithPassCode.parse(formData);
-
-                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, result.guildPhoto, {
+                if (user && convertedBlob) {
+                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, convertedBlob, {
                         cacheControl: "3600",
                         upsert: true
                     });
@@ -173,17 +179,16 @@ export const actions: Actions = {
                         else return fail(200, { msg: "Guild Created" })
                     }
 
-
-
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
-                }
-
+                } else return redirect(301, "/");
+            } catch (error) {
+                const zodError = error as ZodError;
+                const { fieldErrors } = zodError.flatten();
+                return fail(400, { errors: fieldErrors });
             }
 
-        } else return redirect(302, "/");
+        }
+
+
 
     },
 
