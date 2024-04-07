@@ -6,6 +6,9 @@
 	import LearningModuleCard from '$lib/auth-components/learning-module/learning-module-card.svelte';
 	import { fade } from 'svelte/transition';
 	import LearningModuleConent from '$lib/auth-components/learning-module/learning-module-conent.svelte';
+	import type { LayoutData } from '../$types';
+
+	export let data: LayoutData;
 
 	const authState = getAuthState();
 
@@ -13,7 +16,7 @@
 </script>
 
 {#if $authState.modules.showModule}
-	<LearningModuleConent />
+	<LearningModuleConent supabase={data.supabase} />
 {:else}
 	<div class="" in:fade>
 		<div class="fixed bottom-0 right-0 m-[20px] z-10">

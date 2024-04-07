@@ -10,6 +10,9 @@
 	import AddComment from './commenting/add-comment.svelte';
 	import { getAuthState } from '$lib';
 	import CommentCard from './commenting/comment-card.svelte';
+	import type { SupabaseClient } from '@supabase/supabase-js';
+
+	export let supabase: SupabaseClient<any, 'public', any>;
 
 	const authState = getAuthState();
 
@@ -98,7 +101,7 @@
 	</div>
 
 	<div class="flex flex-col gap-[10px] mt-[10px]">
-		<AddComment />
+		<AddComment {supabase} />
 
 		<button
 			disabled={deleteModuleLoader}
