@@ -1,9 +1,39 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { SupabaseClient } from '@supabase/supabase-js';
+	import type { SubmitFunction } from '@sveltejs/kit';
+
+	interface AddCommentVal {
+		commentValue: string[];
+	}
+
+	const addCommentActionNews: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			const { status } = result;
+
+			switch (status) {
+				case 200:
+					break;
+
+				case 400:
+					break;
+
+				case 401:
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
-<form method="post" action="/APIS?/addCommentAction" enctype="multipart/form-data" use:enhance>
+<form
+	method="post"
+	action="/APIS?/addCommentAction"
+	enctype="multipart/form-data"
+	use:enhance={addCommentActionNews}
+>
 	<div class="">
 		<label>
 			<span class="text-main text-[14px] transition-all">Add Comment</span>
