@@ -146,25 +146,40 @@ export const actions: Actions = {
             } else {
                 try {
                     const result = createGuildSchemaWithPassCode.parse(formData);
-                    const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                        user_id: user.id,
-                        guild_name: result.guildName,
-                        host_name: result.hostName,
-                        is_private: true,
-                        image_url: null,
-                        max_users: Number(result.maxUsers),
-                        description: result.description,
-                        passcode: result.passcode,
-                        host_photo: result.hostPhoto
-                    }]);
 
-                    if (insertGuildError) return fail(401, { msg: insertGuildError.message });
-                    else return fail(200, { msg: "Guild Created" })
+                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, result.guildPhoto, {
+                        cacheControl: "3600",
+                        upsert: true
+                    });
+
+                    if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
+                    else if (uploadGuildPhoto) {
+                        const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
+
+                        const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
+                            user_id: user.id,
+                            guild_name: result.guildName,
+                            host_name: result.hostName,
+                            is_private: true,
+                            image_url: publicUrl,
+                            max_users: Number(result.maxUsers),
+                            description: result.description,
+                            passcode: result.passcode,
+                            host_photo: result.hostPhoto
+                        }]);
+
+                        if (insertGuildError) return fail(401, { msg: insertGuildError.message });
+                        else return fail(200, { msg: "Guild Created" })
+                    }
+
+
+
                 } catch (error) {
                     const zodError = error as ZodError;
                     const { fieldErrors } = zodError.flatten();
                     return fail(400, { errors: fieldErrors });
                 }
+
             }
 
         } else return redirect(302, "/");
