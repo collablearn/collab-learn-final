@@ -18,16 +18,18 @@
 	const staticState = getStaticState();
 </script>
 
-{#if $staticState.isRegistering}
-	<Register />
-{:else if $staticState.isResetting}
-	{#if $staticState.isVerfying}
-		<VeryfyAccount />
-	{:else if $staticState.isUpdating}
-		<UpdatePassword />
+<div class=" sm:w-[400px] mx-auto">
+	{#if $staticState.isRegistering}
+		<Register />
+	{:else if $staticState.isResetting}
+		{#if $staticState.isVerfying}
+			<VeryfyAccount />
+		{:else if $staticState.isUpdating}
+			<UpdatePassword />
+		{:else}
+			<ResetPassword />
+		{/if}
 	{:else}
-		<ResetPassword />
+		<Login />
 	{/if}
-{:else}
-	<Login />
-{/if}
+</div>

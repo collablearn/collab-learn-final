@@ -63,7 +63,7 @@
 	action="?/loginAction"
 	enctype="multipart/form-data"
 	use:enhance={loginActionNews}
-	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center overflow-hidden"
+	class=" min-h-screen px-[35px] flex flex-col justify-center items-center overflow-hidden"
 >
 	<div class="w-[100%]">
 		<div class="flex justify-center items-center">
