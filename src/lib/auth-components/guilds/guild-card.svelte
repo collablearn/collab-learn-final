@@ -70,7 +70,7 @@
 	<button
 		type="submit"
 		disabled={checkIfJoinLoader}
-		class="bg-subwhite w-full px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px]"
+		class="bg-subwhite w-full px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] break-words"
 	>
 		{#if checkIfJoinLoader}
 			<div
@@ -85,7 +85,11 @@
 			</div>
 		{/if}
 
-		<h3 class="text-[16px] text-main font-semibold truncate">{guildObj.guild_name}</h3>
+		<div class="">
+			<h3 class="text-[16px] text-main font-semibold line-clamp-1">
+				{guildObj.guild_name}
+			</h3>
+		</div>
 		<div class="flex gap-[10px] w-full items-start">
 			<!--For project image-->
 			<div class="w-[200px] relative">
