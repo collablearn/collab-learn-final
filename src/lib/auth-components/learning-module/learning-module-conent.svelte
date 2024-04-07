@@ -86,8 +86,7 @@
 			title="Click to download"
 			class="underline text-[14px] text-blue-700 italic"
 			href={moduleObj?.module_link}
-			download
-			>{moduleObj?.file_name}alskdasdklaskd;alsdkal;sdklaaskldalsdjalsdjashjfashdjklashdlakshdaskldjasdkasdajskdhasdasjdhaskdahlsdhasldahsdajshdjklahsdajklsdhajsdhalskdhjasjhasjfhasldh</a
+			download>{moduleObj?.file_name}</a
 		>
 	</div>
 
