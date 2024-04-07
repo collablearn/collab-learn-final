@@ -2,6 +2,8 @@ import { addCommentSchema, checkGuildPassSchema, createGuildSchema, createGuildS
 import type { CreatedGuildReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
+import sharp from "sharp";
+import { compressImage } from "$lib/helpers";
 
 type UserAndGuildObjTypes = {
     user_id: string
@@ -52,9 +54,13 @@ export const actions: Actions = {
 
         const { user } = await safeGetSession();
 
-        if (user) {
+        const convertedBuffer = await compressImage(profilePicture);
 
-            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(user.id, profilePicture, {
+
+
+        if (user && convertedBuffer) {
+            const blob = new Blob([convertedBuffer], { type: "image/png" });
+            const { data: uploadPicture, error: uploadProfileError } = await supabase.storage.from("collab-bucket").upload(user.id, blob, {
                 cacheControl: "3600",
                 upsert: true
             });
