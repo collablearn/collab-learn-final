@@ -1,23 +1,38 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	interface AddCommentVal {
 		commentValue: string[];
 	}
+	let addCommentLoader = false;
+	let formActionError: AddCommentVal | null = null;
 
 	const addCommentActionNews: SubmitFunction = () => {
+		addCommentLoader = true;
 		return async ({ result, update }) => {
-			const { status } = result;
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: AddCommentVal }>;
 
 			switch (status) {
 				case 200:
+					formActionError = null;
+					addCommentLoader = false;
 					break;
 
 				case 400:
+					formActionError = errors;
+					addCommentLoader = false;
 					break;
 
 				case 401:
+					formActionError = null;
+					toast.error('Add Comment', { description: msg });
+					addCommentLoader = false;
 					break;
 
 				default:
