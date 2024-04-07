@@ -16,6 +16,7 @@
 	}
 	let addCommentLoader = false;
 	let formActionError: AddCommentVal | null = null;
+	let commentValue = '';
 
 	const addCommentActionNews: SubmitFunction = () => {
 		addCommentLoader = true;
@@ -28,6 +29,7 @@
 			switch (status) {
 				case 200:
 					invalidateAll();
+					commentValue = '';
 					formActionError = null;
 					addCommentLoader = false;
 					break;
@@ -63,6 +65,7 @@
 		<label>
 			<span class="text-main text-[14px] transition-all">Add Comment</span>
 			<textarea
+				bind:value={commentValue}
 				disabled={addCommentLoader}
 				name="commentValue"
 				placeholder="Say something..."
@@ -80,7 +83,11 @@
 		class="{addCommentLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
 		transition-all active:bg-main/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] mt-[10px] px-[2px] flex items-center justify-center text-submain"
 	>
-		Add Comment
+		{#if addCommentLoader}
+			Sending...
+		{:else}
+			Add Comment
+		{/if}
 	</button>
 </form>
 
