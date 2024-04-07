@@ -388,7 +388,7 @@ export const actions: Actions = {
             if (user) {
                 const { error: insertCommentError } = await supabase.from("module_comments_tb").insert([{
                     user_id: user.id,
-
+                    module_id: result.moduleId
 
                 }])
             } else return redirect(302, "/");

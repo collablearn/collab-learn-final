@@ -104,7 +104,7 @@
 	</div>
 
 	<div class="flex flex-col gap-[10px] mt-[10px]">
-		<AddComment />
+		<AddComment {moduleObj} />
 
 		<button
 			disabled={deleteModuleLoader}

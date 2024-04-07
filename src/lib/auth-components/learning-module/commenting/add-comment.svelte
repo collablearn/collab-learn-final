@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { ResultModel } from '$lib/types';
+	import { getUserState } from '$lib';
+	import type { CreatedModuleReference, ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+
+	export let moduleObj: CreatedModuleReference | null;
+
+	const userState = getUserState();
 
 	interface AddCommentVal {
 		commentValue: string[];
@@ -50,6 +55,8 @@
 	enctype="multipart/form-data"
 	use:enhance={addCommentActionNews}
 >
+	<input name="moduleId" type="hidden" class="hidden" value={moduleObj?.id} />
+	<input name="userObj" type="hidden" class="hidden" value={JSON.stringify($userState)} />
 	<div class="">
 		<label>
 			<span class="text-main text-[14px] transition-all">Add Comment</span>
