@@ -65,6 +65,7 @@ export const updatePasswordSchema = z.object({
 export const createGuildSchema = z.object({
     hostPhoto: z.string(),
     hostName: z.string(),
+    guildPhoto: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a guild photo." }),
     guildName: z.string().min(1, { message: "Must enter a valid guild name." }),
     maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
     description: z.string().min(5, { message: "Must enter a valid description." }),
@@ -74,6 +75,7 @@ export const createGuildSchema = z.object({
 export const createGuildSchemaWithPassCode = z.object({
     hostPhoto: z.string(),
     hostName: z.string(),
+    guildPhoto: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a guild photo." }),
     guildName: z.string().min(1, { message: "Must enter a valid guild name." }),
     maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
     description: z.string().min(5, { message: "Must enter a valid description." }),
