@@ -1,15 +1,30 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import { getUserState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import type { CreatedModuleReference, ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
+	import type { SupabaseClient } from '@supabase/supabase-js';
+
+	export let supabase: SupabaseClient<any, 'public', any>;
 
 	export let moduleObj: CreatedModuleReference | null;
 
 	const userState = getUserState();
+	const authState = getAuthState();
+
+	const getModuleComments = async () => {
+		const { data, error } = await supabase
+			.from('module_comments_tb')
+			.select('*')
+			.match({ user_id: $userState?.user_id, module_id: moduleObj?.id });
+
+		if (error) return toast.error('Get Comments', { description: error.message });
+
+		$authState.modules.moduleComments = data;
+	};
 
 	interface AddCommentVal {
 		commentValue: string[];
@@ -28,10 +43,10 @@
 
 			switch (status) {
 				case 200:
-					invalidateAll();
 					commentValue = '';
 					formActionError = null;
 					addCommentLoader = false;
+					await getModuleComments();
 					break;
 
 				case 400:
