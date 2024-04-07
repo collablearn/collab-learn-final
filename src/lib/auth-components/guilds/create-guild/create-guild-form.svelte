@@ -14,6 +14,7 @@
 	const visibilitySelection = ['Public', 'Private'];
 
 	interface CreateGuild {
+		guildPhoto: string[];
 		guildName: string[];
 		maxUsers: string[];
 		description: string[];
@@ -134,6 +135,10 @@
 				</div>
 			</label>
 		</div>
+
+		{#each formActionError?.guildPhoto ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 		<label>
 			<span class="text-main text-[14px] transition-all">Guild Name</span>
 			<input
