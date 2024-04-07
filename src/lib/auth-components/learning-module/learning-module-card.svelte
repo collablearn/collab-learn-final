@@ -12,8 +12,9 @@
 
 	const authState = getAuthState();
 	const userState = getUserState();
-
+	let addViewLoader = false;
 	const addViewsHandler = async () => {
+		addViewLoader = true;
 		const { error } = await supabase.rpc('update_total_views', {
 			client_module_id: moduleObj.id,
 			client_user_id: $userState?.user_id,
@@ -29,15 +30,29 @@
 			$authState.modules.showModule = true;
 			$authState.modules.moduleObj = moduleObj;
 			invalidateAll();
+			addViewLoader = false;
 		}
 	};
 </script>
 
 <div class="w-full mt-[10px]">
 	<button
+		disabled={addViewLoader}
 		on:click={addViewsHandler}
-		class="bg-subwhite px-[13px] py-[16px] w-full rounded-[10px] shadow-sm shadow-black text-left"
+		class="bg-subwhite px-[13px] py-[16px] w-full rounded-[10px] shadow-sm shadow-black text-left relative"
 	>
+		{#if addViewLoader}
+			<div
+				class="absolute left-0 right-0 top-0 bottom-0 bg-[#0000009a] flex flex-col items-center justify-center rounded-[10px] z-10"
+			>
+				<div class="flex items-center gap-[20px] text-submain">
+					<div
+						class="w-10 h-10 border-[5px] border-b-submain rounded-full animate-spin border-[#0000009a]"
+					></div>
+					<p class="font-bold">Checking...</p>
+				</div>
+			</div>
+		{/if}
 		<div class="flex items-center gap-[20px]">
 			<div class="">
 				<img src={learningModIcon} alt="sample-icon" />

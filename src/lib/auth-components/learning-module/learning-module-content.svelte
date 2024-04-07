@@ -70,7 +70,7 @@
 			class=" text-main text-[14px] flex items-center gap-[5px] font-semibold transition-all active:underline"
 		>
 			<img src={eyeIcon} class="" alt="eye-icon" />
-			400 Views
+			{moduleObj?.total_views} Views
 		</button>
 		{#if $userState?.user_id === moduleObj?.user_id}
 			<form
