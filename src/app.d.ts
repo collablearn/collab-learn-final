@@ -8,6 +8,7 @@ declare global {
 			supabase: SupabaseClient
 			supabaseAdmin: SupabaseClient
 			safeGetSession: () => Promise<{ session: Session | null; user: User | null }>
+			compressImage: (fileObject: File, targetSizeKB?: number) => Promise<Blob | null>
 		}
 
 
