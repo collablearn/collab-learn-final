@@ -376,6 +376,18 @@ export const actions: Actions = {
 
         return redirect(302, "/")
 
+    },
+
+    addCommentAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors })
+        }
     }
 
 };
