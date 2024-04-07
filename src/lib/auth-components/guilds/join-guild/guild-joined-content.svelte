@@ -98,7 +98,7 @@
 				enctype="multipart/form-data"
 				use:enhance={deleteGuildActionNews}
 			>
-				<input name="guildId" type="hidden" class="hidden" value={guildObj?.id} />
+				<input name="guildObj" type="hidden" class="hidden" value={JSON.stringify(guildObj)} />
 				<button
 					disabled={deleteGuildLoader}
 					class="{deleteGuildLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}

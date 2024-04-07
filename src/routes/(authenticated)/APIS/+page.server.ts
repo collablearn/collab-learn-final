@@ -1,4 +1,5 @@
 import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import type { CreatedGuildReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -253,11 +254,20 @@ export const actions: Actions = {
     },
 
     deleteGuildAction: async ({ locals: { supabase }, request }) => {
-        const guildId = (await request.formData()).get("guildId");
+        const formData = await request.formData();
+        const guildObj: CreatedGuildReference = JSON.parse(formData.get("guildObj") as string);
 
-        const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildId);
-        if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
-        else return fail(200, { msg: "Guild Deleted Successfully" });
+        const { data: deletedGuildPhoto, error: deleteGuildPhotoError } = await supabase.storage.from("guild-bucket").remove([`${guildObj.user_id}/${guildObj.guild_name}`]);
+
+        if (deleteGuildPhotoError) return fail(401, { msg: deleteGuildPhotoError.message });
+        else if (deletedGuildPhoto) {
+
+            const { error: deleteGuildError } = await supabase.from("created_guild_tb").delete().eq("id", guildObj.id);
+            if (deleteGuildError) return fail(401, { msg: deleteGuildError.message });
+            else return fail(200, { msg: "Guild Deleted Successfully" });
+        }
+
+
     },
 
     //projects route
