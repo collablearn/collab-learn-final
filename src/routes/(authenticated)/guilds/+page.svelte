@@ -29,7 +29,7 @@
 						<SearchGuilds />
 					</div>
 
-					<div class="flex flex-col gap-[20px]">
+					<div class="grid gap-[20px] lg:grid-cols-2">
 						{#each $authState.guilds.createdGuilds ?? [] as guildObj}
 							<div class="">
 								<GuildCard {guildObj} />

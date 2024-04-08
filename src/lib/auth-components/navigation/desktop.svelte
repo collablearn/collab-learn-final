@@ -27,7 +27,7 @@
 
 <div class="flex flex-col gap-[20px] mt-[100px]">
 	{#each selections as selection}
-		<a href={selection.url} class="text-[20px] p-[10px] w-full font-semibold text-submain"
+		<a href={selection.url} class="text-[20px] p-[10px] w-full font-semibold text-submain bg-black"
 			>{selection.title}</a
 		>
 	{/each}

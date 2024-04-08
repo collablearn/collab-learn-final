@@ -61,9 +61,13 @@
 <div class="">
 	{#if showPublicJoin}
 		<div
-			class="absolute left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
+			class="absolute px-[10px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 		>
-			<div class="bg-submain py-[50px] px-[22px] w-full relative" in:scale out:fade>
+			<div
+				class="bg-submain py-[50px] px-[22px] w-full relative rounded-[10px] md:w-[600px]"
+				in:scale
+				out:fade
+			>
 				<div class="flex flex-col gap-[10px]">
 					<h3 class="text-[24px] text-main">{guildObj.guild_name}</h3>
 					<p class="text-[14px] text-main">{guildObj.description}</p>

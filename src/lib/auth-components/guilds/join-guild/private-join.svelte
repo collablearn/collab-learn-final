@@ -7,7 +7,6 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { invalidateAll } from '$app/navigation';
-	import { tick } from 'svelte';
 
 	export let guildObj: CreatedGuildReference;
 
@@ -73,14 +72,14 @@
 
 {#if showPrivateJoin}
 	<div
-		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
+		class="absolute px-[10px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
 		<form
 			method="post"
 			action="/APIS?/checkPasswordAction"
 			enctype="multipart/form-data"
 			use:enhance={checkPasswordActionNews}
-			class="bg-submain py-[50px] px-[22px] w-full relative"
+			class="bg-submain py-[50px] px-[22px] w-full relative rounded-[10px] md:w-[600px]"
 			in:scale
 			out:fade
 		>
