@@ -11,7 +11,7 @@
 	$authState.activeItem = '/projects';
 </script>
 
-<div class="" in:fade>
+<div class="p-[22px] relative min-h-screen" in:fade>
 	<div class="fixed bottom-0 right-0 m-[20px] z-10">
 		<CreateProjectBtn />
 	</div>
@@ -21,38 +21,10 @@
 			<SearchProject />
 		</div>
 
-		<div class="flex flex-col gap-[20px] mt-[35px]">
+		<div class="grid gap-[20px] lg:grid-cols-2 mt-[35px]">
 			{#each $authState.projects.createdProjects ?? [] as projectObj}
 				<ProjectCard {projectObj} />
 			{/each}
-
-			<div class="">
-				<button
-					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-				>
-					1
-				</button>
-
-				<button
-					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-				>
-					2
-				</button>
-
-				<button
-					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-				>
-					3
-				</button>
-
-				...
-
-				<button
-					class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-				>
-					10
-				</button>
-			</div>
 		</div>
 	</div>
 </div>

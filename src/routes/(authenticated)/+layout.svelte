@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Nav from '$lib/auth-components/nav.svelte';
+	import Nav from '$lib/auth-components/navigation/nav.svelte';
 	import {
 		getAuthState,
 		getUserState,
@@ -9,6 +9,7 @@
 	} from '$lib';
 	import ProjectJoinedContent from '$lib/auth-components/projects/join-project/project-joined-content.svelte';
 	import type { LayoutServerData } from './$types';
+	import Desktop from '$lib/auth-components/navigation/desktop.svelte';
 
 	export let data: LayoutServerData;
 
@@ -31,7 +32,8 @@
 		modules: {
 			createdModules: null,
 			moduleObj: null,
-			showModule: false
+			showModule: false,
+			moduleComments: null
 		}
 	};
 
@@ -71,16 +73,26 @@
 	}
 </script>
 
-<div class=" bg-submain block">
+<div class=" bg-submain">
 	{#if $authState.projects.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
-		<div class="sticky top-0 z-20">
-			<Nav />
-		</div>
+		<div class="w-full">
+			<div class="sticky top-0 z-20">
+				<Nav />
+			</div>
 
-		<div class="min-h-screen px-[22px] py-[50px]">
-			<slot />
+			<div class="flex min-h-screen">
+				<div class="w-[350px] bg-[#691D1F] hidden md:block">
+					<div class="">
+						<Desktop />
+					</div>
+				</div>
+
+				<div class="min-h-screen w-full overflow-y-auto">
+					<slot />
+				</div>
+			</div>
 		</div>
 	{/if}
 </div>

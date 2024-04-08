@@ -4,4 +4,7 @@
 </script>
 
 <Toaster richColors />
-<slot />
+
+<div class="bg-main">
+	<slot />
+</div>

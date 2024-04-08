@@ -70,7 +70,7 @@
 	<button
 		type="submit"
 		disabled={checkIfJoinLoader}
-		class="bg-subwhite w-full px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px]"
+		class="bg-subwhite w-full px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] break-words"
 	>
 		{#if checkIfJoinLoader}
 			<div
@@ -85,15 +85,19 @@
 			</div>
 		{/if}
 
-		<h3 class="text-[16px] text-main font-semibold truncate">{guildObj.guild_name}</h3>
-		<div class="flex gap-[10px] w-full items-start">
-			<!--For project image-->
-			<div class="w-[200px] relative">
-				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="w-[200px] h-[150px]" />
+		<div class="">
+			<h3 class="text-[16px] text-main font-semibold line-clamp-1">
+				{guildObj.guild_name}
+			</h3>
+		</div>
+		<div class="flex gap-[10px] w-full">
+			<!--For guild image-->
+			<div class="w-[20%]">
+				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="" />
 			</div>
 
-			<!--For project details-->
-			<div class="w-[100%] flex flex-col gap-[10px]" title={guildObj.description}>
+			<!--For guild details-->
+			<div class="w-[80%] flex flex-col gap-[10px]" title={guildObj.description}>
 				<div class="flex items-center flex-wrap gap-[5px]">
 					<p class="text-[14px] font-semibold text-main">Host:</p>
 					<p class="text-[14px] text-main">{guildObj.host_name}</p>
@@ -101,7 +105,8 @@
 
 				<div class="flex items-center flex-wrap gap-[5px]">
 					<p class="text-[14px] font-semibold text-main">Description:</p>
-					<p class="text-[14px] text-main line-clamp-3 sm:line-clamp-none text-wrap">
+
+					<p class="text-[14px] text-main line-clamp-3 text-wrap">
 						{guildObj.description}
 					</p>
 				</div>
