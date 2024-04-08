@@ -77,19 +77,19 @@
 	{#if $authState.projects.joinedProject}
 		<ProjectJoinedContent />
 	{:else}
-		<div class="sticky top-0 z-20">
-			<Nav />
-		</div>
+		<div class="flex">
+			<div class="w-[265px] hidden md:block"></div>
 
-		<div class="flex w-full">
-			<div class="w-[400px] bg-main hidden md:block">
-				<div class="fixed left-0 top-0 bottom-0 mt-[10dvh] ml-[5px]">
-					<Desktop />
+			<div class="w-full">
+				<div class="sticky top-0 z-20">
+					<Nav />
 				</div>
-			</div>
 
-			<div class="min-h-screen px-[22px] py-[50px] w-full">
-				<slot />
+				<div class="">
+					<div class="min-h-screen w-full">
+						<slot />
+					</div>
+				</div>
 			</div>
 		</div>
 	{/if}

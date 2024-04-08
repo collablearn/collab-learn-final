@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { getAuthState } from '$lib';
+
 	let selections = [
 		{
 			title: 'DASHBOARD',
@@ -19,6 +21,8 @@
 			url: '/learning-modules'
 		}
 	];
+
+	const authState = getAuthState();
 </script>
 
 <div class="flex flex-col gap-[20px] mt-[100px]">

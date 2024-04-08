@@ -92,8 +92,8 @@
 		</div>
 		<div class="flex gap-[10px] w-full items-start">
 			<!--For project image-->
-			<div class="w-[200px] relative">
-				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="w-[200px] h-[150px]" />
+			<div class=" relative">
+				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" />
 			</div>
 
 			<!--For project details-->
