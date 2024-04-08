@@ -82,12 +82,14 @@
 				<Nav />
 			</div>
 
-			<div class="flex">
+			<div class="flex min-h-screen">
 				<div class="w-[350px] bg-[#691D1F] hidden md:block">
-					<Desktop />
+					<div class="">
+						<Desktop />
+					</div>
 				</div>
 
-				<div class="min-h-screen w-full">
+				<div class="min-h-screen w-full overflow-y-auto">
 					<slot />
 				</div>
 			</div>

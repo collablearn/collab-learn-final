@@ -25,10 +25,15 @@
 	const authState = getAuthState();
 </script>
 
-<div class="flex flex-col gap-[20px] mt-[100px]">
+<div class="flex flex-col gap-[17px] mt-[100px]">
 	{#each selections as selection}
-		<a href={selection.url} class="text-[20px] p-[10px] w-full font-semibold text-submain bg-black"
-			>{selection.title}</a
+		<a
+			on:click={() => ($authState.activeItem = selection.url)}
+			href={selection.url}
+			class="text-[21px] py-[30px] text-center w-full font-semibold {$authState.activeItem ===
+			selection.url
+				? 'text-submain bg-[#911F1F]'
+				: 'text-white'}">{selection.title}</a
 		>
 	{/each}
 </div>

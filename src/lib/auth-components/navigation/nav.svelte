@@ -2,7 +2,7 @@
 	import burgerIcon from '$lib/assets/burger.svg';
 	import userIcon from '$lib/assets/user_icon_320.svg';
 	import { fly, scale } from 'svelte/transition';
-
+	import desktopNavIcon from '$lib/assets/desktop_nav_icon.svg';
 	import UserModal from './user-modal.svelte';
 	import { getUserState } from '$lib';
 	import MobileSlider from './mobile-slider.svelte';
@@ -34,8 +34,12 @@
 	];
 </script>
 
-<nav class="bg-main w-full px-[23px] py-[20px]">
-	<div class="flex items-center justify-between md:justify-end">
+<nav class="bg-main w-full px-[23px] py-[20px] flex items-center justify-between">
+	<button class="hidden md:flex">
+		<img src={desktopNavIcon} alt="desk-nav-icon" />
+	</button>
+
+	<div class="flex items-center justify-between md:justify-end w-full">
 		<div class="md:hidden">
 			<button on:click={() => (showMobileSlider = true)}>
 				<img src={burgerIcon} alt="burger-icon" />
