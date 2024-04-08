@@ -11,9 +11,13 @@
 
 {#if showPrivateJoin}
 	<div
-		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
+		class="absolute px-[10px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
-		<div class="bg-submain py-[50px] px-[22px] w-full" in:scale out:fade>
+		<div
+			class="bg-submain py-[50px] px-[22px] w-full md:w-[600px] rounded-[10px]"
+			in:scale
+			out:fade
+		>
 			<h3 class="text-[16px] text-main font-semibold">
 				Ask the host for the code, then enter it here
 			</h3>

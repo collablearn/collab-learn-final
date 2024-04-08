@@ -37,7 +37,7 @@ export const handle: Handle = async ({ event, resolve }) => {
             try {
                 // Resize and compress the image with the current quality setting
                 outputBuffer = await sharp(Buffer.from(inputImageBuffer))
-                    .resize({ width: 800, height: 600 }) // Resize if needed
+                    .resize({ width: 300, height: 300 }) // Resize if needed
                     .png({ quality: quality }) // Set PNG quality
                     .toBuffer();
 

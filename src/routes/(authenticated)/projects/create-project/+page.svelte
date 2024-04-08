@@ -7,7 +7,7 @@
 	$authState.activeItem = '/projects';
 </script>
 
-<div class="">
+<div class="p-[22px]">
 	<h3 class="text-[16px] text-main font-semibold">Create Project</h3>
 	<p class="text-[14px] text-main mt-[15px]">Creatte a project to start collaboration.</p>
 

@@ -14,55 +14,30 @@
 	$authState.activeItem = '/guilds';
 </script>
 
-<div class="" in:fade>
-	{#if $authState.guilds.joinedGuild}
-		<GuildJoinedContent supabase={data.supabase} />
-	{:else}
-		<div class="fixed bottom-0 right-0 m-[20px] z-10">
-			<CreateGuildBtn />
-		</div>
-
-		<div class="">
+<div class="min-h-screen w-full relative" in:fade>
+	<div class="">
+		{#if $authState.guilds.joinedGuild}
+			<GuildJoinedContent supabase={data.supabase} />
+		{:else}
 			<div class="">
-				<SearchGuilds />
-			</div>
+				<div class="fixed bottom-0 right-0 m-[20px] z-10">
+					<CreateGuildBtn />
+				</div>
 
-			<div class="flex flex-col gap-[20px] mt-[35px]">
-				{#each $authState.guilds.createdGuilds ?? [] as guildObj}
-					<div class="">
-						<GuildCard {guildObj} />
+				<div class="px-[22px]">
+					<div class="py-[50px]">
+						<SearchGuilds />
 					</div>
-				{/each}
 
-				<!--Sample Pagination Comming Soooooon-->
-				<div class="">
-					<button
-						class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-					>
-						1
-					</button>
-
-					<button
-						class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-					>
-						2
-					</button>
-
-					<button
-						class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-					>
-						3
-					</button>
-
-					...
-
-					<button
-						class="text-[14px] text-main px-[5px] font-semibold rounded-[5px] active:border-[1px] border-main"
-					>
-						10
-					</button>
+					<div class="grid gap-[20px] lg:grid-cols-2">
+						{#each $authState.guilds.createdGuilds ?? [] as guildObj}
+							<div class="">
+								<GuildCard {guildObj} />
+							</div>
+						{/each}
+					</div>
 				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>

@@ -11,7 +11,7 @@
 	const selections = ['Personal Information', 'Change Password'];
 </script>
 
-<div class="" in:fade>
+<div class="p-[22px]" in:fade>
 	<p class="text-[16px] text-main font-semibold">Edit Profile</p>
 
 	<!--Switch Here-->

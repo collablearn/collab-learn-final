@@ -109,11 +109,11 @@
 		value={$userState?.user_fullname}
 	/>
 	<div class="flex flex-col gap-[10px]">
-		<div class="bg-main text-submain text-[14px] p-[10px] rounded-[10px]">
+		<div class="bg-main text-submain text-[14px] p-[10px] rounded-[10px] flex flex-wrap gap-[10px]">
 			<p>Note:</p>
 			<p>
-				Due to the free plan tier of hosting, we have limited the size requirement to a maximum of
-				1MB or 1024KB. You are old enough to Google things if you don't know!
+				We use advanced image compression techniques to reduce your image size to 300kb while
+				maintaining decent quality. Uploading an image larger than 5MB may take some time.
 			</p>
 		</div>
 
