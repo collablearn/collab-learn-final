@@ -28,7 +28,7 @@
 					<LearningModuleSearch />
 				</div>
 
-				<div class="flex flex-col gap-[20px] mt-[35px]">
+				<div class="grid gap-[20px] lg:grid-cols-2 mt-[35px]">
 					{#each $authState.modules.createdModules ?? [] as moduleObj}
 						<LearningModuleCard {moduleObj} supabase={data.supabase} />
 					{/each}
