@@ -91,12 +91,12 @@
 			</h3>
 		</div>
 		<div class="flex gap-[10px] w-full">
-			<!--For project image-->
+			<!--For guild image-->
 			<div class="w-[20%]">
 				<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="" />
 			</div>
 
-			<!--For project details-->
+			<!--For guild details-->
 			<div class="w-[80%] flex flex-col gap-[10px]" title={guildObj.description}>
 				<div class="flex items-center flex-wrap gap-[5px]">
 					<p class="text-[14px] font-semibold text-main">Host:</p>

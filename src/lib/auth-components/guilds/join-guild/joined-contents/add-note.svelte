@@ -71,14 +71,14 @@
 
 {#if showAddNote}
 	<div
-		class="fixed left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
+		class="absolute px-[22px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
 		<form
 			method="post"
 			action="/guilds?/addNoteAction"
 			enctype="multipart/form-data"
 			use:enhance={addNoteActionNews}
-			class="bg-submain py-[50px] px-[22px] w-full relative"
+			class="bg-submain py-[50px] px-[22px] w-full relative md:w-[600px] rounded-[10px]"
 			in:scale
 			out:fade
 		>
