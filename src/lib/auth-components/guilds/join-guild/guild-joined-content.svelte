@@ -9,6 +9,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
 	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+	import { tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -37,10 +38,7 @@
 					supabase.removeAllChannels();
 					invalidateAll();
 					toast.success('Guild', { description: msg });
-					deleteGuildLoader = false;
-					$authState.guilds.joinedGuild = false;
-					$authState.guilds.guildObj = null;
-					$authState.guilds.guildNotes = null;
+					window.location.reload();
 					break;
 
 				case 401:
