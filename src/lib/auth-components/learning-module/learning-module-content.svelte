@@ -42,10 +42,8 @@
 
 			switch (status) {
 				case 200:
-					invalidateAll();
 					toast.success('Delete Module', { description: msg });
-					deleteModuleLoader = false;
-					$authState.modules.showModule = false;
+					window.location.reload();
 					break;
 
 				case 401:

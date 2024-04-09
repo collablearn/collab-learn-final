@@ -44,6 +44,7 @@ export type CreatedGuildReference = {
     passcode: string
     image_url: string
     host_photo: string
+    searchTerms: string
 }
 
 // guild_wall_tb
@@ -95,6 +96,7 @@ export type CreatedProjectReference = {
     joined_count: number
     image_url: string
     host_photo: string
+    searchTerms: string
 }
 
 //created_module_tb
@@ -110,6 +112,7 @@ export type CreatedModuleReference = {
     module_link: string
     file_name: string
     total_views: number
+    searchTerms: string
 }
 
 //module_comments+tb
@@ -120,6 +123,7 @@ export type ModuleCommentsReference = {
     user_fullname: string
     user_photo_link: string | null
     module_comment: string
+    searchTerms: string
 }
 
 export interface SearchStoreModel<T extends Record<PropertyKey, any>> {

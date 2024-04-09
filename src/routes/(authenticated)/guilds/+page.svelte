@@ -7,6 +7,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import type { LayoutData } from '../$types';
 	import { onDestroy, tick } from 'svelte';
+	import { flip } from 'svelte/animate';
 
 	export let data: LayoutData;
 
@@ -46,8 +47,10 @@
 					</div>
 
 					<div class="grid gap-[20px] lg:grid-cols-2">
-						{#each $searchStore.filtered as guildObj}
-							<GuildCard {guildObj} />
+						{#each $searchStore.filtered as guildObj (guildObj.id)}
+							<div class="" animate:flip={{ duration: 320 }} transition:fade>
+								<GuildCard {guildObj} />
+							</div>
 						{/each}
 					</div>
 				</div>
