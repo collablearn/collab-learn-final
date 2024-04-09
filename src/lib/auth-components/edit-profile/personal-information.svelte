@@ -13,6 +13,26 @@
 
 	const userState = getUserState();
 
+	const resetValues = () => {
+		bio = $userState?.user_bio;
+		firstName = $userState?.user_fullname.split(', ')[1];
+		lastName = $userState?.user_fullname.split(', ')[0];
+		address = $userState?.user_address;
+		barangay = $userState?.user_barangay;
+		city = $userState?.user_city;
+		religion = $userState?.user_religion;
+		contactNumber = $userState?.user_contact;
+	};
+
+	let bio = $userState?.user_bio;
+	let firstName = $userState?.user_fullname.split(', ')[1];
+	let lastName = $userState?.user_fullname.split(', ')[0];
+	let address = $userState?.user_address;
+	let barangay = $userState?.user_barangay;
+	let city = $userState?.user_city;
+	let religion = $userState?.user_religion;
+	let contactNumber = $userState?.user_contact;
+
 	let file: FileList | undefined;
 	let defaultState = true;
 
@@ -200,7 +220,7 @@
 		<span class="text-main text-[14px] transition-all">Bio</span>
 		<textarea
 			autocomplete="off"
-			value={defaultState ? $userState?.user_bio : ''}
+			bind:value={bio}
 			disabled={defaultState}
 			name="bio"
 			class="{defaultState ? 'bg-submain' : 'bg-subwhite'} 
@@ -215,7 +235,7 @@
 		<span class="text-main text-[14px] transition-all">First Name</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_fullname.split(', ')[1] : ''}
+			bind:value={firstName}
 			disabled={defaultState}
 			name="firstName"
 			type="text"
@@ -231,7 +251,7 @@
 		<span class="text-main text-[14px] transition-all">Last Name</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_fullname.split(', ')[0] : ''}
+			bind:value={lastName}
 			disabled={defaultState}
 			name="lastName"
 			type="text"
@@ -247,7 +267,7 @@
 		<span class="text-main text-[14px] transition-all">Address</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_address : ''}
+			bind:value={address}
 			disabled={defaultState}
 			name="address"
 			type="text"
@@ -263,7 +283,7 @@
 		<span class="text-main text-[14px] transition-all">Barangay</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_barangay : ''}
+			bind:value={barangay}
 			disabled={defaultState}
 			name="barangay"
 			type="text"
@@ -279,7 +299,7 @@
 		<span class="text-main text-[14px] transition-all">City</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_city : ''}
+			bind:value={city}
 			disabled={defaultState}
 			name="city"
 			type="text"
@@ -295,7 +315,7 @@
 		<span class="text-main text-[14px] transition-all">Religion</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_religion : ''}
+			bind:value={religion}
 			disabled={defaultState}
 			name="religion"
 			type="text"
@@ -311,7 +331,7 @@
 		<span class="text-main text-[14px] transition-all">Contact Number</span>
 		<input
 			autocomplete="off"
-			value={defaultState ? $userState?.user_contact : ''}
+			bind:value={contactNumber}
 			disabled={defaultState}
 			name="contactNumber"
 			type="text"
@@ -339,11 +359,11 @@
 				on:click={() => {
 					defaultState = true;
 					formActionError = null;
+					resetValues();
 				}}
 				disabled={updateInfoLoader}
 				type="button"
-				class=" border-[1px] border-main
-		py-[10px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-main bg-submain"
+				class="border-[1px] border-main py-[10px] font-semibold text-[14px] w-full flex items-center justify-center rounded-[10px] text-main bg-submain"
 				>Cancel
 			</button>
 			<button

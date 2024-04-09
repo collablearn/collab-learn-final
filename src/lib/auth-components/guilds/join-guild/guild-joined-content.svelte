@@ -9,6 +9,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
 	import type { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
+	import { tick } from 'svelte';
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -37,10 +38,7 @@
 					supabase.removeAllChannels();
 					invalidateAll();
 					toast.success('Guild', { description: msg });
-					deleteGuildLoader = false;
-					$authState.guilds.joinedGuild = false;
-					$authState.guilds.guildObj = null;
-					$authState.guilds.guildNotes = null;
+					window.location.reload();
 					break;
 
 				case 401:
@@ -84,14 +82,14 @@
 
 		{#if guildObj?.user_id === $userState?.user_id}
 			<div class="flex items-center gap-[10px]">
-				<form>
+				<!-- <form>
 					<button
 						class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
 						on:click={() =>
 							alert('This is coming soon, this is not a wordpress application take it easy.')}
 						>Edit
 					</button>
-				</form>
+				</form> -->
 
 				<form
 					method="post"
