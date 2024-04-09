@@ -27,7 +27,7 @@
 <PublicJoin bind:showPublicJoin {projectObj} />
 
 <button
-	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px]"
+	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] w-full"
 	on:click={handleJoin}
 >
 	<h3 class="text-[16px] text-main font-semibold truncate">{projectObj.project_name}</h3>

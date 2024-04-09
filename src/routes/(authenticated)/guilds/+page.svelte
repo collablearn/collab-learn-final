@@ -3,15 +3,32 @@
 	import GuildCard from '$lib/auth-components/guilds/guild-card.svelte';
 	import SearchGuilds from '$lib/auth-components/guilds/search-guilds.svelte';
 	import GuildJoinedContent from '$lib/auth-components/guilds/join-guild/guild-joined-content.svelte';
-	import { getAuthState, getUserState } from '$lib';
+	import { createSearchStore, getAuthState, getUserState, searchHandler } from '$lib';
 	import { fade, scale } from 'svelte/transition';
 	import type { LayoutData } from '../$types';
+	import { onDestroy, tick } from 'svelte';
+	import { flip } from 'svelte/animate';
 
 	export let data: LayoutData;
 
 	const authState = getAuthState();
 
 	$authState.activeItem = '/guilds';
+
+	const generateClientCopy = () => {
+		const generatedGuilds = $authState.guilds.createdGuilds?.map((guild) => ({
+			...guild,
+			searchTerms: `${guild.description} ${guild.host_name} ${guild.guild_name} `
+		}));
+
+		return generatedGuilds;
+	};
+
+	let searchStore = createSearchStore(generateClientCopy() ?? []);
+
+	const unsubscribe = searchStore.subscribe((model) => searchHandler(model));
+
+	onDestroy(() => unsubscribe());
 </script>
 
 <div class="min-h-screen w-full relative" in:fade>
@@ -26,12 +43,12 @@
 
 				<div class="px-[22px]">
 					<div class="py-[50px]">
-						<SearchGuilds />
+						<SearchGuilds bind:searchTerm={$searchStore.search} />
 					</div>
 
 					<div class="grid gap-[20px] lg:grid-cols-2">
-						{#each $authState.guilds.createdGuilds ?? [] as guildObj}
-							<div class="">
+						{#each $searchStore.filtered as guildObj (guildObj.id)}
+							<div class="" animate:flip={{ duration: 320 }} transition:fade>
 								<GuildCard {guildObj} />
 							</div>
 						{/each}

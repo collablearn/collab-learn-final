@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
-import type { CreatedGuildReference, CreatedModuleReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, ModuleCommentsReference, UserReference } from "./types";
+import type { CreatedGuildReference, CreatedModuleReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, ModuleCommentsReference, SearchStoreModel, UserReference } from "./types";
 
 
 // for static store
@@ -295,3 +295,25 @@ export const mockDatas = writable({
         }
     ]
 });
+
+
+//search stores
+export const createSearchStore = <T extends Record<PropertyKey, any>>(data: T[]) => {
+    const { subscribe, set, update } = writable<SearchStoreModel<T>>({
+        data,
+        filtered: data,
+        search: "",
+    });
+
+    return {
+        subscribe, set, update
+    };
+};
+
+export const searchHandler = <T extends Record<PropertyKey, any>>(store: SearchStoreModel<T>) => {
+    const searchTerm = store.search.toLowerCase() || "";
+    store.filtered = store.data.filter((item) => {
+        return item.searchTerms.toLowerCase().includes(searchTerm);
+    })
+
+}

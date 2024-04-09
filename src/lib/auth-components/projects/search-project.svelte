@@ -1,9 +1,13 @@
 <script lang="ts">
 	import seachIcon from '$lib/assets/guilds_search_icon_320.svg';
+	import { string } from 'zod';
+
+	export let searchTerm: string;
 </script>
 
 <div class="relative flex items-center">
 	<input
+		bind:value={searchTerm}
 		placeholder="Search Project Name"
 		type="text"
 		class="outline-none w-full text-[14px] py-[11px] pl-[20px] pr-[40px] text-main bg-submain border-[1px] border-main rounded-[10px] transition-all"
