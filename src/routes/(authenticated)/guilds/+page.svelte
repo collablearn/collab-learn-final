@@ -31,9 +31,7 @@
 
 					<div class="grid gap-[20px] lg:grid-cols-2">
 						{#each $authState.guilds.createdGuilds ?? [] as guildObj}
-							<div class="">
-								<GuildCard {guildObj} />
-							</div>
+							<GuildCard {guildObj} />
 						{/each}
 					</div>
 				</div>
