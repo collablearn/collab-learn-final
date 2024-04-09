@@ -121,3 +121,9 @@ export type ModuleCommentsReference = {
     user_photo_link: string | null
     module_comment: string
 }
+
+export interface SearchStoreModel<T extends Record<PropertyKey, any>> {
+    data: T[]
+    filtered: T[]
+    search: string
+}
