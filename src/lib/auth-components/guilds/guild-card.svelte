@@ -113,10 +113,13 @@
 				</div>
 			</div>
 
-			<div class="mt-[10px]">
-				<div class="flex items-center justify-between w-full">
+			<div class="mt-[10px] w-full">
+				<div class="flex items-center justify-between">
 					{#if guildObj.is_private}
-						<img src={lockIcon} alt="lock-icon" class="" />
+						<div title="This guild is private." class="flex items-center gap-[10px]">
+							<img src={lockIcon} alt="lock-icon" class="" />
+							<p class="text-[14px] text-main">Locked</p>
+						</div>
 					{/if}
 
 					<div class="flex items-center justify-end w-full gap-[5px]">
