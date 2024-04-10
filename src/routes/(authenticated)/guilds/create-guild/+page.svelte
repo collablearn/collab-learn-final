@@ -9,9 +9,7 @@
 
 <div class="p-[22px]">
 	<h3 class="text-[16px] text-main font-semibold">Create Guild</h3>
-	<p class="text-[14px] text-main mt-[15px]">
-		Start collaborating to your co-peers thhrough guild.
-	</p>
+	<p class="text-[14px] text-main mt-[15px]">Start collaborating to your co-peers through guild.</p>
 
 	<div class="mt-[19px]">
 		<CreateGuildForm />

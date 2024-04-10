@@ -71,7 +71,7 @@
 		<button
 			type="submit"
 			disabled={checkIfJoinLoader}
-			class="bg-subwhite w-full p-[20px] h-[230px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] break-words"
+			class="bg-subwhite w-full p-[20px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] break-words"
 		>
 			{#if checkIfJoinLoader}
 				<div
@@ -91,34 +91,29 @@
 					{guildObj.guild_name}
 				</h3>
 			</div>
-			<div class="flex gap-[20px]">
+			<div class="flex flex-col sm:flex-row gap-[20px]">
 				<!--For guild image-->
-				<div class="w-[100px]">
-					<img
-						src={guildObj.image_url ?? sampleIcon}
-						alt="sample-icon"
-						class="w-[100px] h-[100px]"
-					/>
+				<div class="">
+					<img src={guildObj.image_url ?? sampleIcon} alt="sample-icon" class="rounded-[10px]" />
 				</div>
 
-				<!--For guild details-->
-				<div class="w-full flex flex-col gap-[10px]" title={guildObj.description}>
-					<div class="flex items-center flex-wrap gap-[5px]">
+				<div class="flex flex-col gap-[10px] w-full">
+					<div class="">
 						<p class="text-[14px] font-semibold text-main">Host:</p>
 						<p class="text-[14px] text-main">{guildObj.host_name}</p>
 					</div>
 
-					<div class="flex items-center flex-wrap gap-[5px]">
+					<div class="">
 						<p class="text-[14px] font-semibold text-main">Description:</p>
 
-						<p class="text-[14px] text-main line-clamp-3 text-wrap">
+						<p class="text-[14px] text-main line-clamp-3 whitespace-pre-wrap max-w-full break-all">
 							{guildObj.description}
 						</p>
 					</div>
 				</div>
 			</div>
 
-			<div class="absolute bottom-0 left-0 right-0 p-[10px]">
+			<div class="mt-[10px]">
 				<div class="flex items-center justify-between w-full">
 					{#if guildObj.is_private}
 						<img src={lockIcon} alt="lock-icon" class="" />
