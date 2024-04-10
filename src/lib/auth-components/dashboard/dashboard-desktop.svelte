@@ -4,23 +4,25 @@
 	const userState = getUserState();
 </script>
 
-<div class="h-[150px] rounded-[10px] bg-main w-full flex items-center gap-[20px] p-[50px] relative">
-	<div class=" absolute bottom-0 right-0 mb-[20px] mr-[10px]">
-		<a href="/edit-profile" class="text-[14px] text-main bg-submain rounded-[10px] p-[10px]"
-			>Edit Profile
-		</a>
+<div class=" rounded-[10px] bg-main w-full gap-[20px] relative p-[10px]">
+	<div class="flex gap-[20px]">
+		<div class="w-[150px]">
+			<img src={$userState?.user_photo_link} alt="" class="rounded-full" />
+		</div>
+
+		<div class="w-full">
+			<p class="text-[24px] text-submain">{$userState?.user_fullname}</p>
+			<p class="text-[14px] text-submain">
+				{$userState?.user_bio}
+			</p>
+		</div>
 	</div>
 
-	<div class="">
-		<img
-			src={$userState?.user_photo_link}
-			alt="profile-icon"
-			class="w-[100px] h-[100px] rounded-full"
-		/>
-	</div>
-
-	<div class="">
-		<p class="text-white text-[20px]">{$userState?.user_fullname}</p>
-		<p class="text-white text-[14px]">{$userState?.user_bio}</p>
+	<div class="flex justify-end mt-[20px]">
+		<a
+			href="/edit-profile"
+			class="text-[14px] font-semibold bg-submain text-main p-[10px] flex items-center rounded-[10px]"
+			>Edit Profile</a
+		>
 	</div>
 </div>
