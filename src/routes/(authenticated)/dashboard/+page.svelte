@@ -11,7 +11,7 @@
 </script>
 
 <div class="p-[22px] flex flex-col gap-[20px]" in:fade>
-	<div class="hidden md:flex">
+	<div class="">
 		<DashboardDesktop />
 	</div>
 
