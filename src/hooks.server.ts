@@ -25,45 +25,33 @@ export const handle: Handle = async ({ event, resolve }) => {
         },
     })
 
-    event.locals.compressImage = async (fileObject: File, targetSizeKB = 300) => {
-        const maxQuality = 100; // Maximum JPEG/PNG quality (for resizing)
+    event.locals.compressImage = async (fileObject, targetSizeKB = 300) => {
+        const maxQuality = 100;
         const inputImageBuffer = await fileObject.arrayBuffer();
 
         let quality = maxQuality;
         let outputBuffer = null;
 
-        // Adjust image quality dynamically to achieve target size
-        while (quality > 0) {
-            try {
-                // Resize and compress the image with the current quality setting
-                outputBuffer = await sharp(Buffer.from(inputImageBuffer))
-                    .resize({ width: 150, height: 150 }) // Resize if needed
-                    .png({ quality: quality }) // Set PNG quality
-                    .toBuffer();
+        try {
+            // Resize and crop the image to exactly 150x150 pixels
+            outputBuffer = await sharp(Buffer.from(inputImageBuffer))
+                .resize({ width: 150, height: 150, fit: 'cover' }) // Resize to cover 150x150
+                .png({ quality: quality }) // Set PNG quality
+                .toBuffer();
 
-                // Check the size of the output image
-                const outputSizeKB = outputBuffer.length / 1024;
+            const outputSizeKB = outputBuffer.length / 1024;
 
-                // Check if the output size is within the target range
-                if (outputSizeKB <= targetSizeKB) {
-                    break; // Stop compression if target size is achieved
-                }
-
-                // Reduce quality for the next iteration
-                quality -= 5; // Adjust quality reduction step
-            } catch (error) {
-                console.error('Error compressing image:', error);
-                return null; // Return null on error
+            // Check if the output size is within the target range
+            if (outputSizeKB <= targetSizeKB) {
+                const blob = new Blob([outputBuffer], { type: "image/png" });
+                return blob;
             }
+        } catch (error) {
+            console.error('Error compressing image:', error);
         }
 
-        if (outputBuffer) {
-            const blob = new Blob([outputBuffer], { type: "image/png" });
-            return blob
-        }
-
-        return null; // Return the compressed image buffer
-    }
+        return null; // Return null if image processing fails or target size not achieved
+    };
 
 
     event.locals.supabaseAdmin = createServerClient(supabaseURL, supabaseAdminKEY, {
