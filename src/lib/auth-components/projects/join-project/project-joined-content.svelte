@@ -14,8 +14,36 @@
 
 	import { getAuthState } from '$lib';
 	import { fade } from 'svelte/transition';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import type { ResultModel } from '$lib/types';
 
 	const authState = getAuthState();
+
+	let deleteProjLoader = false;
+	const deleteProjectActionNews: SubmitFunction = () => {
+		deleteProjLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					toast.success('Delete Project', { description: msg });
+					deleteProjLoader = false;
+					break;
+
+				case 401:
+					toast.error('Delete Project', { description: msg });
+					deleteProjLoader = false;
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -80,35 +108,30 @@
 				{/if}
 			</div>
 
-			<div class="">
-				<button>
+			<div class="flex flex-row-reverse">
+				<button on:click={() => ($authState.projects.showSettings = true)}>
 					<img src={projectSettingsIcon} alt="project-settings-icon" />
 				</button>
-				{#if $authState.projects.showEditTools}
+				{#if $authState.projects.showSettings}
 					<div
 						class="fixed left-0 right-0 top-0 bottom-0"
-						on:click={() => ($authState.projects.showEditTools = false)}
+						on:click={() => ($authState.projects.showSettings = false)}
 					></div>
 
 					<div
 						in:fade
 						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
 					>
-						<div class="w-full flex items-center">
-							<button><img src={editTool1} alt="edit-1-icon" />Paint</button>
-						</div>
-
-						<div class="w-full flex items-center">
-							<button><img src={editTool2} alt="edit-2-icon" />Erase</button>
-						</div>
-
-						<div class="w-full flex items-center">
-							<button><img src={editTool3} alt="edit-3-icon" />Text</button>
-						</div>
-
-						<div class="w-full flex items-center">
-							<button><img src={editTool4} alt="edit-4-icon" />Rectangle</button>
-						</div>
+						<form
+							method="post"
+							action="/APIS?/deleteProjectAction"
+							enctype="multipart/form-data"
+							use:enhance={deleteProjectActionNews}
+						>
+							<button class="truncate bg-submain text-main p-[10px] rounded-[10px]"
+								>Delete This Project</button
+							>
+						</form>
 					</div>
 				{/if}
 			</div>
