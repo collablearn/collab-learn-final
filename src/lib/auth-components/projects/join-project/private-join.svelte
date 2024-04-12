@@ -40,14 +40,13 @@
 
 			switch (status) {
 				case 200:
-					invalidateAll();
 					toast.success('Join Project', { description: msg });
 					formActionError = null;
 					$authState.projects.projectObj = projectObj;
 					//faker hhaha
 					$authState.projects.projectObj.joined_count++;
 					checkPasscodeLoader = false;
-					$authState.guilds.joinedGuild = true;
+					$authState.projects.joinedProject = true;
 					break;
 
 				case 400:
