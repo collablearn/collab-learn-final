@@ -280,6 +280,19 @@ export const actions: Actions = {
         }
     },
 
+    checkIfJoinedProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const { user } = await safeGetSession();
+        const projectId = (await request.formData()).get("projectId") as string;
+        if (user) {
+
+            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined_project", { client_project_id: Number(projectId), client_user_id: user.id });
+            if (checkIfJoinedError) return fail(401, { msg: checkIfJoinedError.message });
+            else if (data) return fail(200, { msg: "Welcome Back." });
+            else return fail(400, { msg: "Not joined" });
+
+        } else return redirect(302, "/");
+    },
+
     ///learning module route
     uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());

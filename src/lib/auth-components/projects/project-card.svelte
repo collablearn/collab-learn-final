@@ -2,24 +2,25 @@
 	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
-
-	export let projectObj: CreatedProjectReference;
-
-	console.log(projectObj);
-
-	import { getAuthState } from '$lib';
 	import type { CreatedGuildReference, CreatedProjectReference, ResultModel } from '$lib/types';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
 	import { checkIfhavePhoto } from '$lib/helpers';
+	import { getAuthState } from '$lib';
+	import PrivateJoin from './join-project/private-join.svelte';
+	import PublicJoin from './join-project/public-join.svelte';
+
+	export let projectObj: CreatedProjectReference;
+
+	const authState = getAuthState();
 
 	let showPrivateJoin = false;
 	let showPublicJoin = false;
 	let checkIfJoinLoader = false;
 
-	/* const checkIfJoinedActionNews: SubmitFunction = () => {
+	const checkIfJoinedProjAction: SubmitFunction = () => {
 		checkIfJoinLoader = true;
 		return async ({ result, update }) => {
 			const {
@@ -30,13 +31,13 @@
 			switch (status) {
 				case 200:
 					invalidateAll();
-					$authState.guilds.joinedGuild = true;
-					$authState.guilds.guildObj = guildObj;
+					$authState.projects.joinedProject = true;
+					$authState.projects.projectObj = projectObj;
 					toast.success('Joined', { description: 'Welcome Back!' });
 					break;
 
 				case 400:
-					guildObj.is_private ? (showPrivateJoin = true) : (showPublicJoin = true);
+					projectObj.is_private ? (showPrivateJoin = true) : (showPublicJoin = true);
 					checkIfJoinLoader = false;
 					break;
 
@@ -50,21 +51,22 @@
 			}
 			await update();
 		};
-	}; */
+	};
 </script>
 
 <form
 	method="post"
-	action="/APIS?/checkIfJoinedAction"
+	action="/APIS?/checkIfJoinedProjAction"
 	enctype="multipart/form-data"
 	class="w-full h-full"
+	use:enhance={checkIfJoinedProjAction}
 >
-	<input name="guildId" type="hidden" class="hidden" />
-	<!-- {#if guildObj.is_private}
-		<PrivateJoin bind:showPrivateJoin {guildObj} />
+	<input name="projectId" type="hidden" class="hidden" value={projectObj.id} />
+	{#if projectObj.is_private}
+		<PrivateJoin bind:showPrivateJoin {projectObj} />
 	{:else}
-		<PublicJoin bind:showPublicJoin {guildObj} />
-	{/if} -->
+		<PublicJoin bind:showPublicJoin {projectObj} />
+	{/if}
 	<button
 		type="submit"
 		disabled={checkIfJoinLoader}
