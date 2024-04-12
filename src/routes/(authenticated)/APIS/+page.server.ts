@@ -107,87 +107,47 @@ export const actions: Actions = {
     //guild route actions
     createGuildAction: async ({ locals: { supabase, safeGetSession, compressImage }, request }) => {
 
-        const { user } = await safeGetSession();
-
         const formData = Object.fromEntries(await request.formData());
 
-        if (formData.visibility === "Public") {
-            try {
-                const result = createGuildSchema.parse(formData);
-                const convertedBlob = await compressImage(result.guildPhoto);
+        try {
+            const { user } = await safeGetSession();
+            const result = createGuildSchema.parse(formData);
+            const convertedBlob = await compressImage(result.guildPhoto);
 
-                if (user && convertedBlob) {
+            if (user && convertedBlob) {
 
-                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, convertedBlob, {
-                        cacheControl: "3600",
-                        upsert: true
-                    });
+                const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, convertedBlob, {
+                    cacheControl: "3600",
+                    upsert: true
+                });
 
-                    if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
-                    else if (uploadGuildPhoto) {
-                        const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
+                if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
+                else if (uploadGuildPhoto) {
+                    const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
 
-                        const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                            user_id: user.id,
-                            guild_name: result.guildName,
-                            host_name: result.hostName,
-                            is_private: false,
-                            image_url: publicUrl,
-                            max_users: Number(result.maxUsers),
-                            description: result.description,
-                            passcode: null,
-                            host_photo: result.hostPhoto
-                        }]);
+                    const { error: createGuildError } = await supabase.rpc('insert_guilds', {
+                        client_user_id: user.id,
+                        client_guild_name: result.guildName,
+                        client_max_users: Number(result.maxUsers),
+                        client_description: result.description,
+                        client_host_name: result.hostName,
+                        client_is_private: `${result.visibility === "Public" ? false : true}`,
+                        client_joined_count: 1,
+                        client_image_url: publicUrl,
+                        client_host_photo: result.hostPhoto,
+                        client_passcode: `${result.visibility === "Public" ? null : result.passcode}`
+                    })
 
-                        if (insertGuildError) return fail(401, { msg: insertGuildError.message });
-                        else return fail(200, { msg: "Guild Created" })
-                    }
-                } else return redirect(301, "/");
-            } catch (error) {
-                const zodError = error as ZodError;
-                const { fieldErrors } = zodError.flatten();
-                return fail(400, { errors: fieldErrors });
-            }
-        } else {
-            try {
-                const result = createGuildSchemaWithPassCode.parse(formData);
-                const convertedBlob = await compressImage(result.guildPhoto);
-
-                if (user && convertedBlob) {
-                    const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("guild-bucket").upload(`${user.id}/${result.guildName}`, convertedBlob, {
-                        cacheControl: "3600",
-                        upsert: true
-                    });
-
-                    if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
-                    else if (uploadGuildPhoto) {
-                        const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
-
-                        const { error: insertGuildError } = await supabase.from("created_guild_tb").insert([{
-                            user_id: user.id,
-                            guild_name: result.guildName,
-                            host_name: result.hostName,
-                            is_private: true,
-                            image_url: publicUrl,
-                            max_users: Number(result.maxUsers),
-                            description: result.description,
-                            passcode: result.passcode,
-                            host_photo: result.hostPhoto
-                        }]);
-
-                        if (insertGuildError) return fail(401, { msg: insertGuildError.message });
-                        else return fail(200, { msg: "Guild Created" })
-                    }
-
-                } else return redirect(301, "/");
-            } catch (error) {
-                const zodError = error as ZodError;
-                const { fieldErrors } = zodError.flatten();
-                return fail(400, { errors: fieldErrors });
-            }
-
+                    if (createGuildError) return fail(401, { msg: createGuildError.message });
+                    else return fail(200, { msg: "Guild Created" })
+                }
+            } else return redirect(301, "/");
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            console.log(fieldErrors)
+            return fail(400, { errors: fieldErrors });
         }
-
 
 
     },
