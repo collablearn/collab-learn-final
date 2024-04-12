@@ -17,8 +17,10 @@
 		activeItem: '/dashboard',
 		projects: {
 			createdProjects: null,
+			projectObj: null,
 			joinedProject: false,
-			showEditTools: false
+			showEditTools: false,
+			showSettings: false
 		},
 		guilds: {
 			createdGuilds: null,

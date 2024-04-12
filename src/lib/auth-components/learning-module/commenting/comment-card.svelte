@@ -1,7 +1,8 @@
 <script lang="ts">
 	import sampleIcon from '$lib/assets/description_icon_320_sample.svg';
-	import { formatDate } from '$lib/helpers';
+	import { checkIfhavePhoto, formatDate } from '$lib/helpers';
 	import type { ModuleCommentsReference } from '$lib/types';
+
 	import { fade } from 'svelte/transition';
 
 	export let moduleObj: ModuleCommentsReference;
@@ -12,7 +13,7 @@
 	<div class="flex gap-[10px]">
 		<div class="w-[25px]">
 			<img
-				src={moduleObj.user_photo_link ?? sampleIcon}
+				src={checkIfhavePhoto(moduleObj?.user_photo_link ?? '', sampleIcon)}
 				alt="profile-icon"
 				class="w-full rounded-full"
 			/>

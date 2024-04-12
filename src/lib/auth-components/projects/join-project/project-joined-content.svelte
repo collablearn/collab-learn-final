@@ -12,10 +12,73 @@
 	import footerIcon3 from '$lib/assets/joined_project_footer3_320.svg';
 	import footerIcon4 from '$lib/assets/joined_project_footer4_320.svg';
 
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { fade } from 'svelte/transition';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import type { ResultModel } from '$lib/types';
+	import { invalidateAll } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	const authState = getAuthState();
+	const userState = getUserState();
+
+	let videoElement: HTMLVideoElement;
+
+	onMount(() => {
+		const constraints: MediaStreamConstraints = { video: true };
+
+		navigator.mediaDevices
+			.getUserMedia(constraints)
+			.then((stream: MediaStream) => {
+				videoElement.srcObject = stream;
+				videoElement.play(); // Start playing the video
+			})
+			.catch((error: Error) => {
+				console.error('Error accessing camera:', error);
+			});
+
+		return () => {
+			// Cleanup: Stop the camera stream when component is unmounted
+			if (videoElement.srcObject) {
+				const stream = videoElement.srcObject as MediaStream;
+				const tracks = stream.getTracks();
+
+				tracks.forEach((track: MediaStreamTrack) => {
+					track.stop();
+				});
+
+				videoElement.srcObject = null;
+			}
+		};
+	});
+
+	let deleteProjLoader = false;
+	const deleteProjectActionNews: SubmitFunction = () => {
+		deleteProjLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					invalidateAll();
+					toast.success('Delete Project', { description: msg });
+					deleteProjLoader = false;
+					$authState.projects.joinedProject = false;
+					break;
+
+				case 401:
+					toast.error('Delete Project', { description: msg });
+					deleteProjLoader = false;
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -47,7 +110,7 @@
 					class="transition-all active:scale-105"
 					on:click={() => ($authState.projects.showEditTools = true)}
 				>
-					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
+					<img src={projectShareScreenIcon} alt="shareScreenTools" />
 				</button>
 
 				<!-- Simple Overlay for edit tools-->
@@ -59,37 +122,84 @@
 
 					<div
 						in:fade
-						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"
+						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
 					>
 						<div class="w-full flex items-center">
-							<button><img src={editTool1} alt="edit-1-icon" /></button>
+							<button><img src={editTool1} alt="edit-1-icon" />Paint</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool2} alt="edit-2-icon" /></button>
+							<button><img src={editTool2} alt="edit-2-icon" />Erase</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool3} alt="edit-3-icon" /></button>
+							<button><img src={editTool3} alt="edit-3-icon" />Text</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool4} alt="edit-4-icon" /></button>
+							<button><img src={editTool4} alt="edit-4-icon" />Rectangle</button>
 						</div>
 					</div>
 				{/if}
 			</div>
 
-			<div class="">
-				<button>
+			<div class="flex flex-row-reverse">
+				<button on:click={() => ($authState.projects.showSettings = true)}>
 					<img src={projectSettingsIcon} alt="project-settings-icon" />
 				</button>
+				{#if $authState.projects.showSettings}
+					<div
+						class="fixed left-0 right-0 top-0 bottom-0 z-10"
+						on:click={() => ($authState.projects.showSettings = false)}
+					></div>
+
+					<div
+						in:fade
+						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
+					>
+						{#if $authState.projects.projectObj?.user_id === $userState?.user_id}
+							<form
+								method="post"
+								action="/APIS?/deleteProjectAction"
+								enctype="multipart/form-data"
+								use:enhance={deleteProjectActionNews}
+							>
+								<input
+									name="projectId"
+									type="hidden"
+									class="hidden"
+									value={$authState.projects.projectObj?.id}
+								/>
+								<button
+									type="submit"
+									disabled={deleteProjLoader}
+									class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
+								>
+							</form>
+						{:else}
+							<button
+								type="submit"
+								disabled={deleteProjLoader}
+								class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+					truncate bg-submain text-main p-[10px] rounded-[10px]"
+								>not creator
+							</button>
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
 
 	<!--Camera Body-->
-	<div class=""></div>
+	<div class="">
+		<video bind:this={videoElement} class="w-full h-full">
+			<!-- Add a captions track for accessibility -->
+			<track kind="captions" label="English" src="path_to_captions.vtt" srclang="en" default />
+			<!-- Replace 'path_to_captions.vtt' with the URL/path to your captions file -->
+		</video>
+	</div>
 
 	<!--Footer-->
 	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full py-[20px]">

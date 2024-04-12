@@ -1,5 +1,5 @@
-import { addCommentSchema, checkGuildPassSchema, createGuildSchema, createProjectSchema, createProjectSchemaWithPassCode, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
-import type { CreatedGuildReference, UserReference } from "$lib/types";
+import { addCommentSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import type { CreatedGuildReference, CreatedProjectReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -12,6 +12,16 @@ type UserAndGuildObjTypes = {
     guild_name: string
     guild_host_name: string
     guild_image_url: string
+}
+
+type UserAndProjectObjTypes = {
+    user_id: string
+    user_photo_link: string
+    user_fullname: string
+    project_id: number
+    project_name: string
+    project_host_name: string
+    project_image_url: string
 }
 
 
@@ -215,7 +225,6 @@ export const actions: Actions = {
 
         if (checkPassError) return fail(401, { msg: checkPassError.message });
         else if (data) return fail(200, { msg: "You have successfully joined this guild." });
-        else return fail(401, { msg: "Invalid Password" });
     },
 
     deleteGuildAction: async ({ locals: { supabase }, request }) => {
@@ -236,48 +245,127 @@ export const actions: Actions = {
     },
 
     //projects route
-    createProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
-        const { user } = await safeGetSession();
+    createProjectAction: async ({ locals: { supabase, safeGetSession, compressImage }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
 
+        try {
+            const result = createProjectSchema.parse(formData);
+            const { user } = await safeGetSession();
+
+            const convertedBlob = await compressImage(result.projectPhoto); //sharp technology for compression image in server side
+
+            if (user && convertedBlob) {
+
+                const { data: uploadProject, error: uploadProjectError } = await supabase.storage.from("project-bucket").upload(`${user.id}/${result.projectName}`, convertedBlob, {
+                    cacheControl: "3600",
+                    upsert: true
+                });
+                console.log(uploadProjectError?.message)
+                if (uploadProjectError) return fail(401, { msg: uploadProjectError.message });
+                else if (uploadProject) {
+                    const { data: { publicUrl } } = supabase.storage.from("project-bucket").getPublicUrl(uploadProject.path);
+
+                    const { error: createProjectError } = await supabase.rpc("insert_project", {
+                        client_user_id: user.id,
+                        client_project_name: result.projectName,
+                        client_max_users: Number(result.maxUsers),
+                        client_description: result.description,
+                        client_host_name: result.hostName,
+                        client_is_private: `${result.visibility === "Public" ? false : true}`,
+                        client_joined_count: 1,
+                        client_image_url: publicUrl,
+                        client_host_photo: result.hostPhoto,
+                        client_passcode: `${result.visibility === "Public" ? null : result.passcode}`
+                    });
+
+                    if (createProjectError) return fail(401, { msg: createProjectError.message });
+                    else return fail(200, { msg: "Project Created Successfully." });
+                }
+            } else return redirect(301, "/");
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
+    checkIfJoinedProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const { user } = await safeGetSession();
+        const projectId = (await request.formData()).get("projectId") as string;
         if (user) {
 
-            const formData = Object.fromEntries(await request.formData());
-
-            if (formData.visibility === "Public") {
-                try {
-                    const result = createProjectSchema.parse(formData);
-
-                    const { data, error: insertProjectError } = await supabase.from("created_projects_tb").insert([{
-                        user_id: user.id,
-                        project_name: result.projectName,
-                        max_users: Number(result.maxUsers),
-                        description: result.description,
-                        passcode: "",
-                        host_name: result.description,
-                        is_private: false,
-                        host_photo: result.hostPhoto
-                    }]);
-
-                    if (insertProjectError) return fail(401, { msg: insertProjectError.message });
-                    else return fail(200, { msg: "Project Created" });
-
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
-                }
-            } else {
-                try {
-                    const result = createProjectSchemaWithPassCode.parse(formData);
-                    console.log(result)
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
-                }
-            }
+            const { data, error: checkIfJoinedError } = await supabase.rpc("check_if_joined_project", { client_project_id: Number(projectId), client_user_id: user.id });
+            if (checkIfJoinedError) return fail(401, { msg: checkIfJoinedError.message });
+            else if (data) return fail(200, { msg: "Welcome Back." });
+            else return fail(400, { msg: "Not joined" });
 
         } else return redirect(302, "/");
+    },
+
+    checkPasswordProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+        try {
+            const { user } = await safeGetSession();
+            const result = checkProjectSchema.parse(formData);
+
+            if (user) {
+                const parsedUserAndProjectObj = JSON.parse(result.userAndProjectObj) as UserAndProjectObjTypes;
+
+                const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
+                    client_user_id: user.id,
+                    client_user_photo_link: parsedUserAndProjectObj.user_photo_link,
+                    client_user_fullname: parsedUserAndProjectObj.user_fullname,
+                    client_project_id: Number(parsedUserAndProjectObj.project_id),
+                    client_project_name: parsedUserAndProjectObj.project_name,
+                    client_project_host_name: parsedUserAndProjectObj.project_host_name,
+                    client_project_image_url: parsedUserAndProjectObj.project_image_url,
+                    client_pass_code: result.passcode
+                });
+
+                if (checkPassError) return fail(401, { msg: checkPassError.message });
+                else if (data) return fail(200, { msg: "You have successfully joined this project." });
+                else return fail(401, { msg: "Invalid Password" });
+            } else return redirect(301, "/")
+
+
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
+    publicJoinProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+
+        const { user } = await safeGetSession();
+        const formData = await request.formData();
+        if (user) {
+            const parsedUserAndProjectObj = JSON.parse(formData.get("userAndProjectObj") as string) as UserAndProjectObjTypes;
+
+            const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
+                client_user_id: user.id,
+                client_user_photo_link: parsedUserAndProjectObj.user_photo_link,
+                client_user_fullname: parsedUserAndProjectObj.user_fullname,
+                client_project_id: Number(parsedUserAndProjectObj.project_id),
+                client_project_name: parsedUserAndProjectObj.project_name,
+                client_project_host_name: parsedUserAndProjectObj.project_host_name,
+                client_project_image_url: parsedUserAndProjectObj.project_image_url,
+            });
+
+            if (checkPassError) return fail(401, { msg: checkPassError.message });
+            else if (data) return fail(200, { msg: "You have successfully joined this project." });
+        } else return redirect(301, "/")
+    },
+
+    deleteProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = await request.formData();
+        const projectId = formData.get("projectId") as string;
+
+        const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
+        if (deleteError) return fail(401, { msg: deleteError.message });
+        else return fail(200, { msg: "Project Deleted Successfully." });
+
     },
 
     ///learning module route
