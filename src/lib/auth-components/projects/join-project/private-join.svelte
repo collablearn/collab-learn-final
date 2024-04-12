@@ -18,10 +18,10 @@
 		user_id: $userState?.user_id,
 		user_photo_link: $userState?.user_photo_link,
 		user_fullname: $userState?.user_fullname,
-		guild_id: projectObj.id,
-		guild_name: projectObj.project_name,
-		guild_host_name: projectObj.host_name,
-		guild_image_url: projectObj.image_url
+		project_id: projectObj.id,
+		project_name: projectObj.project_name,
+		project_host_name: projectObj.host_name,
+		project_image_url: projectObj.image_url
 	};
 
 	interface CheckPasscodeVal {
@@ -82,10 +82,6 @@
 			in:scale
 			out:fade
 		>
-			<h3 class="text-[16px] text-main font-semibold">
-				Ask the host for the code, then enter it here
-			</h3>
-
 			<div class="flex flex-col gap-[10px]">
 				<h3 class="text-[24px] text-main">{projectObj.project_name}</h3>
 				<p class="text-[14px] text-main">{projectObj.description}</p>
@@ -123,7 +119,6 @@
 				<button
 					type="submit"
 					disabled={checkPasscodeLoader}
-					on:click={() => ($authState.projects.joinedProject = true)}
 					class="{checkPasscodeLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
 					transition-all active:bg-main/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>

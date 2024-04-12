@@ -1,4 +1,4 @@
-import { addCommentSchema, checkGuildPassSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import { addCommentSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
 import type { CreatedGuildReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
@@ -306,25 +306,29 @@ export const actions: Actions = {
     checkPasswordProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());
         try {
-            const result = checkGuildPassSchema.parse(formData);
+            const { user } = await safeGetSession();
+            const result = checkProjectSchema.parse(formData);
 
-            const parsedUserAndProjectObj = JSON.parse(result.userAndGuildObj) as UserAndProjectObjTypes;
+            if (user) {
+                const parsedUserAndProjectObj = JSON.parse(result.userAndProjectObj) as UserAndProjectObjTypes;
+
+                const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
+                    client_user_id: user.id,
+                    client_user_photo_link: parsedUserAndProjectObj.user_photo_link,
+                    client_user_fullname: parsedUserAndProjectObj.user_fullname,
+                    client_project_id: Number(parsedUserAndProjectObj.project_id),
+                    client_project_name: parsedUserAndProjectObj.project_name,
+                    client_project_host_name: parsedUserAndProjectObj.project_host_name,
+                    client_project_image_url: parsedUserAndProjectObj.project_image_url,
+                    client_pass_code: result.passcode
+                });
+
+                if (checkPassError) return fail(401, { msg: checkPassError.message });
+                else if (data) return fail(200, { msg: "You have successfully joined this project." });
+                else return fail(401, { msg: "Invalid Password" });
+            } else return redirect(301, "/")
 
 
-            /*  const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
-                 client_user_id uuid,
-                 client_user_photo_link text,
-                 client_user_fullname text,
-                 client_project_id int8,
-                 client_project_name text,
-                 client_project_host_name text,
-                 client_project_image_url text,
-                 client_pass_code text DEFAULT NULL
-             });
- 
-             if (checkPassError) return fail(401, { msg: checkPassError.message });
-             else if (data) return fail(200, { msg: "You have successfully joined this guild." });
-             else return fail(401, { msg: "Invalid Password" }); */
 
         } catch (error) {
             const zodError = error as ZodError;
