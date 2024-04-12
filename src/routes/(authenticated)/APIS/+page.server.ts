@@ -1,5 +1,5 @@
 import { addCommentSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
-import type { CreatedGuildReference, UserReference } from "$lib/types";
+import type { CreatedGuildReference, CreatedProjectReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
@@ -358,7 +358,13 @@ export const actions: Actions = {
         } else return redirect(301, "/")
     },
 
-    deleteProjectActionNews: async ({ locals: { supabase, safeGetSession }, request }) => {
+    deleteProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = await request.formData();
+        const projectId = formData.get("projectId") as string;
+
+        const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
+        if (deleteError) return fail(401, { msg: deleteError.message });
+        else return fail(200, { msg: "Project Deleted Successfully." });
 
     },
 

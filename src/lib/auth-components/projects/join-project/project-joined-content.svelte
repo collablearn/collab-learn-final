@@ -18,6 +18,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
+	import { invalidateAll } from '$app/navigation';
 
 	const authState = getAuthState();
 
@@ -32,8 +33,10 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Delete Project', { description: msg });
 					deleteProjLoader = false;
+					$authState.projects.joinedProject = false;
 					break;
 
 				case 401:
@@ -128,7 +131,14 @@
 							enctype="multipart/form-data"
 							use:enhance={deleteProjectActionNews}
 						>
+							<input
+								name="projectId"
+								type="hidden"
+								class="hidden"
+								value={$authState.projects.projectObj?.id}
+							/>
 							<button
+								type="submit"
 								disabled={deleteProjLoader}
 								class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
 								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
