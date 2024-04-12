@@ -1,16 +1,79 @@
 <script lang="ts">
 	import { fade, scale } from 'svelte/transition';
-	import { getAuthState } from '$lib';
-	import type { CreatedProjectReference } from '$lib/types';
+	import { getAuthState, getUserState } from '$lib';
+	import type { CreatedProjectReference, ResultModel } from '$lib/types';
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
 
 	export let projectObj: CreatedProjectReference;
 	export let showPrivateJoin = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
+
+	const userAndProjectObj = {
+		user_id: $userState?.user_id,
+		user_photo_link: $userState?.user_photo_link,
+		user_fullname: $userState?.user_fullname,
+		guild_id: projectObj.id,
+		guild_name: projectObj.project_name,
+		guild_host_name: projectObj.host_name,
+		guild_image_url: projectObj.image_url
+	};
+
+	interface CheckPasscodeVal {
+		passcode: string[];
+	}
+
+	let formActionError: CheckPasscodeVal | null = null;
+	let checkPasscodeLoader = false;
+	const checkPasswordActionNews: SubmitFunction = () => {
+		checkPasscodeLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: CheckPasscodeVal }>;
+
+			switch (status) {
+				case 200:
+					invalidateAll();
+					toast.success('Join Guild', { description: msg });
+					formActionError = null;
+					$authState.projects.projectObj = projectObj;
+					//faker hhaha
+					$authState.projects.projectObj.joined_count++;
+					checkPasscodeLoader = false;
+					$authState.guilds.joinedGuild = true;
+					break;
+
+				case 400:
+					formActionError = errors;
+					checkPasscodeLoader = false;
+					break;
+
+				case 401:
+					toast.error('Join Guild', { description: msg });
+					formActionError = null;
+					checkPasscodeLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 {#if showPrivateJoin}
-	<div
+	<form
+		method="post"
+		action="/APIS?/checkPasswordProjAction"
+		enctype="multipart/form-data"
+		use:enhance={checkPasswordActionNews}
 		class="absolute px-[10px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
 		<div
@@ -48,5 +111,5 @@
 				</button>
 			</div>
 		</div>
-	</div>
+	</form>
 {/if}
