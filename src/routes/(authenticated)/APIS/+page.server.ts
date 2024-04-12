@@ -358,6 +358,10 @@ export const actions: Actions = {
         } else return redirect(301, "/")
     },
 
+    deleteProjectActionNews: async ({ locals: { supabase, safeGetSession }, request }) => {
+
+    },
+
     ///learning module route
     uploadModuleAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = Object.fromEntries(await request.formData());

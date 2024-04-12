@@ -128,8 +128,10 @@
 							enctype="multipart/form-data"
 							use:enhance={deleteProjectActionNews}
 						>
-							<button class="truncate bg-submain text-main p-[10px] rounded-[10px]"
-								>Delete This Project</button
+							<button
+								disabled={deleteProjLoader}
+								class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
 							>
 						</form>
 					</div>
