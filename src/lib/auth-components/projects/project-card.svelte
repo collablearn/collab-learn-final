@@ -1,56 +1,133 @@
 <script lang="ts">
-	import onlineIcon from '$lib/assets/project_online_icon_320.svg';
-	import offlineIcon from '$lib/assets/project_offline_icon_320.svg';
-	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
-	import type { CreatedProjectReference } from '$lib/types';
-	import PublicJoin from './join-project/public-join.svelte';
-	import PrivateJoin from './join-project/private-join.svelte';
+	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
+	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
+	import type { CreatedGuildReference, CreatedProjectReference, ResultModel } from '$lib/types';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
+	import { checkIfhavePhoto } from '$lib/helpers';
+	import { getAuthState } from '$lib';
+	import PrivateJoin from './join-project/private-join.svelte';
+	import PublicJoin from './join-project/public-join.svelte';
 
 	export let projectObj: CreatedProjectReference;
 
+	const authState = getAuthState();
+
 	let showPrivateJoin = false;
 	let showPublicJoin = false;
+	let checkIfJoinLoader = false;
 
-	const handleJoin = () => {
-		if (projectObj.is_private) {
-			showPrivateJoin = true;
-			showPublicJoin = false;
-		} else {
-			showPrivateJoin = false;
-			showPublicJoin = true;
-		}
+	const checkIfJoinedProjAction: SubmitFunction = () => {
+		checkIfJoinLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					invalidateAll();
+					$authState.projects.joinedProject = true;
+					$authState.projects.projectObj = projectObj;
+					toast.success('Joined', { description: 'Welcome Back!' });
+					break;
+
+				case 400:
+					projectObj.is_private ? (showPrivateJoin = true) : (showPublicJoin = true);
+					checkIfJoinLoader = false;
+					break;
+
+				case 401:
+					toast.error('Check If Join', { description: msg });
+					checkIfJoinLoader = false;
+					break;
+
+				default:
+					break;
+			}
+			await update();
+		};
 	};
 </script>
 
-<PrivateJoin bind:showPrivateJoin {projectObj} />
-<PublicJoin bind:showPublicJoin {projectObj} />
-
-<button
-	class="bg-subwhite px-[13px] py-[16px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] w-full"
-	on:click={handleJoin}
+<form
+	method="post"
+	action="/APIS?/checkIfJoinedProjAction"
+	enctype="multipart/form-data"
+	class="w-full h-full"
+	use:enhance={checkIfJoinedProjAction}
 >
-	<h3 class="text-[16px] text-main font-semibold truncate">{projectObj.project_name}</h3>
-	<div class="flex gap-[10px] w-full">
-		<!--For project image-->
-		<div class="w-[200px] h-[100px] bg-white relative">
-			{#if projectObj.is_private}
-				<img src={lockIcon} alt="lock-icon" class="absolute bottom-0 right-0" />
-			{/if}
+	<input name="projectId" type="hidden" class="hidden" value={projectObj.id} />
+	{#if projectObj.is_private}
+		<PrivateJoin bind:showPrivateJoin {projectObj} />
+	{:else}
+		<PublicJoin bind:showPublicJoin {projectObj} />
+	{/if}
+	<button
+		type="submit"
+		disabled={checkIfJoinLoader}
+		class="bg-subwhite h-full w-full mb-[20px] p-[20px] rounded-[10px] relative shadow-sm shadow-black text-left flex flex-col gap-[10px] break-words"
+	>
+		{#if checkIfJoinLoader}
+			<div
+				class="absolute left-0 right-0 top-0 bottom-0 bg-[#0000009a] flex flex-col items-center justify-center rounded-[10px] z-10"
+			>
+				<div class="flex flex-col items-center gap-[20px] text-submain">
+					<div
+						class="w-10 h-10 border-[5px] border-b-submain rounded-full animate-spin border-[#0000009a]"
+					></div>
+					<p class="font-bold">Checking if joined</p>
+				</div>
+			</div>
+		{/if}
+
+		<div class="">
+			<h3 class="text-[16px] text-main font-semibold line-clamp-1">{projectObj.project_name}</h3>
+		</div>
+		<div class="flex flex-col sm:flex-row gap-[20px]">
+			<!--For guild image-->
+			<div class="">
+				<img
+					src={checkIfhavePhoto(projectObj.image_url ?? '', sampleIcon)}
+					alt="sample-icon"
+					class="rounded-[10px]"
+				/>
+			</div>
+
+			<div class="flex flex-col gap-[10px] w-full">
+				<div class="">
+					<p class="text-[14px] font-semibold text-main">Host:</p>
+					<p class="text-[14px] text-main">{projectObj.host_name}</p>
+				</div>
+
+				<div class="">
+					<p class="text-[14px] font-semibold text-main">Description:</p>
+
+					<p class="text-[14px] text-main line-clamp-3 whitespace-pre-wrap max-w-full break-all">
+						{projectObj.description}
+					</p>
+				</div>
+			</div>
 		</div>
 
-		<!--For project details-->
-		<div class="w-[100%]" title={projectObj.description}>
-			<p class="text-[14px] text-main line-clamp-3 sm:line-clamp-none text-wrap">
-				{projectObj.description}
-			</p>
+		<div class="absolute bottom-0 left-0 right-0 mb-[10px] px-[20px] w-full">
+			<div class="flex items-center justify-between">
+				{#if projectObj.is_private}
+					<div title="This guild is private." class="flex items-center gap-[10px]">
+						<img src={lockIcon} alt="lock-icon" class="" />
+						<p class="text-[14px] text-main">Locked</p>
+					</div>
+				{/if}
 
-			<div class="absolute right-0 bottom-0 mb-[5px] mr-[10px]">
-				<div class="flex items-center gap-[5px]">
+				<div class="flex items-center justify-end w-full gap-[5px]">
 					<img src={groupIcon} alt="group-icon" />
 					<p class="text-[14px] text-main">{projectObj.joined_count}/{projectObj.max_users}</p>
 				</div>
 			</div>
 		</div>
-	</div>
-</button>
+	</button>
+</form>

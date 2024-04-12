@@ -1,11 +1,15 @@
 <script lang="ts">
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
-	import { formatDate } from '$lib/helpers';
+	import { checkFileExtention, formatDate } from '$lib/helpers';
 	import type { CreatedModuleReference, ResultModel } from '$lib/types';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { getAuthState, getUserState } from '$lib';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
+	import pdftIcon from '$lib/assets/pdf_icon.svg';
+	import powerIcon from '$lib/assets/powerPoint_icon.svg';
+	import wordIcon from '$lib/assets/word_icon.svg';
+	import excelIcon from '$lib/assets/excel_icon.svg';
 
 	export let moduleObj: CreatedModuleReference;
 	export let supabase: SupabaseClient<any, 'public', any>;
@@ -33,6 +37,19 @@
 			addViewLoader = false;
 		}
 	};
+
+	const generateIcon = (fileName: string) => {
+		/* .pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx */
+
+		const extentionName = checkFileExtention(fileName);
+
+		if (extentionName === '.pdf') return pdftIcon;
+		if (extentionName === '.ppt' || extentionName === 'pptx') return powerIcon;
+		if (extentionName === '.doc' || extentionName === '.docx') return wordIcon;
+		if (extentionName === '.xls' || extentionName === '.xlsx') return excelIcon;
+
+		return learningModIcon;
+	};
 </script>
 
 <div class="w-full mt-[10px]">
@@ -55,7 +72,11 @@
 		{/if}
 		<div class="flex items-center gap-[20px]">
 			<div class="">
-				<img src={learningModIcon} alt="sample-icon" />
+				<img
+					src={generateIcon(moduleObj.file_name)}
+					alt="sample-icon"
+					class="w-[150px] h-[150px]"
+				/>
 			</div>
 
 			<div class="flex flex-col gap-[5px] w-full">
