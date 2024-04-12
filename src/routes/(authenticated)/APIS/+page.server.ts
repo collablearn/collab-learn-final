@@ -14,6 +14,16 @@ type UserAndGuildObjTypes = {
     guild_image_url: string
 }
 
+type UserAndProjectObjTypes = {
+    user_id: string
+    user_photo_link: string
+    user_fullname: string
+    project_id: number
+    project_name: string
+    project_host_name: string
+    project_image_url: string
+}
+
 
 export const actions: Actions = {
     //edit profile actions
@@ -291,6 +301,36 @@ export const actions: Actions = {
             else return fail(400, { msg: "Not joined" });
 
         } else return redirect(302, "/");
+    },
+
+    checkPasswordProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+        try {
+            const result = checkGuildPassSchema.parse(formData);
+
+            const parsedUserAndProjectObj = JSON.parse(result.userAndGuildObj) as UserAndProjectObjTypes;
+
+
+            /*  const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
+                 client_user_id uuid,
+                 client_user_photo_link text,
+                 client_user_fullname text,
+                 client_project_id int8,
+                 client_project_name text,
+                 client_project_host_name text,
+                 client_project_image_url text,
+                 client_pass_code text DEFAULT NULL
+             });
+ 
+             if (checkPassError) return fail(401, { msg: checkPassError.message });
+             else if (data) return fail(200, { msg: "You have successfully joined this guild." });
+             else return fail(401, { msg: "Invalid Password" }); */
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     },
 
     ///learning module route
