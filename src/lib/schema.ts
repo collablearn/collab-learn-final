@@ -117,20 +117,24 @@ export const sendGuildChatSchema = z.object({
 export const createProjectSchema = z.object({
     hostPhoto: z.string(),
     hostName: z.string(),
+    projectPhoto: z.instanceof(File).refine((file) => file.size > 0, { message: "Must upload a project photo." }),
     projectName: z.string().min(1, { message: "Must enter a valid project name." }),
     maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
     description: z.string().min(5, { message: "Must enter a valid description." }),
     visibility: z.string(),
-})
+    passcode: z.string().optional().default("") // Make passcode optional directly
+}).superRefine(({ visibility, passcode }, ctx) => {
+    if (visibility !== "Public") { // Check passcode only if it's provided
 
-export const createProjectSchemaWithPassCode = z.object({
-    hostPhoto: z.string(),
-    hostName: z.string(),
-    projectName: z.string().min(1, { message: "Must enter a valid project name." }),
-    maxUsers: z.string().refine((value) => Number(value) > 0, { message: "Must enter a valid max users" }),
-    description: z.string().min(5, { message: "Must enter a valid description." }),
-    visibility: z.string(),
-    passcode: z.string().min(6, { message: "Must choose a strong passcode." })
+        if (passcode.length < 6) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Must enter a strong passcode.",
+                path: ["passcode"]
+            });
+        }
+
+    }
 });
 
 //learning module route schema

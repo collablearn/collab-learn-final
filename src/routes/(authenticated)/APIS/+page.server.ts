@@ -236,48 +236,34 @@ export const actions: Actions = {
     },
 
     //projects route
-    createProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
-        const { user } = await safeGetSession();
+    createProjectAction: async ({ locals: { supabase, safeGetSession, compressImage }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
 
-        if (user) {
+        try {
+            const result = createProjectSchema.parse(formData);
+            /* const { user } = await safeGetSession();
+            
+            const convertedBlob = await compressImage(result.projectPhoto);
 
-            const formData = Object.fromEntries(await request.formData());
+            if (user && convertedBlob) {
 
-            if (formData.visibility === "Public") {
-                try {
-                    const result = createProjectSchema.parse(formData);
+                const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("project-bucket").upload(`${user.id}/${result.projectName}`, convertedBlob, {
+                    cacheControl: "3600",
+                    upsert: true
+                });
 
-                    const { data, error: insertProjectError } = await supabase.from("created_projects_tb").insert([{
-                        user_id: user.id,
-                        project_name: result.projectName,
-                        max_users: Number(result.maxUsers),
-                        description: result.description,
-                        passcode: "",
-                        host_name: result.description,
-                        is_private: false,
-                        host_photo: result.hostPhoto
-                    }]);
+                if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
+                else if (uploadGuildPhoto) {
+                    const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
 
-                    if (insertProjectError) return fail(401, { msg: insertProjectError.message });
-                    else return fail(200, { msg: "Project Created" });
-
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
                 }
-            } else {
-                try {
-                    const result = createProjectSchemaWithPassCode.parse(formData);
-                    console.log(result)
-                } catch (error) {
-                    const zodError = error as ZodError;
-                    const { fieldErrors } = zodError.flatten();
-                    return fail(400, { errors: fieldErrors });
-                }
-            }
-
-        } else return redirect(302, "/");
+            } else return redirect(301, "/"); */
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            console.log(fieldErrors)
+            return fail(400, { errors: fieldErrors });
+        }
     },
 
     ///learning module route

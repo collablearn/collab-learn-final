@@ -12,6 +12,7 @@
 	const userState = getUserState();
 
 	interface CreateProjectVal {
+		projectPhoto: string[];
 		projectName: string[];
 		maxUsers: string[];
 		description: string[];
@@ -132,7 +133,7 @@
 						<input
 							autocomplete="off"
 							type="file"
-							name="guildPhoto"
+							name="projectPhoto"
 							class="hidden"
 							bind:files
 							on:change={handleFileChange}
@@ -142,7 +143,9 @@
 				</div>
 			</label>
 		</div>
-
+		{#each formActionError?.projectPhoto ?? [] as errMsg}
+			<p class="text-main text-[14px]" in:fade>{errMsg}</p>
+		{/each}
 		<label>
 			<span class="text-main text-[14px] transition-all">Project Name</span>
 			<input
