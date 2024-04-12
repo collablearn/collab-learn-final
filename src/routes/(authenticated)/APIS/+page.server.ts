@@ -336,23 +336,26 @@ export const actions: Actions = {
         }
     },
 
-    publicJoinProjAction: async ({ locals: { supabase }, request }) => {
-        const userAndGuildObj = (await request.formData()).get("userAndGuildObj") as string;
+    publicJoinProjAction: async ({ locals: { supabase, safeGetSession }, request }) => {
 
-        const parsedUserAndGuildObj = await JSON.parse(userAndGuildObj) as UserAndGuildObjTypes;
+        const { user } = await safeGetSession();
+        const formData = await request.formData();
+        if (user) {
+            const parsedUserAndProjectObj = JSON.parse(formData.get("userAndProjectObj") as string) as UserAndProjectObjTypes;
 
-        const { data, error: checkPassError } = await supabase.rpc("check_password", {
-            client_user_id: parsedUserAndGuildObj.user_id,
-            client_user_photo_link: parsedUserAndGuildObj.user_photo_link,
-            client_user_fullname: parsedUserAndGuildObj.user_fullname,
-            client_guild_id: parsedUserAndGuildObj.guild_id,
-            client_guild_name: parsedUserAndGuildObj.guild_name,
-            client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
-            client_guild_image_url: parsedUserAndGuildObj.user_photo_link
-        });
+            const { data, error: checkPassError } = await supabase.rpc("check_password_project", {
+                client_user_id: user.id,
+                client_user_photo_link: parsedUserAndProjectObj.user_photo_link,
+                client_user_fullname: parsedUserAndProjectObj.user_fullname,
+                client_project_id: Number(parsedUserAndProjectObj.project_id),
+                client_project_name: parsedUserAndProjectObj.project_name,
+                client_project_host_name: parsedUserAndProjectObj.project_host_name,
+                client_project_image_url: parsedUserAndProjectObj.project_image_url,
+            });
 
-        if (checkPassError) return fail(401, { msg: checkPassError.message });
-        else if (data) return fail(200, { msg: "You have successfully joined this guild." });
+            if (checkPassError) return fail(401, { msg: checkPassError.message });
+            else if (data) return fail(200, { msg: "You have successfully joined this project." });
+        } else return redirect(301, "/")
     },
 
     ///learning module route

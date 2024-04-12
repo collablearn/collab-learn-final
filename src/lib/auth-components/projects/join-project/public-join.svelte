@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { CreatedProjectReference, ResultModel } from '$lib/types';
 	import { fade, scale } from 'svelte/transition';
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import { toast } from 'svelte-sonner';
@@ -11,6 +11,17 @@
 	export let showPublicJoin = false;
 
 	const authState = getAuthState();
+	const userState = getUserState();
+
+	const userAndProjectObj = {
+		user_id: $userState?.user_id,
+		user_photo_link: $userState?.user_photo_link,
+		user_fullname: $userState?.user_fullname,
+		project_id: projectObj.id,
+		project_name: projectObj.project_name,
+		project_host_name: projectObj.host_name,
+		project_image_url: projectObj.image_url
+	};
 
 	let publicJoinLoader = false;
 	const publicJoinProjAction: SubmitFunction = () => {
@@ -53,6 +64,13 @@
 		use:enhance={publicJoinProjAction}
 		class="absolute px-[10px] left-0 right-0 bottom-0 top-0 bg-[#00000050] z-10 flex items-center justify-center"
 	>
+		<input
+			autocomplete="off"
+			name="userAndProjectObj"
+			type="hidden"
+			class="hidden"
+			value={JSON.stringify(userAndProjectObj)}
+		/>
 		<div
 			class="bg-submain py-[50px] px-[22px] w-full md:w-[600px] rounded-[10px]"
 			in:scale
@@ -79,13 +97,16 @@
 				<button
 					disabled={publicJoinLoader}
 					class="{publicJoinLoader ? 'cursor-not-allowed bg-main/50' : 'bg-main'}
-					 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
+					transition-all active:bg-main/50 w-full rounded-[10px] text-[14px] font-semibold py-[10px] px-[2px] flex items-center justify-center text-submain"
 				>
-					Join
+					{#if publicJoinLoader}
+						Joining...
+					{:else}
+						Join
+					{/if}
 				</button>
 
 				<button
-					disabled={publicJoinLoader}
 					on:click={() => (showPublicJoin = false)}
 					class="bg-submain text-main w-full rounded-[10px] text-[14px] font-semibold py-[8px] px-[2px] flex items-center justify-center border-[1px] border-main"
 				>
