@@ -3,12 +3,17 @@
 	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import lockIcon from '$lib/assets/project_lock_icon_320.svg';
 
+	export let projectObj: CreatedProjectReference;
+
+	console.log(projectObj);
+
 	import { getAuthState } from '$lib';
-	import type { CreatedGuildReference, ResultModel } from '$lib/types';
+	import type { CreatedGuildReference, CreatedProjectReference, ResultModel } from '$lib/types';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
+	import { checkIfhavePhoto } from '$lib/helpers';
 
 	let showPrivateJoin = false;
 	let showPublicJoin = false;
@@ -79,27 +84,29 @@
 		{/if}
 
 		<div class="">
-			<h3 class="text-[16px] text-main font-semibold line-clamp-1">Sample Name</h3>
+			<h3 class="text-[16px] text-main font-semibold line-clamp-1">{projectObj.project_name}</h3>
 		</div>
 		<div class="flex flex-col sm:flex-row gap-[20px]">
 			<!--For guild image-->
 			<div class="">
-				<img src={sampleIcon} alt="sample-icon" class="rounded-[10px]" />
+				<img
+					src={checkIfhavePhoto(projectObj.image_url ?? '', sampleIcon)}
+					alt="sample-icon"
+					class="rounded-[10px]"
+				/>
 			</div>
 
 			<div class="flex flex-col gap-[10px] w-full">
 				<div class="">
 					<p class="text-[14px] font-semibold text-main">Host:</p>
-					<p class="text-[14px] text-main">Mike John</p>
+					<p class="text-[14px] text-main">{projectObj.host_name}</p>
 				</div>
 
 				<div class="">
 					<p class="text-[14px] font-semibold text-main">Description:</p>
 
 					<p class="text-[14px] text-main line-clamp-3 whitespace-pre-wrap max-w-full break-all">
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi ullam rem dolorum iure
-						quas. Nostrum fuga quis facere eligendi consequuntur. Eligendi iure omnis, ad quisquam
-						explicabo laboriosam tenetur? Non, libero?
+						{projectObj.description}
 					</p>
 				</div>
 			</div>
@@ -107,7 +114,7 @@
 
 		<div class="absolute bottom-0 left-0 right-0 mb-[10px] px-[20px] w-full">
 			<div class="flex items-center justify-between">
-				{#if true}
+				{#if projectObj.is_private}
 					<div title="This guild is private." class="flex items-center gap-[10px]">
 						<img src={lockIcon} alt="lock-icon" class="" />
 						<p class="text-[14px] text-main">Locked</p>
@@ -116,7 +123,7 @@
 
 				<div class="flex items-center justify-end w-full gap-[5px]">
 					<img src={groupIcon} alt="group-icon" />
-					<p class="text-[14px] text-main">2/20</p>
+					<p class="text-[14px] text-main">{projectObj.joined_count}/{projectObj.max_users}</p>
 				</div>
 			</div>
 		</div>

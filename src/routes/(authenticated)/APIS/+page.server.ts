@@ -241,27 +241,41 @@ export const actions: Actions = {
 
         try {
             const result = createProjectSchema.parse(formData);
-            /* const { user } = await safeGetSession();
-            
-            const convertedBlob = await compressImage(result.projectPhoto);
+            const { user } = await safeGetSession();
+
+            const convertedBlob = await compressImage(result.projectPhoto); //sharp technology for compression image in server side
 
             if (user && convertedBlob) {
 
-                const { data: uploadGuildPhoto, error: uploadGuildPhotoError } = await supabase.storage.from("project-bucket").upload(`${user.id}/${result.projectName}`, convertedBlob, {
+                const { data: uploadProject, error: uploadProjectError } = await supabase.storage.from("project-bucket").upload(`${user.id}/${result.projectName}`, convertedBlob, {
                     cacheControl: "3600",
                     upsert: true
                 });
+                console.log(uploadProjectError?.message)
+                if (uploadProjectError) return fail(401, { msg: uploadProjectError.message });
+                else if (uploadProject) {
+                    const { data: { publicUrl } } = supabase.storage.from("project-bucket").getPublicUrl(uploadProject.path);
 
-                if (uploadGuildPhotoError) return fail(401, { msg: uploadGuildPhotoError.message });
-                else if (uploadGuildPhoto) {
-                    const { data: { publicUrl } } = supabase.storage.from("guild-bucket").getPublicUrl(uploadGuildPhoto.path);
+                    const { error: createProjectError } = await supabase.rpc("insert_project", {
+                        client_user_id: user.id,
+                        client_project_name: result.projectName,
+                        client_max_users: Number(result.maxUsers),
+                        client_description: result.description,
+                        client_host_name: result.hostName,
+                        client_is_private: `${result.visibility === "Public" ? false : true}`,
+                        client_joined_count: 1,
+                        client_image_url: publicUrl,
+                        client_host_photo: result.hostPhoto,
+                        client_passcode: `${result.visibility === "Public" ? null : result.passcode}`
+                    });
 
+                    if (createProjectError) return fail(401, { msg: createProjectError.message });
+                    else return fail(200, { msg: "Project Created Successfully." });
                 }
-            } else return redirect(301, "/"); */
+            } else return redirect(301, "/");
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            console.log(fieldErrors)
             return fail(400, { errors: fieldErrors });
         }
     },
