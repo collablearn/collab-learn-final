@@ -113,7 +113,11 @@
 		{/if}
 	</div>
 	<div class="flex items-center gap-[10px]">
-		<img src={generateIcon(moduleObj?.file_name)} alt="sample-icon" class="w-[150px] h-[150px]" />
+		<img
+			src={generateIcon(moduleObj?.file_name ?? '')}
+			alt="sample-icon"
+			class="w-[150px] h-[150px]"
+		/>
 		<div class="flex flex-col gap-[2px]">
 			<h3 class="text-[16px] text-main font-semibold">{moduleObj?.module_name}</h3>
 			<p class="text-[14px] text-main">{formatDate(moduleObj?.created_at ?? '')}</p>

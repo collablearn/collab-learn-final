@@ -19,9 +19,40 @@
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
 	import { invalidateAll } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	const authState = getAuthState();
 	const userState = getUserState();
+
+	let videoElement: HTMLVideoElement;
+
+	onMount(() => {
+		const constraints: MediaStreamConstraints = { video: true };
+
+		navigator.mediaDevices
+			.getUserMedia(constraints)
+			.then((stream: MediaStream) => {
+				videoElement.srcObject = stream;
+				videoElement.play(); // Start playing the video
+			})
+			.catch((error: Error) => {
+				console.error('Error accessing camera:', error);
+			});
+
+		return () => {
+			// Cleanup: Stop the camera stream when component is unmounted
+			if (videoElement.srcObject) {
+				const stream = videoElement.srcObject as MediaStream;
+				const tracks = stream.getTracks();
+
+				tracks.forEach((track: MediaStreamTrack) => {
+					track.stop();
+				});
+
+				videoElement.srcObject = null;
+			}
+		};
+	});
 
 	let deleteProjLoader = false;
 	const deleteProjectActionNews: SubmitFunction = () => {
@@ -118,7 +149,7 @@
 				</button>
 				{#if $authState.projects.showSettings}
 					<div
-						class="fixed left-0 right-0 top-0 bottom-0"
+						class="fixed left-0 right-0 top-0 bottom-0 z-10"
 						on:click={() => ($authState.projects.showSettings = false)}
 					></div>
 
@@ -162,7 +193,13 @@
 	</div>
 
 	<!--Camera Body-->
-	<div class=""></div>
+	<div class="">
+		<video bind:this={videoElement} class="w-full h-full">
+			<!-- Add a captions track for accessibility -->
+			<track kind="captions" label="English" src="path_to_captions.vtt" srclang="en" default />
+			<!-- Replace 'path_to_captions.vtt' with the URL/path to your captions file -->
+		</video>
+	</div>
 
 	<!--Footer-->
 	<div class="bg-submain min-h-[30%] fixed bottom-0 w-full py-[20px]">
