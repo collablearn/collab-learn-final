@@ -225,7 +225,6 @@ export const actions: Actions = {
 
         if (checkPassError) return fail(401, { msg: checkPassError.message });
         else if (data) return fail(200, { msg: "You have successfully joined this guild." });
-        else return fail(401, { msg: "Invalid Password" });
     },
 
     deleteGuildAction: async ({ locals: { supabase }, request }) => {
@@ -335,6 +334,25 @@ export const actions: Actions = {
             const { fieldErrors } = zodError.flatten();
             return fail(400, { errors: fieldErrors });
         }
+    },
+
+    publicJoinProjAction: async ({ locals: { supabase }, request }) => {
+        const userAndGuildObj = (await request.formData()).get("userAndGuildObj") as string;
+
+        const parsedUserAndGuildObj = await JSON.parse(userAndGuildObj) as UserAndGuildObjTypes;
+
+        const { data, error: checkPassError } = await supabase.rpc("check_password", {
+            client_user_id: parsedUserAndGuildObj.user_id,
+            client_user_photo_link: parsedUserAndGuildObj.user_photo_link,
+            client_user_fullname: parsedUserAndGuildObj.user_fullname,
+            client_guild_id: parsedUserAndGuildObj.guild_id,
+            client_guild_name: parsedUserAndGuildObj.guild_name,
+            client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
+            client_guild_image_url: parsedUserAndGuildObj.user_photo_link
+        });
+
+        if (checkPassError) return fail(401, { msg: checkPassError.message });
+        else if (data) return fail(200, { msg: "You have successfully joined this guild." });
     },
 
     ///learning module route

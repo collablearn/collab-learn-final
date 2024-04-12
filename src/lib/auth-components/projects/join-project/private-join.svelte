@@ -40,6 +40,7 @@
 
 			switch (status) {
 				case 200:
+					invalidateAll();
 					toast.success('Join Project', { description: msg });
 					formActionError = null;
 					$authState.projects.projectObj = projectObj;
