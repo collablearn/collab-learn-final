@@ -1,4 +1,5 @@
 <script lang="ts">
+	import uploadIcon from '$lib/assets/upload_icon.svg';
 	import { enhance } from '$app/forms';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { getUserState } from '$lib';
@@ -21,6 +22,23 @@
 		msg: string;
 		errors: CreateProjectVal;
 	}
+
+	//for uploading profile
+	let uploadLoader = false;
+	let previewURL: string | undefined;
+	let files: FileList | undefined = undefined;
+
+	const handleFileChange = (event: Event) => {
+		const fileInput = event.currentTarget as HTMLInputElement;
+		const file = fileInput.files?.[0];
+		if (file && file.type.startsWith('image/')) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				previewURL = reader.result as string;
+			};
+			reader.readAsDataURL(file);
+		}
+	};
 
 	const visibilitySelection = ['Public', 'Private'];
 
@@ -90,6 +108,41 @@
 	/>
 
 	<div class="flex flex-col gap-[10px]">
+		<div class="bg-main text-submain text-[14px] p-[10px] rounded-[10px] flex flex-wrap gap-[10px]">
+			<p>Note:</p>
+			<p>
+				We use advanced image compression techniques to reduce your image size to 300kb while
+				maintaining decent quality. Uploading an image larger than 5MB may take some time.
+			</p>
+		</div>
+
+		<div class="flex items-center gap-[10px]">
+			<div class="">
+				{#if previewURL}
+					<img src={previewURL} alt="sample-icon" class="h-[71px] w-[71px] rounded-full" />
+				{/if}
+			</div>
+			<label>
+				<div
+					class="transition-all active:bg-main/50 cursor-pointer max-w-fit text-[14px] font-semibold h-[40px] rounded-[10px] bg-main text-submain px-[10px] flex items-center"
+				>
+					<div class="flex items-end gap-[10px]">
+						<img src={uploadIcon} alt="upload-icon" />
+						<span>Upload Guild Photo</span>
+						<input
+							autocomplete="off"
+							type="file"
+							name="guildPhoto"
+							class="hidden"
+							bind:files
+							on:change={handleFileChange}
+							accept=".png, .jpg, .jpeg"
+						/>
+					</div>
+				</div>
+			</label>
+		</div>
+
 		<label>
 			<span class="text-main text-[14px] transition-all">Project Name</span>
 			<input

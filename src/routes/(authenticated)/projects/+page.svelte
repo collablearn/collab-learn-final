@@ -37,10 +37,10 @@
 			<SearchProject bind:searchTerm={$searchStore.search} />
 		</div>
 
-		<div class="grid gap-[20px] lg:grid-cols-2 mt-[35px]">
+		<div class="grid grid-cols-1 gap-[20px] lg:grid-cols-2 mt-[35px]">
 			{#each $searchStore.filtered ?? [] as projectObj (projectObj.id)}
 				<div class="w-full" animate:flip={{ duration: 360 }} transition:fade>
-					<ProjectCard {projectObj} />
+					<ProjectCard />
 				</div>
 			{/each}
 		</div>
