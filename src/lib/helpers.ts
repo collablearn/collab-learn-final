@@ -19,3 +19,13 @@ export const formatDate = (dateVal: string) => {
 }
 
 
+export const checkFileExtention = (inputString: string) => {
+    const pattern = /\.(pdf|pptx?|docx?|xlsx?)\b/gi;
+
+    // Find the first match in the inputString
+    const match = inputString.match(pattern);
+
+    // Return the matched extension if found, otherwise return null
+    return match ? match[0].toLowerCase() : null;
+}
+

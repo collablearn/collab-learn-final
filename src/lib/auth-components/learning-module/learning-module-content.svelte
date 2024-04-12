@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import learningModIcon from '$lib/assets/learning_mod_icon_320.svg';
-	import { formatDate } from '$lib/helpers';
+	import { checkFileExtention, formatDate } from '$lib/helpers';
 	import type { ResultModel } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
@@ -11,6 +11,23 @@
 	import CommentCard from './commenting/comment-card.svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import eyeIcon from '$lib/assets/eyeIcon.svg';
+	import pdftIcon from '$lib/assets/pdf_icon.svg';
+	import powerIcon from '$lib/assets/powerPoint_icon.svg';
+	import wordIcon from '$lib/assets/word_icon.svg';
+	import excelIcon from '$lib/assets/excel_icon.svg';
+
+	const generateIcon = (fileName: string) => {
+		/* .pdf, .ppt, .pptx, .doc, .docx, .xls, .xlsx */
+
+		const extentionName = checkFileExtention(fileName);
+
+		if (extentionName === '.pdf') return pdftIcon;
+		if (extentionName === '.ppt' || extentionName === 'pptx') return powerIcon;
+		if (extentionName === '.doc' || extentionName === '.docx') return wordIcon;
+		if (extentionName === '.xls' || extentionName === '.xlsx') return excelIcon;
+
+		return learningModIcon;
+	};
 
 	export let supabase: SupabaseClient<any, 'public', any>;
 
@@ -96,7 +113,7 @@
 		{/if}
 	</div>
 	<div class="flex items-center gap-[10px]">
-		<img src={learningModIcon} alt="sample-icon" />
+		<img src={generateIcon(moduleObj?.file_name)} alt="sample-icon" class="w-[150px] h-[150px]" />
 		<div class="flex flex-col gap-[2px]">
 			<h3 class="text-[16px] text-main font-semibold">{moduleObj?.module_name}</h3>
 			<p class="text-[14px] text-main">{formatDate(moduleObj?.created_at ?? '')}</p>
