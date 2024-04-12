@@ -12,7 +12,7 @@
 	import footerIcon3 from '$lib/assets/joined_project_footer3_320.svg';
 	import footerIcon4 from '$lib/assets/joined_project_footer4_320.svg';
 
-	import { getAuthState } from '$lib';
+	import { getAuthState, getUserState } from '$lib';
 	import { fade } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -21,6 +21,7 @@
 	import { invalidateAll } from '$app/navigation';
 
 	const authState = getAuthState();
+	const userState = getUserState();
 
 	let deleteProjLoader = false;
 	const deleteProjectActionNews: SubmitFunction = () => {
@@ -125,25 +126,35 @@
 						in:fade
 						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
 					>
-						<form
-							method="post"
-							action="/APIS?/deleteProjectAction"
-							enctype="multipart/form-data"
-							use:enhance={deleteProjectActionNews}
-						>
-							<input
-								name="projectId"
-								type="hidden"
-								class="hidden"
-								value={$authState.projects.projectObj?.id}
-							/>
+						{#if $authState.projects.projectObj?.user_id === $userState?.user_id}
+							<form
+								method="post"
+								action="/APIS?/deleteProjectAction"
+								enctype="multipart/form-data"
+								use:enhance={deleteProjectActionNews}
+							>
+								<input
+									name="projectId"
+									type="hidden"
+									class="hidden"
+									value={$authState.projects.projectObj?.id}
+								/>
+								<button
+									type="submit"
+									disabled={deleteProjLoader}
+									class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
+								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
+								>
+							</form>
+						{:else}
 							<button
 								type="submit"
 								disabled={deleteProjLoader}
 								class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
-								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
-							>
-						</form>
+					truncate bg-submain text-main p-[10px] rounded-[10px]"
+								>not creator
+							</button>
+						{/if}
 					</div>
 				{/if}
 			</div>
