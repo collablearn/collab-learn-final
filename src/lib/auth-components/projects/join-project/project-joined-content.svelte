@@ -47,7 +47,7 @@
 					class="transition-all active:scale-105"
 					on:click={() => ($authState.projects.showEditTools = true)}
 				>
-					<img src={projectShareScreenIcon} alt="project-sharescreen-icon" />
+					<img src={projectShareScreenIcon} alt="shareScreenTools" />
 				</button>
 
 				<!-- Simple Overlay for edit tools-->
@@ -59,22 +59,22 @@
 
 					<div
 						in:fade
-						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px]"
+						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
 					>
 						<div class="w-full flex items-center">
-							<button><img src={editTool1} alt="edit-1-icon" /></button>
+							<button><img src={editTool1} alt="edit-1-icon" />Paint</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool2} alt="edit-2-icon" /></button>
+							<button><img src={editTool2} alt="edit-2-icon" />Erase</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool3} alt="edit-3-icon" /></button>
+							<button><img src={editTool3} alt="edit-3-icon" />Text</button>
 						</div>
 
 						<div class="w-full flex items-center">
-							<button><img src={editTool4} alt="edit-4-icon" /></button>
+							<button><img src={editTool4} alt="edit-4-icon" />Rectangle</button>
 						</div>
 					</div>
 				{/if}
@@ -84,6 +84,33 @@
 				<button>
 					<img src={projectSettingsIcon} alt="project-settings-icon" />
 				</button>
+				{#if $authState.projects.showEditTools}
+					<div
+						class="fixed left-0 right-0 top-0 bottom-0"
+						on:click={() => ($authState.projects.showEditTools = false)}
+					></div>
+
+					<div
+						in:fade
+						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
+					>
+						<div class="w-full flex items-center">
+							<button><img src={editTool1} alt="edit-1-icon" />Paint</button>
+						</div>
+
+						<div class="w-full flex items-center">
+							<button><img src={editTool2} alt="edit-2-icon" />Erase</button>
+						</div>
+
+						<div class="w-full flex items-center">
+							<button><img src={editTool3} alt="edit-3-icon" />Text</button>
+						</div>
+
+						<div class="w-full flex items-center">
+							<button><img src={editTool4} alt="edit-4-icon" />Rectangle</button>
+						</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

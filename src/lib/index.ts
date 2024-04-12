@@ -29,6 +29,7 @@ export interface AuthStateStoreTypes {
     projects: {
         joinedProject: boolean
         showEditTools: boolean
+        showSettings: boolean
         createdProjects: CreatedProjectReference[] | null
         projectObj: CreatedProjectReference | null
     }
