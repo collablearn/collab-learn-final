@@ -137,6 +137,11 @@ export const createProjectSchema = z.object({
     }
 });
 
+export const checkProjectSchema = z.object({
+    userAndProjectObj: z.string(),
+    passcode: z.string().min(1, { message: "Passcode must not be empty." })
+})
+
 //learning module route schema
 export const uploadModuleSchema = z.object({
     hostName: z.string().min(1, { message: "Are you hacking?" }),

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import groupIcon from '$lib/assets/guild_group_icon_320.svg';
 	import { fade, scale } from 'svelte/transition';
 	import { getAuthState, getUserState } from '$lib';
 	import type { CreatedProjectReference, ResultModel } from '$lib/types';
@@ -40,7 +41,7 @@
 			switch (status) {
 				case 200:
 					invalidateAll();
-					toast.success('Join Guild', { description: msg });
+					toast.success('Join Project', { description: msg });
 					formActionError = null;
 					$authState.projects.projectObj = projectObj;
 					//faker hhaha
@@ -55,7 +56,7 @@
 					break;
 
 				case 401:
-					toast.error('Join Guild', { description: msg });
+					toast.error('Join Project', { description: msg });
 					formActionError = null;
 					checkPasscodeLoader = false;
 					break;
@@ -84,6 +85,24 @@
 			<h3 class="text-[16px] text-main font-semibold">
 				Ask the host for the code, then enter it here
 			</h3>
+
+			<div class="flex flex-col gap-[10px]">
+				<h3 class="text-[24px] text-main">{projectObj.project_name}</h3>
+				<p class="text-[14px] text-main">{projectObj.description}</p>
+			</div>
+
+			<div class="flex items-center gap-[5px] absolute top-0 right-0 m-[20px]">
+				<img src={groupIcon} alt="group-icon" />
+				<p class="text-[14px] text-main">{projectObj.joined_count}/{projectObj.max_users}</p>
+			</div>
+
+			<input
+				autocomplete="off"
+				name="userAndProjectObj"
+				type="hidden"
+				class="hidden"
+				value={JSON.stringify(userAndProjectObj)}
+			/>
 
 			<div class="mt-[20px]">
 				<label>
