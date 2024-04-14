@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getAuthState } from '$lib';
-	import JoinedGuildCard from './joined-guild-card.svelte';
+	import JoinedProjectCard from './joined-project--card.svelte';
 
 	const authState = getAuthState();
 </script>
@@ -12,8 +12,8 @@
 
 	{#if $authState.guilds.joinedGuildArray?.length}
 		<div class="grid gap-[20px] lg:grid-cols-2">
-			{#each $authState.guilds.joinedGuildArray ?? [] as joinGuildObj, index}
-				<JoinedGuildCard {joinGuildObj} />
+			{#each $authState.projects.joinedProjectArray ?? [] as joinedProjectObj, index}
+				<JoinedProjectCard {joinedProjectObj} />
 			{/each}
 		</div>
 	{:else}
