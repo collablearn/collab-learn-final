@@ -75,7 +75,7 @@
 	>
 		<form
 			method="post"
-			action="/guilds?/addNoteAction"
+			action="/APIS?/addNoteAction"
 			enctype="multipart/form-data"
 			use:enhance={addNoteActionNews}
 			class="bg-submain py-[50px] px-[22px] w-full relative md:w-[600px] rounded-[10px]"
