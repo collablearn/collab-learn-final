@@ -1,14 +1,39 @@
-import { checkGuildPassSchema, createGuildSchema, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { loginSchema, registerSchema, resetPasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
+import dotenv from 'dotenv';
+import transporter from "$lib/helpers.server";
 
 import type { ZodError } from "zod";
 import type { PageServerLoad } from "./$types";
+import type { SentMessageInfo } from "nodemailer";
+
+interface EmailMessage {
+    from: string;
+    bcc: string;
+    subject: string;
+    html: string;
+}
 
 export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase } }) => {
     const { user } = await safeGetSession();
 
     if (user) redirect(302, "/dashboard");
 
+};
+
+dotenv.config();
+const email = process.env.GMAIL_EMAIL;
+
+const sendEmail = async (message: EmailMessage): Promise<SentMessageInfo> => {
+    return new Promise((resolve, reject) => {
+        transporter.sendMail(message, (err, info) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(info);
+            }
+        });
+    });
 };
 
 export const actions: Actions = {
@@ -57,7 +82,27 @@ export const actions: Actions = {
                     const { error: deleteUserError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
                     if (deleteUserError) return fail(401, { msg: deleteUserError.message });
                     else return fail(401, { msg: insertError.message });
-                } else return fail(200, { msg: "Registered Successfully." });
+                } else {
+                    const html = ` 
+                    <h2>Hi👋 ${result.firstName}, </h2>
+                    <p>Thank you for registering in our system.</p>
+                    `;
+                    const message = {
+                        from: email ?? "",
+                        bcc: user.email ?? "",
+                        subject: "Collab Learn Registration",
+                        html,
+                    };
+
+                    try {
+                        await sendEmail(message);
+                        return fail(200, { msg: "Registered Successfully." });
+                    } catch (error) {
+                        return fail(401, { msg: "There is an error." })
+                    }
+
+
+                }
             }
 
         } catch (error) {
