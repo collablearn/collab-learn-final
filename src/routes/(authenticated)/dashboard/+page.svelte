@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { getAuthState } from '$lib';
-	import DashboardDesktop from '$lib/auth-components/dashboard/dashboard-desktop.svelte';
+
 	import DashboardJoinedGuilds from '$lib/auth-components/dashboard/dashboard-joined-guilds.svelte';
 	import DashboardRecentProjects from '$lib/auth-components/dashboard/dashboard-recent-projects.svelte';
 	import desktopNavIcon from '$lib/assets/desktop_nav_icon.svg';
 	import { fade } from 'svelte/transition';
+	import DashboardHeader from '$lib/auth-components/dashboard/dashboard-header.svelte';
 
 	const authState = getAuthState();
 
@@ -18,7 +19,7 @@
 			<img src={desktopNavIcon} alt={desktopNavIcon} class="md:w-[50%]" />
 		</div>
 
-		<DashboardDesktop />
+		<DashboardHeader />
 	</div>
 
 	<div class="">
