@@ -129,7 +129,7 @@
 				>
 					<div class="flex items-end gap-[10px]">
 						<img src={uploadIcon} alt="upload-icon" />
-						<span>Upload Guild Photo</span>
+						<span>Upload Project Photo</span>
 						<input
 							autocomplete="off"
 							type="file"

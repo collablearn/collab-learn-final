@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { writable, type Writable } from "svelte/store";
-import type { CreatedGuildReference, CreatedModuleReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, ModuleCommentsReference, SearchStoreModel, UserReference } from "./types";
+import type { CreatedGuildReference, CreatedModuleReference, CreatedProjectReference, GuildChatReference, GuildWallReference, JoinedGuildReference, JoinedProjectReference, ModuleCommentsReference, SearchStoreModel, UserReference } from "./types";
 
 
 // for static store
@@ -26,6 +26,11 @@ export const getStaticState = () => getContext<Writable<StaticStateTypes>>("stat
 export interface AuthStateStoreTypes {
     activeItem: string
 
+    dashboard: {
+        recentProjectArray: CreatedProjectReference[] | null,
+        joinedGuildArray: JoinedGuildReference[] | null
+    }
+
     projects: {
         joinedProject: boolean
         showEditTools: boolean
@@ -41,7 +46,6 @@ export interface AuthStateStoreTypes {
         guildNotes: GuildWallReference[] | null
         guildNoteObj: GuildWallReference | null
         guildChats: GuildChatReference[] | null
-        joinedGuildArray: JoinedGuildReference[] | null
     }
 
     modules: {

@@ -1,4 +1,4 @@
-import { addCommentSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
+import { addCommentSchema, addNoteSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
 import type { CreatedGuildReference, CreatedProjectReference, UserReference } from "$lib/types";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { ZodError } from "zod";
@@ -227,6 +227,41 @@ export const actions: Actions = {
         else if (data) return fail(200, { msg: "You have successfully joined this guild." });
     },
 
+    addNoteAction: async ({ locals: { supabase, safeGetSession }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = addNoteSchema.parse(formData);
+            const { user } = await safeGetSession();
+
+            if (user) {
+                const { error: addNoteError } = await supabase.from("guild_wall_tb").insert([{
+                    guild_id: result.guildId,
+                    user_id: user?.id,
+                    user_fullname: result.userFullname,
+                    user_photo_link: result.userPhotoLink,
+                    guild_note: result.guildNote
+                }]);
+                if (addNoteError) return fail(401, { msg: addNoteError.message });
+                else {
+                    const { data: guildNotes, error: guildNotesError } = await supabase.from('guild_wall_tb').select('*').match({
+                        guild_id: result.guildId,
+                    });
+
+                    if (guildNotesError) return fail(401, { msg: guildNotesError.message });
+                    else if (guildNotes) return fail(200, { msg: "Note added.", guildNotes });
+                }
+
+            }
+
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
     deleteGuildAction: async ({ locals: { supabase }, request }) => {
         const formData = await request.formData();
         const guildObj: CreatedGuildReference = JSON.parse(formData.get("guildObj") as string);
@@ -361,10 +396,22 @@ export const actions: Actions = {
     deleteProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = await request.formData();
         const projectId = formData.get("projectId") as string;
+        const projectName = formData.get("projectName") as string;
 
-        const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
-        if (deleteError) return fail(401, { msg: deleteError.message });
-        else return fail(200, { msg: "Project Deleted Successfully." });
+        const { user } = await safeGetSession();
+
+        if (user) {
+            const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
+            if (deleteError) return fail(401, { msg: deleteError.message });
+            else {
+                const { error: deleteProjectPhotoError } = await supabase.storage.from("project-bucket").remove([`${user.id}/${projectName}`]);
+                if (deleteProjectPhotoError) return fail(401, { msg: deleteProjectPhotoError });
+                else
+                    return fail(200, { msg: "Project Deleted Successfully." });
+            }
+
+
+        } else return redirect(302, "/");
 
     },
 
