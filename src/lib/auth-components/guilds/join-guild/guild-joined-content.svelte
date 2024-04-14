@@ -82,15 +82,6 @@
 
 		{#if guildObj?.user_id === $userState?.user_id}
 			<div class="flex items-center gap-[10px]">
-				<!-- <form>
-					<button
-						class="underline bg-main text-submain px-[10px] text-[14px] font-semibold"
-						on:click={() =>
-							alert('This is coming soon, this is not a wordpress application take it easy.')}
-						>Edit
-					</button>
-				</form> -->
-
 				<form
 					method="post"
 					action="/APIS?/deleteGuildAction"
@@ -114,8 +105,9 @@
 		{/if}
 	</div>
 
-	<div class="pt-[130px]">
-		<div class="flex flex-col justify-center items-center gap-[10px]">
+	<div class="pt-[20px]">
+		<img src={guildObj?.image_url} alt="guildicon" class="w-full h-[100px] rounded-[10px]" />
+		<div class="flex flex-col justify-center items-center gap-[10px] mt-[20px]">
 			<p class="text-[24px] text-main">{guildObj?.guild_name}</p>
 			<div class="">
 				<img src={groupIcon} alt="group-icon" />

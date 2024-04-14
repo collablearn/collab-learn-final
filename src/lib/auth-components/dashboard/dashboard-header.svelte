@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getUserState } from '$lib';
-	import userIcon from '$lib/assets/user_icon_320.svg';
+	import dashboardIdlIcon from '$lib/assets/dashboard_idl_icon.svg';
 
 	const userState = getUserState();
 </script>
@@ -8,11 +8,7 @@
 <div class=" rounded-[10px] bg-main w-full gap-[20px] relative p-[10px]">
 	<div class="flex gap-[20px]">
 		<div class="w-[150px]">
-			<img
-				src={$userState?.user_photo_link ?? userIcon}
-				alt=""
-				class="rounded-[10px] w-[150px] h-[150px]"
-			/>
+			<img src={$userState?.user_photo_link ?? dashboardIdlIcon} alt="" class="rounded-full" />
 		</div>
 
 		<div class="w-full">

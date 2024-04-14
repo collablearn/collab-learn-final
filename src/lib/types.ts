@@ -99,6 +99,20 @@ export type CreatedProjectReference = {
     searchTerms: string
 }
 
+//joined_project_tb
+export type JoinedProjectReference = {
+    id: number
+    created_at: string
+    user_id: string
+    user_photo_link: string
+    user_fullname: string
+    project_id: string
+    project_name: string
+    passcode: string
+    host_name: string
+    project_image_url: string
+}
+
 //created_module_tb
 export type CreatedModuleReference = {
     id: number
