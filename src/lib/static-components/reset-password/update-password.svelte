@@ -66,7 +66,7 @@
 
 <form
 	method="post"
-	action="?/updatePasswordAction"
+	action="/APIS?/updatePasswordAction"
 	enctype="multipart/form-data"
 	use:enhance={updatePasswordActionNews}
 	class="bg-main min-h-screen px-[35px] flex flex-col justify-center items-center"

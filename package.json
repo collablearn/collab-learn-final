@@ -16,6 +16,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
+		"@types/nodemailer": "^6.4.14",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.19",
@@ -37,6 +38,7 @@
 		"@supabase/ssr": "^0.1.0",
 		"@supabase/supabase-js": "^2.39.8",
 		"check-password-strength": "^2.0.10",
+		"nodemailer": "^6.9.13",
 		"sharp": "^0.33.3",
 		"svelte-sonner": "^0.3.19",
 		"zod": "^3.22.4"
