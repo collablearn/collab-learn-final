@@ -220,7 +220,7 @@ export const actions: Actions = {
             client_guild_id: parsedUserAndGuildObj.guild_id,
             client_guild_name: parsedUserAndGuildObj.guild_name,
             client_guild_host_name: parsedUserAndGuildObj.guild_host_name,
-            client_guild_image_url: parsedUserAndGuildObj.user_photo_link
+            client_guild_image_url: parsedUserAndGuildObj.guild_image_url
         });
 
         if (checkPassError) return fail(401, { msg: checkPassError.message });
