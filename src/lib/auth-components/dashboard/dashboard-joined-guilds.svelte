@@ -1,6 +1,7 @@
 <script lang="ts">
 	import arrowRightIcon from '$lib/assets/arrow-right_icon.svg';
 	import { getAuthState } from '$lib';
+	import JoinedGuildCard from './joined-guild-card.svelte';
 
 	const authState = getAuthState();
 </script>
@@ -11,16 +12,9 @@
 	<hr class="mt-[11px] mb-[24px] w-full border-[1px] border-main" />
 
 	{#if $authState.guilds.joinedGuildArray?.length}
-		<div class="overflow-x-scroll flex gap-[10px]">
+		<div class="grid gap-[20px] lg:grid-cols-2">
 			{#each $authState.guilds.joinedGuildArray ?? [] as joinGuildObj, index}
-				<div class="flex-shrink-0 w-full bg-subwhite rounded-lg p-[20px]">
-					<div class="w-full text-[14px] flex flex-col gap-[10px]">
-						<p class="text-[16px]">Guild Name:</p>
-						<p>{joinGuildObj.guild_name}</p>
-						<p class="text-[16px]">Host Name:</p>
-						<p>{joinGuildObj.host_name}</p>
-					</div>
-				</div>
+				<JoinedGuildCard {joinGuildObj} />
 			{/each}
 		</div>
 
