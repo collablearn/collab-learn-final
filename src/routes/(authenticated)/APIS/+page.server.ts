@@ -396,10 +396,22 @@ export const actions: Actions = {
     deleteProjectAction: async ({ locals: { supabase, safeGetSession }, request }) => {
         const formData = await request.formData();
         const projectId = formData.get("projectId") as string;
+        const projectName = formData.get("projectName") as string;
 
-        const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
-        if (deleteError) return fail(401, { msg: deleteError.message });
-        else return fail(200, { msg: "Project Deleted Successfully." });
+        const { user } = await safeGetSession();
+
+        if (user) {
+            const { error: deleteError } = await supabase.from("created_projects_tb").delete().eq("id", Number(projectId));
+            if (deleteError) return fail(401, { msg: deleteError.message });
+            else {
+                const { error: deleteProjectPhotoError } = await supabase.storage.from("project-bucket").remove([`${user.id}/${projectName}`]);
+                if (deleteProjectPhotoError) return fail(401, { msg: deleteProjectPhotoError });
+                else
+                    return fail(200, { msg: "Project Deleted Successfully." });
+            }
+
+
+        } else return redirect(302, "/");
 
     },
 

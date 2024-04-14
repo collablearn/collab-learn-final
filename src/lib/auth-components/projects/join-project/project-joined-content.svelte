@@ -18,8 +18,8 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { toast } from 'svelte-sonner';
 	import type { ResultModel } from '$lib/types';
-	import { invalidateAll } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import { goto, invalidateAll } from '$app/navigation';
+	import { onMount, tick } from 'svelte';
 
 	const authState = getAuthState();
 	const userState = getUserState();
@@ -155,7 +155,7 @@
 
 					<div
 						in:fade
-						class="absolute mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
+						class="absolute z-10 mt-[50px] bg-main flex items-center p-[20px] gap-[22px] rounded-[10px] text-white text-[14px]"
 					>
 						{#if $authState.projects.projectObj?.user_id === $userState?.user_id}
 							<form
@@ -170,12 +170,25 @@
 									class="hidden"
 									value={$authState.projects.projectObj?.id}
 								/>
+
+								<input
+									name="projectName"
+									type="hidden"
+									class="hidden"
+									value={$authState.projects.projectObj?.project_name}
+								/>
 								<button
 									type="submit"
 									disabled={deleteProjLoader}
 									class="{deleteProjLoader ? 'cursor-not-allowed bg-submain/50' : 'bg-submain'}
-								truncate bg-submain text-main p-[10px] rounded-[10px]">Delete This Project</button
+								truncate bg-submain text-main p-[10px] rounded-[10px]"
 								>
+									{#if deleteProjLoader}
+										Deleting...
+									{:else}
+										Delete This Project
+									{/if}
+								</button>
 							</form>
 						{:else}
 							<button
