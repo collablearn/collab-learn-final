@@ -68,7 +68,7 @@
 	$: if (data.recentProjects.data) {
 		$authState.dashboard.recentProjectArray = data.recentProjects.data;
 	}
-	console.log(data.recentProjects.data);
+
 	// making created projects array reactive
 	$: if (data.createdProjects.data) {
 		$authState.projects.createdProjects = data.createdProjects.data;
