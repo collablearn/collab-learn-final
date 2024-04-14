@@ -18,7 +18,6 @@ export const formatDate = (dateVal: string) => {
     return `${months[parsedDate.getMonth()]} ${parsedDate.getDate()} ${parsedDate.getFullYear()} @ ${formattedHours}:${formattedMinutes} ${ampm}`;
 }
 
-
 export const checkFileExtention = (inputString: string) => {
     const pattern = /\.(pdf|pptx?|docx?|xlsx?)\b/gi;
 
@@ -28,4 +27,7 @@ export const checkFileExtention = (inputString: string) => {
     // Return the matched extension if found, otherwise return null
     return match ? match[0].toLowerCase() : null;
 }
+
+
+
 

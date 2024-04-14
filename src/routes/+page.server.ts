@@ -1,4 +1,4 @@
-import { checkGuildPassSchema, createGuildSchema, createGuildSchemaWithPassCode, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
+import { checkGuildPassSchema, createGuildSchema, loginSchema, registerSchema, resetPasswordSchema, updateInformationSchema, updatePasswordSchema, verifyCodeSchema } from "$lib/schema";
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 
 import type { ZodError } from "zod";
@@ -112,5 +112,7 @@ export const actions: Actions = {
             return fail(400, { errors: fieldErrors });
         }
     },
+
+
 
 };
