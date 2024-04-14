@@ -10,10 +10,10 @@
 
 	<hr class="mt-[11px] mb-[24px] w-full border-[1px] border-main" />
 
-	{#if $authState.guilds.joinedGuildArray?.length}
+	{#if $authState.dashboard.recentProjectArray?.length}
 		<div class="grid gap-[20px] lg:grid-cols-2">
-			{#each $authState.projects.joinedProjectArray ?? [] as joinedProjectObj, index}
-				<JoinedProjectCard {joinedProjectObj} />
+			{#each $authState.dashboard.recentProjectArray ?? [] as recentProjectObj, index}
+				<JoinedProjectCard {recentProjectObj} />
 			{/each}
 		</div>
 	{:else}

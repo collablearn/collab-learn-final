@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { JoinedGuildReference, JoinedProjectReference } from '$lib/types';
+	import type { CreatedProjectReference } from '$lib/types';
 	import sampleIcon from '$lib/assets/guild_sample_icon_320.svg';
+	import { checkIfhavePhoto } from '$lib/helpers';
 
-	export let joinedProjectObj: JoinedProjectReference;
+	export let recentProjectObj: CreatedProjectReference;
 </script>
 
 <div
@@ -12,7 +13,7 @@
 		<!--For guild image-->
 		<div class="">
 			<img
-				src={joinedProjectObj.project_image_url ?? sampleIcon}
+				src={checkIfhavePhoto(recentProjectObj.image_url, sampleIcon)}
 				alt="sample-icon"
 				class="rounded-[10px]"
 			/>
@@ -21,12 +22,12 @@
 		<div class="flex flex-col gap-[10px] w-full">
 			<div class="">
 				<h3 class="text-[16px] text-main font-semibold line-clamp-1">
-					{joinedProjectObj.project_name}
+					{recentProjectObj.project_name}
 				</h3>
 			</div>
 			<div class="">
 				<p class="text-[14px] font-semibold text-main">Host:</p>
-				<p class="text-[14px] text-main">{joinedProjectObj.host_name}</p>
+				<p class="text-[14px] text-main">{recentProjectObj.host_name}</p>
 			</div>
 		</div>
 	</div>

@@ -10,9 +10,9 @@
 
 	<hr class="mt-[11px] mb-[24px] w-full border-[1px] border-main" />
 
-	{#if $authState.guilds.joinedGuildArray?.length}
+	{#if $authState.dashboard.joinedGuildArray?.length}
 		<div class="grid gap-[20px] lg:grid-cols-2">
-			{#each $authState.guilds.joinedGuildArray ?? [] as joinGuildObj, index}
+			{#each $authState.dashboard.joinedGuildArray ?? [] as joinGuildObj, index}
 				<JoinedGuildCard {joinGuildObj} />
 			{/each}
 		</div>

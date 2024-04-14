@@ -15,10 +15,14 @@
 
 	const defaulState: AuthStateStoreTypes = {
 		activeItem: '/dashboard',
+		dashboard: {
+			recentProjectArray: null,
+			joinedGuildArray: null
+		},
+
 		projects: {
 			createdProjects: null,
 			projectObj: null,
-			joinedProjectArray: null,
 			joinedProject: false,
 			showEditTools: false,
 			showSettings: false
@@ -29,8 +33,7 @@
 			guildObj: null,
 			guildNotes: null,
 			guildNoteObj: null,
-			guildChats: null,
-			joinedGuildArray: null
+			guildChats: null
 		},
 		modules: {
 			createdModules: null,
@@ -56,23 +59,21 @@
 
 	// making joined guild array reactive
 	$: if (data.joinedGuilds.data) {
-		$authState.guilds.joinedGuildArray = data.joinedGuilds.data;
+		$authState.dashboard.joinedGuildArray = data.joinedGuilds.data;
 	} else {
-		$authState.guilds.joinedGuildArray = null;
+		$authState.dashboard.joinedGuildArray = null;
 	}
 
+	// making recent project array reactive
+	$: if (data.recentProjects.data) {
+		$authState.dashboard.recentProjectArray = data.recentProjects.data;
+	}
+	console.log(data.recentProjects.data);
 	// making created projects array reactive
 	$: if (data.createdProjects.data) {
 		$authState.projects.createdProjects = data.createdProjects.data;
 	} else {
 		$authState.projects.createdProjects = null;
-	}
-
-	// making joined project array reactive
-	$: if (data.joinedProjects.data) {
-		$authState.projects.joinedProjectArray = data.joinedProjects.data;
-	} else {
-		$authState.projects.joinedProjectArray = null;
 	}
 
 	// making created modules array reactive

@@ -26,13 +26,17 @@ export const getStaticState = () => getContext<Writable<StaticStateTypes>>("stat
 export interface AuthStateStoreTypes {
     activeItem: string
 
+    dashboard: {
+        recentProjectArray: CreatedProjectReference[] | null,
+        joinedGuildArray: JoinedGuildReference[] | null
+    }
+
     projects: {
         joinedProject: boolean
         showEditTools: boolean
         showSettings: boolean
         createdProjects: CreatedProjectReference[] | null
         projectObj: CreatedProjectReference | null
-        joinedProjectArray: JoinedProjectReference[] | null
     }
 
     guilds: {
@@ -42,7 +46,6 @@ export interface AuthStateStoreTypes {
         guildNotes: GuildWallReference[] | null
         guildNoteObj: GuildWallReference | null
         guildChats: GuildChatReference[] | null
-        joinedGuildArray: JoinedGuildReference[] | null
     }
 
     modules: {
