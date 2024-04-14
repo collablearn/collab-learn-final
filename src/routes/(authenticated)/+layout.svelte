@@ -58,6 +58,7 @@
 	}
 
 	// making joined guild array reactive
+	$: console.log(data.joinedGuilds.data);
 	$: if (data.joinedGuilds.data) {
 		$authState.dashboard.joinedGuildArray = data.joinedGuilds.data;
 	} else {
