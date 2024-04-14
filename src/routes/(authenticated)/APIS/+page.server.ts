@@ -1,6 +1,6 @@
 import { addCommentSchema, addNoteSchema, checkGuildPassSchema, checkProjectSchema, createGuildSchema, createProjectSchema, updateInformationSchema, updatePasswordSchema, uploadModuleSchema } from "$lib/schema";
 import type { CreatedGuildReference, CreatedProjectReference, UserReference } from "$lib/types";
-import { fail, type Actions, redirect } from "@sveltejs/kit";
+import { fail, type Actions, redirect, error } from "@sveltejs/kit";
 import type { ZodError } from "zod";
 
 
@@ -420,7 +420,9 @@ export const actions: Actions = {
         const formData = Object.fromEntries(await request.formData());
 
         try {
+
             const { user } = await safeGetSession();
+
             const result = uploadModuleSchema.parse(formData);
 
             if (user) {
