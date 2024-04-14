@@ -18,6 +18,7 @@
 		projects: {
 			createdProjects: null,
 			projectObj: null,
+			joinedProjectArray: null,
 			joinedProject: false,
 			showEditTools: false,
 			showSettings: false
@@ -65,6 +66,13 @@
 		$authState.projects.createdProjects = data.createdProjects.data;
 	} else {
 		$authState.projects.createdProjects = null;
+	}
+
+	// making joined project array reactive
+	$: if (data.joinedProjects.data) {
+		$authState.projects.joinedProjectArray = data.joinedProjects.data;
+	} else {
+		$authState.projects.joinedProjectArray = null;
 	}
 
 	// making created modules array reactive
