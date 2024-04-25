@@ -94,12 +94,9 @@ export const actions: Actions = {
                         html,
                     };
 
-                    try {
-                        await sendEmail(message);
-                        return fail(200, { msg: "Registered Successfully." });
-                    } catch (error) {
-                        return fail(401, { msg: "There is an error." })
-                    }
+                    await sendEmail(message);
+                    return fail(200, { msg: "Registered Successfully." });
+
 
 
                 }
