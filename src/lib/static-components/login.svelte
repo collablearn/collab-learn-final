@@ -56,6 +56,9 @@
 			await update();
 		};
 	};
+
+	let showPass = false;
+	let password = '';
 </script>
 
 <form
@@ -83,14 +86,39 @@
 				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 			{/each}
 
-			<input
-				in:fly={{ x: -50, duration: 450 }}
-				autocomplete="off"
-				name="password"
-				type="password"
-				placeholder="Enter your password"
-				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
-			/>
+			<div class="flex items-center relative">
+				{#if showPass}
+					<input
+						in:fly={{ x: -50, duration: 450 }}
+						autocomplete="off"
+						name="password"
+						type="text"
+						bind:value={password}
+						placeholder="Enter your password"
+						class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+					/>
+				{:else}
+					<input
+						in:fly={{ x: -50, duration: 450 }}
+						autocomplete="off"
+						name="password"
+						type="password"
+						bind:value={password}
+						placeholder="Enter your password"
+						class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+					/>
+				{/if}
+				<button
+					type="button"
+					on:click={() => (showPass = !showPass)}
+					class="absolute text-[10px] font-semibold bg-submain text-main px-[10px] right-0 {password.length
+						? ''
+						: 'hidden'}"
+				>
+					{showPass ? 'Hide' : 'Show'}
+				</button>
+			</div>
+
 			{#each formActionError?.password ?? [] as errMsg}
 				<p class="text-submain text-[14px]" in:fade>{errMsg}</p>
 			{/each}

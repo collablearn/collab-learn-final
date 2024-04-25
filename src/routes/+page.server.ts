@@ -97,8 +97,6 @@ export const actions: Actions = {
                     await sendEmail(message);
                     return fail(200, { msg: "Registered Successfully." });
 
-
-
                 }
             }
 
