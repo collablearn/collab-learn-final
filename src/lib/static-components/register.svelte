@@ -68,6 +68,8 @@
 			await update();
 		};
 	};
+
+	let showPass = false;
 </script>
 
 <form
@@ -140,16 +142,41 @@
 				</div>
 			{/if}
 
-			<input
-				in:fly={{ x: -50, duration: 450 }}
-				autocomplete="off"
-				on:keyup={checkPasswordEngine}
-				bind:value={password}
-				name="password"
-				type="password"
-				placeholder="Password"
-				class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
-			/>
+			<div class="flex items-center relative">
+				{#if showPass}
+					<input
+						in:fly={{ x: -50, duration: 450 }}
+						autocomplete="off"
+						on:keyup={checkPasswordEngine}
+						bind:value={password}
+						name="password"
+						type="text"
+						placeholder="Password"
+						class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+					/>
+				{:else}
+					<input
+						in:fly={{ x: -50, duration: 450 }}
+						autocomplete="off"
+						on:keyup={checkPasswordEngine}
+						bind:value={password}
+						name="password"
+						type="password"
+						placeholder="Password"
+						class="text-[14px] py-[10px] outline-none bg-main border-b-[1px] text-white w-full"
+					/>
+				{/if}
+				<button
+					type="button"
+					on:click={() => (showPass = !showPass)}
+					class="absolute text-[10px] font-semibold bg-submain text-main px-[10px] right-0 {password.length
+						? ''
+						: 'hidden'}"
+				>
+					{showPass ? 'Hide' : 'Show'}
+				</button>
+			</div>
+
 			{#if password}
 				<p class="text-submain text-[14px]" in:fade>{passwordCheck}</p>
 			{:else}
